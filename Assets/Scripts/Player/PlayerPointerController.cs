@@ -16,7 +16,7 @@ public class PlayerPointerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 1000f, floorMask))
         {
             Vector3 offset = new Vector3((hit.point.x - player.position.x) / 2, 0, (hit.point.z - player.position.z) / 2);
-            transform.position = Vector3.Lerp(transform.position, player.position + Vector3.ClampMagnitude(offset, maxDistance), followSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, player.position + Vector3.ClampMagnitude(offset, maxDistance), followSpeed * Time.fixedUnscaledDeltaTime);
         }
     }
 }

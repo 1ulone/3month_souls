@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (input.test.WasPressedThisFrame())
+        {
+            TimeManager.instances.SlowTime();
+        }
+
         if (!canBeHurt)
         {
             if (startTime + hurtCooldown < Time.time)
@@ -90,7 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             ChangeAnim("walk");
             Quaternion trot = Quaternion.LookRotation(lookRotation, Vector3.up);
-            targetMesh.rotation = Quaternion.RotateTowards(targetMesh.rotation, trot, rotationSpeed * Time.deltaTime * 50);
+            targetMesh.rotation = Quaternion.RotateTowards(targetMesh.rotation, trot, rotationSpeed * Time.unscaledDeltaTime * 50);
         } else 
         if (dir == Vector2.zero)
         {
@@ -105,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         if (state == "roll")
         {
-            controller.Move(rollingDir.normalized * dashSpeed * Time.deltaTime);
+            controller.Move(rollingDir.normalized * dashSpeed * Time.fixedUnscaledDeltaTime);
             return; 
         }
 
@@ -113,7 +118,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 move = transform.right * dir.x + transform.forward * dir.y;
-        controller.Move(move * movementSpeed * Time.deltaTime);
+        controller.Move(move * movementSpeed * Time.fixedUnscaledDeltaTime);
     }
 
     public void ChangeAnim(string newState)
@@ -126,7 +131,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Roll()
     {
         canRoll = false;
-        this.gameObject.layer = invincible;
+        // this.gameObject.layer = invincible;
 
         rollingDir = targetMesh.forward;
         if (dir != Vector2.zero)
@@ -138,13 +143,14 @@ public class PlayerController : MonoBehaviour
         ChangeAnim("roll");
         startTime = Time.time;
 
+        // TODO: fix this shit nigga
         while(startTime + dashTime > Time.time)
             yield return null;
 
-        this.gameObject.layer = defaultLayer;
+        // this.gameObject.layer = defaultLayer;
         ChangeAnim("idle");
 
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSecondsRealtime(dashCooldown);
         canRoll = true;
         canAttack = true;
         currentCoroutine = null;
@@ -162,7 +168,7 @@ public class PlayerController : MonoBehaviour
 
         ChangeAnim("idle");
         
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSecondsRealtime(attackCooldown);
         canRoll = true;
         canAttack = true;
         currentCoroutine = null;
