@@ -12,8 +12,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private VolumeProfile slowVolume;
 
     private float hitstopTime;
-    private Coroutine currentCoroutine;
-    private bool onSlow;
+    public bool onSlow { get; private set; }
 
     private void Awake()
     {
@@ -23,8 +22,11 @@ public class TimeManager : MonoBehaviour
 
     public void HitStop(float waittime)
     {
+        if (onSlow)
+            return;
+
         hitstopTime = waittime;
-        currentCoroutine = StartCoroutine(HitStopCoroutine());
+        StartCoroutine(HitStopCoroutine());
     }
 
     public void SlowTime()
@@ -33,7 +35,7 @@ public class TimeManager : MonoBehaviour
             return; 
 
         // StopCoroutine(currentCoroutine);
-        currentCoroutine = StartCoroutine(SlowTimeCoroutine());
+        StartCoroutine(SlowTimeCoroutine());
     }
 
     private IEnumerator HitStopCoroutine()
@@ -42,23 +44,22 @@ public class TimeManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(hitstopTime);
 
         Time.timeScale = 1;
-        currentCoroutine = null;
     }
 
     private IEnumerator SlowTimeCoroutine()
     {
         onSlow = true;
-        Time.timeScale = 0.25f;
+        Time.timeScale = 0.15f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         hybridTime = Time.fixedUnscaledDeltaTime;
         volume.profile = slowVolume;
-        yield return new WaitForSecondsRealtime(10f);
+        yield return new WaitForSecondsRealtime(5f);
 
         Time.timeScale = 1;
-        currentCoroutine = null;
         Time.fixedDeltaTime = 0.02f;
         hybridTime = Time.deltaTime;
         volume.profile = defaultVolume;
         onSlow = false;
+        // FindObjectsByType<PlayerController>();
     }
 }

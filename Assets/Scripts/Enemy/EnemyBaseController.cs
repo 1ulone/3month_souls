@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using  CameraShake;
 
 public class EnemyBaseController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemyBaseController : MonoBehaviour
     [SerializeField] protected bool drawGizmosDebug = false;
 
     protected const float hurtTime = 1f;
+
     protected float startHurtTime;
     protected float maxHealth;
 
@@ -41,7 +43,7 @@ public class EnemyBaseController : MonoBehaviour
     public bool onEndAttack { get; set; }
 
     public bool onHurt { get; protected set; }
-    public bool canGetHurt { get; set; }
+    // public bool canGetHurt { get; set; }
 
     private void Awake()
     {
@@ -52,11 +54,11 @@ public class EnemyBaseController : MonoBehaviour
         maxHealth = data.health;
         health = maxHealth;
         FacingDirection = 1;
-        canGetHurt = true;
+        // canGetHurt = true;
 
         Initialize();
 
-        // info.enabled = false;
+        info.enabled = false;
     }
 
     protected virtual void Initialize()
@@ -130,6 +132,9 @@ public class EnemyBaseController : MonoBehaviour
 
     public void ChangeVelocity(Vector3 v)
     {
+        if (health <= 0)
+            return;
+
         if (v == Vector3.zero)
             agent.ResetPath();
         agent.velocity = v;
@@ -151,12 +156,15 @@ public class EnemyBaseController : MonoBehaviour
 
     public void GetHurt(int damage)
     {
-        if (!canGetHurt)
+        // if (!canGetHurt)
+        //     return;
+
+        if (onHurt && !TimeManager.instances.onSlow)
             return;
 
-        if (onHurt)
-            return;
-
+        Pool.instances.CreateObject("blood", transform.position + new Vector3(0, 0.5f, 0), new Vector3(0, -transform.rotation.eulerAngles.y, 0));
+        Pool.instances.CreateObject("sparks", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero);
+        CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
         ChangeAnimation("hurt");
         onHurt = true;
         health -= damage;
@@ -189,8 +197,3 @@ public class EnemyBaseController : MonoBehaviour
         return FindFirstObjectByType<PlayerController>().gameObject.transform;
     }
 }
-
-//NOTE: 
-//add screenshake
-//add blood explosion for enemy death
-//add blood splatter for hurt (vfx)

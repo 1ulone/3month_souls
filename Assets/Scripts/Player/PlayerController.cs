@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using CameraShake;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private PlayerUI ui;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private LayerMask invincible;
+    [SerializeField] private LayerMask dodgeWindow;
 
     public Transform Pointer { get { return pointer; } }
     
@@ -29,13 +30,15 @@ public class PlayerController : MonoBehaviour
     private string state;
     private float startTime;
     private bool canRoll, canAttack, canBeHurt;
+    private bool onPDodge;
     private int health;
 
     private Coroutine currentCoroutine;
     private Vector2 dir;
     private Vector3 rollingDir;
     private Vector3 lookRotation;
-    private LayerMask defaultLayer;
+    private int defaultLayer;
+    private int invincible;
 
     private void Awake()
     {
@@ -43,7 +46,9 @@ public class PlayerController : MonoBehaviour
         input = GetComponent<InputController>();
         hitflash = GetComponent<HitflashComponent>();
 
-        defaultLayer = this.gameObject.layer;
+        defaultLayer = LayerMask.NameToLayer("Player");
+        invincible = LayerMask.NameToLayer("Invincible");
+
         health = maxHealth;
         ui.UpdateHealthUI(health, maxHealth);
         
@@ -58,11 +63,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (input.test.WasPressedThisFrame())
-        {
-            TimeManager.instances.SlowTime();
-        }
-
         if (!canBeHurt)
         {
             if (startTime + hurtCooldown < Time.time)
@@ -131,7 +131,11 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Roll()
     {
         canRoll = false;
-        // this.gameObject.layer = invincible;
+        if (onPDodge)
+            TimeManager.instances.SlowTime();
+
+        onPDodge = false;
+        this.gameObject.layer = invincible;
 
         rollingDir = targetMesh.forward;
         if (dir != Vector2.zero)
@@ -141,13 +145,15 @@ public class PlayerController : MonoBehaviour
         }
 
         ChangeAnim("roll");
-        startTime = Time.time;
 
-        // TODO: fix this shit nigga
-        while(startTime + dashTime > Time.time)
+        float timer = 0f;
+        while (timer < dashTime)
+        {
+            timer += TimeManager.instances.onSlow ? Time.unscaledDeltaTime : Time.deltaTime;
             yield return null;
+        }
 
-        // this.gameObject.layer = defaultLayer;
+        this.gameObject.layer = defaultLayer;
         ChangeAnim("idle");
 
         yield return new WaitForSecondsRealtime(dashCooldown);
@@ -161,10 +167,13 @@ public class PlayerController : MonoBehaviour
         canAttack = false;
         targetMesh.LookAt(new Vector3(pointer.position.x, 0, pointer.position.z));
         ChangeAnim("attack");
-        startTime = Time.time;
 
-        while(startTime + attackTime > Time.time)
+        float timer = 0f;
+        while (timer < attackTime)
+        {
+            timer += TimeManager.instances.onSlow ? Time.unscaledDeltaTime : Time.deltaTime;
             yield return null;
+        }
 
         ChangeAnim("idle");
         
@@ -183,6 +192,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         canBeHurt = false;
 
+        CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
         ui.UpdateHealthUI(health, maxHealth);
     
         // EFFECTS
@@ -200,12 +210,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Debug.Log("ay");
-
         if (((1<<other.gameObject.layer) & enemyLayer) != 0)
         {
             if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
                 GetHurt(d.damage);
         }
+
+        if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
+            onPDodge = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
+            onPDodge = false;
     }
 }
