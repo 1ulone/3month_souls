@@ -24,6 +24,8 @@ public class EnemyData : ScriptableObject
     public bool checkPlayerElevation = true;
 
     public float walkRange = 5;
+    public float mass = 0.5f;
+    public float force = 6f;
 
     [HideInInspector] public bool onGround;
     [HideInInspector] public bool onWall;

@@ -18,6 +18,7 @@ public class EnemyBaseController : MonoBehaviour
 
     protected Transform hurtbox;
     protected HitflashComponent hitflash;
+    protected KnockbackComponent knockback;
 
     protected EIdleState idle;
     protected EPatrolState patrol;
@@ -49,6 +50,7 @@ public class EnemyBaseController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         hitflash = GetComponent<HitflashComponent>();
+        knockback = GetComponent<KnockbackComponent>();
         data = Instantiate(data);
 
         maxHealth = data.health;
@@ -150,7 +152,10 @@ public class EnemyBaseController : MonoBehaviour
         if (((1<<other.gameObject.layer) & data.hurtForEnemy) != 0)
         {
             if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
+            {
+                knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force);
                 GetHurt(d.damage);
+            }
         }
     }
 

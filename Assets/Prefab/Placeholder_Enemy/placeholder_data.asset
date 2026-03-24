@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   damage: 2
-  movementSpeed: 3
+  movementSpeed: 4
   chaseSpeed: 5
   idleLength: 5
   patrolLength: 10
@@ -36,6 +36,8 @@ MonoBehaviour:
   checkChase: 1
   checkPlayerElevation: 1
   walkRange: 5
+  mass: 0.3
+  force: 6
   onGround: 1
   onWall: 1
   onChase: 0

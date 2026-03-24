@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackTime = 1f;
     [SerializeField] private float attackCooldown = 1.5f;
     [SerializeField] private float hurtCooldown = 2f;
+    [SerializeField] private float mass = 0.3f;
+    [SerializeField] private float force = 3f;
     [SerializeField] private Transform targetMesh;
     [SerializeField] private Transform pointer;
     [SerializeField] private Animator anim;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private InputController input;
     private CharacterController controller;
     private HitflashComponent hitflash;
+    private KnockbackComponent knockback;
 
     private string state;
     private float startTime;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         input = GetComponent<InputController>();
         hitflash = GetComponent<HitflashComponent>();
+        knockback = GetComponent<KnockbackComponent>();
 
         defaultLayer = LayerMask.NameToLayer("Player");
         invincible = LayerMask.NameToLayer("Invincible");
@@ -194,7 +198,7 @@ public class PlayerController : MonoBehaviour
 
         CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
         ui.UpdateHealthUI(health, maxHealth);
-    
+
         // EFFECTS
         StartCoroutine(hitflash.FlashesCoroutine());
         TimeManager.instances.HitStop(0.25f);
@@ -213,7 +217,10 @@ public class PlayerController : MonoBehaviour
         if (((1<<other.gameObject.layer) & enemyLayer) != 0)
         {
             if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
+            {
+                knockback.StartKnock(transform.position - other.transform.position, mass, force);
                 GetHurt(d.damage);
+            }
         }
 
         if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
