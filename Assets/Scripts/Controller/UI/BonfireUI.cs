@@ -14,6 +14,7 @@ public class BonfireUI : MonoBehaviour
     [SerializeField] private CanvasGroup secondPanel;
     [SerializeField] private Image[] mainOptions;
     [SerializeField] private Image cursor;
+    [SerializeField] private GameObject plusMinIcon;
 
     [Header("Level Up Panel")]
     [SerializeField] private GameObject levelupPanel; 
@@ -47,6 +48,7 @@ public class BonfireUI : MonoBehaviour
             levelupOptions.Add(sv.tag, sv.value);
 
         levelupPanel.SetActive(false);
+        plusMinIcon.SetActive(false);
         ToggleCanvasGroup(secondPanel, false);
         ToggleCanvasGroup(mainUI, false);
     }
@@ -167,7 +169,12 @@ public class BonfireUI : MonoBehaviour
 
 
         yield return new WaitForSecondsRealtime(uiDelay);
+
         MoveCursor(values[levelOptionsID].rectTransform);
+        if (levelOptionsID == 5 || levelOptionsID == 6)
+            plusMinIcon.SetActive(false); else 
+        if (plusMinIcon.activeSelf == false)
+            plusMinIcon.SetActive(true);
         
         canMove = true;
     }
@@ -189,6 +196,7 @@ public class BonfireUI : MonoBehaviour
         knockforce.text = Math.Round(stats.knockforce, 2).ToString();
 
         ToggleCanvasGroup(secondPanel, true);
+        plusMinIcon.SetActive(true);
         levelupPanel.SetActive(true);
 
         yield return new WaitForSecondsRealtime(uiDelay);
@@ -199,6 +207,7 @@ public class BonfireUI : MonoBehaviour
     private IEnumerator CloseLevelPanel(bool accept)
     {
         ToggleCanvasGroup(secondPanel, false);
+        plusMinIcon.SetActive(false);
         levelupPanel.SetActive(false);
 
         yield return new WaitForSecondsRealtime(uiDelay);
