@@ -13,7 +13,6 @@ public class PlayerAnimationTrigger : MonoBehaviour
             Vector3.zero
         );
         vfx.transform.LookAt(new Vector3(controller.Pointer.position.x, 0, controller.Pointer.position.z));
-        vfx.GetComponent<DamageComponent>().damage = 2;
-        // TODO: i'll think about damage later for now lets get the feeling first
+        vfx.GetComponent<DamageComponent>().damage = controller.Stats.damage;
     }
 }

@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     public InputAction attack { get; private set; } 
     public InputAction roll { get; private set; } 
     public InputAction test { get; private set; }
+    public InputAction interact { get; private set; }
 
     private void OnEnable()
     {
@@ -21,11 +22,13 @@ public class InputController : MonoBehaviour
         attack = input.actions["Attack"];
         roll = input.actions["Roll"];
         test = input.actions["Test"];
+        interact = input.actions["Interact"];
 
         move.Enable();
         attack.Enable();
         roll.Enable();
         test.Enable();
+        interact.Enable();
     }
 
     private void OnDisable()
@@ -34,5 +37,6 @@ public class InputController : MonoBehaviour
         attack.Disable();
         roll.Disable();
         test.Disable();
+        interact.Disable();
     }
 }

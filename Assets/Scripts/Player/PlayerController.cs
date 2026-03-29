@@ -22,13 +22,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerUI ui;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask dodgeWindow;
+    [SerializeField] private LayerMask interactLayer;
 
     public Transform Pointer { get { return pointer; } }
+    public PlayerStats Stats { get { return stats; } }
     
-    private InputController input;
     private CharacterController controller;
+    private InputController input;
+    private PlayerStats stats;
     private HitflashComponent hitflash;
     private KnockbackComponent knockback;
+    private IInteractable interactable;
 
     private string state;
     private float startTime;
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         input = GetComponent<InputController>();
+        stats = GetComponent<PlayerStats>();
         hitflash = GetComponent<HitflashComponent>();
         knockback = GetComponent<KnockbackComponent>();
 
@@ -69,12 +74,22 @@ public class PlayerController : MonoBehaviour
     {
         if (!canBeHurt)
         {
-            if (startTime + hurtCooldown < Time.time)
+            dir = Vector2.zero;
+            ChangeAnim("idle"); // TODO: change to hurt later
+            if (startTime + stats.downtime < Time.time)
                 EndHurt();
+
+            return;
         }
 
         if (Time.timeScale == 0)
             return;
+        
+        if (interactable != null && input.interact.WasPressedThisFrame())
+        {
+            interactable.Interact();
+            interactable = null;
+        }
 
         dir = input.move.ReadValue<Vector2>();
         lookRotation = new Vector3(dir.x, 0, dir.y);
@@ -114,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
         if (state == "roll")
         {
-            controller.Move(rollingDir.normalized * dashSpeed * Time.fixedUnscaledDeltaTime);
+            controller.Move(rollingDir.normalized * (dashSpeed + stats.rollspeed) * Time.fixedUnscaledDeltaTime);
             return; 
         }
 
@@ -122,7 +137,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 move = transform.right * dir.x + transform.forward * dir.y;
-        controller.Move(move * movementSpeed * Time.fixedUnscaledDeltaTime);
+        controller.Move(move * stats.speed * Time.fixedUnscaledDeltaTime);
     }
 
     public void ChangeAnim(string newState)
@@ -193,7 +208,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         startTime = Time.time;
-        health -= damage;
+        health -= Mathf.Abs(damage - stats.defense);
         canBeHurt = false;
 
         CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
@@ -218,9 +233,15 @@ public class PlayerController : MonoBehaviour
         {
             if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
             {
-                knockback.StartKnock(transform.position - other.transform.position, mass, force);
+                knockback.StartKnock(transform.position - other.transform.position, mass, stats.knockforce);
                 GetHurt(d.damage);
             }
+        }
+
+        if (((1<<other.gameObject.layer) & interactLayer) != 0)
+        {
+            if (other.gameObject.TryGetComponent<IInteractable>(out IInteractable it))
+                interactable = it;
         }
 
         if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
@@ -231,5 +252,8 @@ public class PlayerController : MonoBehaviour
     {
         if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
             onPDodge = false;
+
+        if ((((1<<other.gameObject.layer) & interactLayer) != 0) && interactable != null)
+            interactable = null;
     }
 }
