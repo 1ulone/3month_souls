@@ -1,0 +1,2027 @@
+fileFormatVersion: 2
+guid: 0559904015c425943a5663314891630c
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 832
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f100e0693038c648bb5a83c67dedbc7
+      internalID: 1180098464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_25
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 832
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2553802b616e8ef4382140b83d8c67d7
+      internalID: 809712144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_26
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 832
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24ced4fb962a25b4d8b58f6fcd5fa22e
+      internalID: -1957640434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 800
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5486e64921c59464cb9ed2e358be797e
+      internalID: -1868159926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_28
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 800
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d99800f8d0dc8047b85c75ae3160370
+      internalID: 1073082376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_29
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 768
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4238ad5d383b21e46908d962fda69390
+      internalID: -204607994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_30
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 800
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55db1f94ef50e0340b61d08f2de984f7
+      internalID: -1479786139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_31
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 800
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54c7feaeb2383504fa981475bac84877
+      internalID: -1825449470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_32
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 768
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5015a792f3986364796c7b77ab970fe9
+      internalID: -1265284473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_33
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 800
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a12ec0a2ee3bfa44845395e38e93528
+      internalID: 784491821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_34
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 769
+        width: 26
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eacdfd8e5b6023241915199759a4c0c2
+      internalID: 1957777803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_35
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 772
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cc22a3003fb6dc4da7b7536dd8020dd
+      internalID: -1515431603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_36
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 772
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae4590f8114771441b29af045f1a1dd8
+      internalID: 848328667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_37
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 737
+        width: 64
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9145351d683e033488f92b0ea98a7d97
+      internalID: 1139817401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_38
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 736
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f90e40875473fdf4791467e83a2c2689
+      internalID: -241412970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_39
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 736
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a0de9c97f4b82d4fa5c73e8b7bd6388
+      internalID: -1928835160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_40
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 736
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c114617c2c0934a42a2071f72e75d0c6
+      internalID: -636303098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_51
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 674
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee24df8d4929d244088226703fcd57fc
+      internalID: -120321375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_52
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 673
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1776e30e2f726f84bb9adb1b7983410a
+      internalID: 180550863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_53
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 673
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cee6db07a2ed1b04d9caeeb880bec070
+      internalID: -1465776913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_54
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 673
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 973ba1c601387a14e8c2df91ba7d84e1
+      internalID: 93384984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_55
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 673
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bfa7fa7fdccfc849bce68e0db1c8086
+      internalID: -29067473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_56
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 672
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d82aadffbaef084aa6bf222117ff85e
+      internalID: 1142876810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_57
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 640
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14b09a07dc552444592afcd3d242836b
+      internalID: 1992025916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_58
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 640
+        width: 30
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d158c1c5240135549b5990c508ee9d06
+      internalID: 1433100558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_59
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 640
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d4322e837c108b4b82c96683ae446e8
+      internalID: 1238079570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_63
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 480
+        width: 25
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 217b60c569ead0a49b3f410d1c1167a8
+      internalID: 557304624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_64
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 480
+        width: 30
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ac468e77e5062d44b5116f7169871b9
+      internalID: 558774572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_65
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 512
+        width: 32
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e03ba66316c65a44b9cd8d4c4fc10cf2
+      internalID: -106000956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_66
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 512
+        width: 25
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e50fc26d150baf489e275b0e08d21b0
+      internalID: -1322209715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_67
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 512
+        width: 25
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 050575755d370d344939fc76759cc59b
+      internalID: 2085724870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_68
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 512
+        width: 25
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 639977708905a34488a940887ccfa15e
+      internalID: 1059048169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_71
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 419
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6266e765f80f5d4790dc06ca2ef9d49
+      internalID: 970838069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_72
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 417
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49356964b7946c14eb8af7ce4458fcb4
+      internalID: 1557636269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_73
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 418
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50cfd04bf6ada9744b7f0c568700e152
+      internalID: -1511880574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_74
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 352
+        width: 63
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd6a8ba0f2cb56e4ba25ced4db5a4542
+      internalID: 65269510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_75
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 416
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40e667a1d827c5b4eaee732e7ba16737
+      internalID: -632709896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_76
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 320
+        width: 30
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7b03b7e8641ad941be08cdd7bd92823
+      internalID: 1285962219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_77
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 320
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c8adbed7c5aa0f469f87558758a9dd0
+      internalID: -1155199789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_78
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 384
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f583605702da582438e9625c23c3782f
+      internalID: -1929170186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_79
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 320
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea73ba9fc8d75f2459a4c33ec05056f4
+      internalID: -1036550697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_80
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 320
+        width: 61
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ff3bf76d815814aa5ae00101dad775
+      internalID: -955418870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_99
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 260
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a03f521f928a0ec4ab552f163815072e
+      internalID: -516630382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_100
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 258
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f481d842db916ed48b75bdab3f3c684f
+      internalID: -233361675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_101
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 256
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 885888cb82020264292fff33836f332e
+      internalID: 1543208722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_102
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2412e2eb1cf30ea4289b3c35ff19b94d
+      internalID: -873236922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_103
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 986bca1254c8c7644b5ec181049c8d41
+      internalID: -1960236620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_104
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 256
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ecf7cfa36bc22c44936b7f10a69d226
+      internalID: 1739812191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_105
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 225
+        width: 23
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca1ab623fece264d901da6e1b3b1f3e
+      internalID: 2051920306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_106
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 224
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 690f8b3d5619c6a439ab15a471753fc7
+      internalID: 510139819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_107
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 224
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddcdf4e5896aca6498880e179f7b85b7
+      internalID: 608925357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_108
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5338bafbd49852145abf6926236a01d3
+      internalID: -1623204249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_109
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 224
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a9589c50b24d204898744369ca5e831
+      internalID: 1027802120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_110
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b46f16d8bdcda0a45be6612fafa86589
+      internalID: -1837328889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_111
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e20a85f963a694fbb6353a0527676e
+      internalID: -1055477300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_112
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 192
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 227de6cd80c31cb4daa640e82ac69daa
+      internalID: -747433127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_113
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 192
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 434b90130007c2b41b05713a78fd7aef
+      internalID: 1244562086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_114
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 165
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87b50bdd839577c47b6a94e36c018998
+      internalID: -399974803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_115
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 164
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20511294401a23e488824daaef014bed
+      internalID: 2015473736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_116
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 164
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a903bfa5d38b2f347966c34ebad75d92
+      internalID: 1813226255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_117
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 165
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 315b989d48df8b94d8beea82fadbc204
+      internalID: 1985094205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_127
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b01de5c02181eb345a184bc5eb5cc38b
+      internalID: -1976453102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_128
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1ce35c57f216ee4391e2a938bc313e5
+      internalID: 605619431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_129
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 97
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8818b4b95dc94aa428aea066f9e2374a
+      internalID: -227302848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_130
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 97
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c16d08a6017f604f949c581e75e663f
+      internalID: -1531843888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_131
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0833dd0af41aa70448f2efbfb7aa4472
+      internalID: -1238785760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_132
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245f34b99da72ca498117be233b31771
+      internalID: -1808632347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_133
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 66
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd8d115f85aef2e41a1afe8a260474e2
+      internalID: -177874544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_134
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce1a6213447eb146ab3c9c1654a25c7
+      internalID: -751793628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_135
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 64
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5070e0054f541c9458fa5925521791b6
+      internalID: 775544833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_142
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d5330a39e695ff429c58bbc2cb83563
+      internalID: -1833325356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_143
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76c105b265b423045bd21ef654b60df1
+      internalID: -136799159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_144
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f44178035ca2a964a84966b1cf3b3c65
+      internalID: -1020761656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_145
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 0
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84a8bf3be10ec0e438a760e94d7f032e
+      internalID: -624215603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_146
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 0
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60a127a792a82fa4f90aca9e4a8dfe6e
+      internalID: -1591968912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item
+        Icons_147
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 0
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 157b68051c0c2054f8fabe4c0f3a868d
+      internalID: -2140661577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9426e5787009d1d48b431c5285f3ea48
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_0: 1320806667
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_1: 1209270866
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_10: -140719603
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_100: -233361675
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_101: 1543208722
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_102: -873236922
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_103: -1960236620
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_104: 1739812191
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_105: 2051920306
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_106: 510139819
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_107: 608925357
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_108: -1623204249
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_109: 1027802120
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_11: 1066901483
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_110: -1837328889
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_111: -1055477300
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_112: -747433127
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_113: 1244562086
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_114: -399974803
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_115: 2015473736
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_116: 1813226255
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_117: 1985094205
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_118: -1121011966
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_119: -1032835472
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_12: -1098174200
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_120: -1884588855
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_121: 2008955457
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_122: -584091234
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_123: -360506572
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_124: 202627477
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_125: 797512627
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_126: -649645163
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_127: -1976453102
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_128: 605619431
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_129: -227302848
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_13: -1351325826
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_130: -1531843888
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_131: -1238785760
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_132: -1808632347
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_133: -177874544
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_134: -751793628
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_135: 775544833
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_136: 1873731157
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_137: 1301003139
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_138: -2060903029
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_139: 37690484
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_14: -842688611
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_140: 896288047
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_141: -1147569448
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_142: -1833325356
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_143: -136799159
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_144: -1020761656
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_145: -624215603
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_146: -1591968912
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_147: -2140661577
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_148: 2086371223
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_15: 1171073760
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_16: 1803244296
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_17: 810864703
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_18: -612715438
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_19: -253125141
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_2: -1915496849
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_20: 522695390
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_21: -1127983427
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_22: 1386436531
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_23: 311853853
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_24: 1180098464
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_25: 809712144
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_26: -1957640434
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_27: -1868159926
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_28: 1073082376
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_29: -204607994
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_3: -1104453793
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_30: -1479786139
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_31: -1825449470
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_32: -1265284473
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_33: 784491821
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_34: 1957777803
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_35: -1515431603
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_36: 848328667
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_37: 1139817401
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_38: -241412970
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_39: -1928835160
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_4: -1145481458
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_40: -636303098
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_41: 1607056277
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_42: -1327038984
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_43: 1771158054
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_44: 1631422933
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_45: -223720278
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_46: -1562892761
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_47: 752717185
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_48: 1436000301
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_49: 1321558342
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_5: 1869087606
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_50: -2026161373
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_51: -120321375
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_52: 180550863
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_53: -1465776913
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_54: 93384984
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_55: -29067473
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_56: 1142876810
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_57: 1992025916
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_58: 1433100558
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_59: 1238079570
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_6: -1867471681
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_60: 730560099
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_61: 2140978624
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_62: -1076632959
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_63: 557304624
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_64: 558774572
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_65: -106000956
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_66: -1322209715
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_67: 2085724870
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_68: 1059048169
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_69: -783087679
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_7: 433607956
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_70: -567220624
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_71: 970838069
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_72: 1557636269
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_73: -1511880574
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_74: 65269510
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_75: -632709896
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_76: 1285962219
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_77: -1155199789
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_78: -1929170186
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_79: -1036550697
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_8: 848092474
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_80: -955418870
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_81: 445338558
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_82: -709582863
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_83: 1248867413
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_84: -1930600583
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_85: 230036009
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_86: -134704334
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_87: -152884700
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_88: -1840993653
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_89: -974693317
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_9: -62789068
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_90: -1364022298
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_91: -636400430
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_92: -301433455
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_93: 1418635087
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_94: -100120724
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_95: -1713956898
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_96: 630465439
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_97: -857365368
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_98: -1738169859
+      Nintendo 64 - The Legend of Zelda_ Majora's Mask - Miscellaneous - Item Icons_99: -516630382
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

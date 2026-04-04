@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats instances;    
+
     //Player Default Weapon (fist)
     [SerializeField] public WeaponItemData defaultWeapon;
     [SerializeField] public CharmItemData defaultCharm;
-    // [SerializeField] public SkillItemData defaultSkill;
 
     //Level
     private const int startExp = 50;
-    public int money { get; private set; }
-    public int nextRequiredMoney { get; private set; }
+    public int exp { get; private set; }
+    public int nextRequiredLevel { get; private set; }
     public int level { get; private set; }
 
     //Default stats on Start 
@@ -42,17 +43,17 @@ public class PlayerStats : MonoBehaviour
     private Buff dexterityBuff;
     private Buff poiseBuff;
 
-    public static WeaponItemData weapon;
-    public static CharmItemData charm;
-    // public static SkillItemData skill;
+    public WeaponItemData weapon { get; set; }
+    public CharmItemData charm { get; set; }
 
-    public static int Health;
-    public static int Mana;
-    public static int Money;
+    public bool hasNoWeapon() { return weapon == defaultWeapon; }
+    public bool hasNoCharm() { return charm == defaultCharm; }
 
     private void Awake()
     {
+        instances = this;
         level = 1;
+        exp = startExp;
 
         currentVitality = startVitality;
         currentStrength = startStrength;
@@ -62,9 +63,7 @@ public class PlayerStats : MonoBehaviour
 
         weapon = defaultWeapon;
         charm = defaultCharm;
-        // skill = defaultSkill;
-        nextRequiredMoney = expFormula(level+1);
-        money = 1000;
+        nextRequiredLevel = expFormula(level+1);
 
         vitalityBuff = new Buff();
         strengthBuff = new Buff();
@@ -73,40 +72,42 @@ public class PlayerStats : MonoBehaviour
         poiseBuff = new Buff();
 
         UpdateStat();
-        Debug.Log(
-            "VIT : " + vitality + "\n" +
-            "ATK : " + strength + "\n" +
-            "DEF : " + defense + "\n" +
-            "SPD : " + speed + "\n" +
-            "RSPD: " + rollspeed + "\n" +
-            "DT  : " + downtime + "\n" + 
-            "KB  : " + knockforce + "\n" 
-        );
+
+        // Debug.Log(
+        //     "VIT : " + vitality + "\n" +
+        //     "ATK : " + strength + "\n" +
+        //     "DEF : " + defense + "\n" +
+        //     "SPD : " + speed + "\n" +
+        //     "RSPD: " + rollspeed + "\n" +
+        //     "DT  : " + downtime + "\n" + 
+        //     "KB  : " + knockforce + "\n" 
+        // );
     }
 
-    private void Start()
+    public void AddExperiences(int e)
     {
-        Health = health;
+        exp += e;
+        PlayerUI.instances.UpdateExpUI(exp);
     }
 
     public bool canLevelUp(int l)
     {
-        return money >= expFormula(l);
+        return exp >= expFormula(l);
     }
 
-    public void levelUp(int l, int atk, int con, int dex, int vit, int poi)
+    public void levelUp(int l, int vit, int str, int con, int dex, int poi)
     {
         int cost = expFormula(l);
         level = l;
-        nextRequiredMoney = expFormula(l+1);
+        nextRequiredLevel = expFormula(l+1);
 
-        currentStrength = atk;
+        currentVitality = vit;
+        currentStrength = str;
         currentConstitution = con;
         currentDexterity = dex;
-        currentVitality = vit;
         currentPoise = poi;
 
-        money -= cost;
+        exp -= cost;
         UpdateStat();
     }
 
@@ -169,7 +170,7 @@ public class PlayerStats : MonoBehaviour
         return healthFormula(nVit, nIns, nCon);
     }
 
-    public int previewStrength(int atk, int dex)
+    public int previewDamage(int atk, int dex)
     {
         int nAtk = currentStrength + strengthBuff.totalBuff + atk;
         int nDex = currentDexterity + dexterityBuff.totalBuff + dex;
@@ -307,7 +308,7 @@ public class PlayerStats : MonoBehaviour
         StatSaveData data = new StatSaveData
         (
             level,
-            money,
+            exp,
             strength,
             constitution,
             dexterity,
@@ -327,7 +328,7 @@ public class PlayerStats : MonoBehaviour
     //     var sd = SaveLoadManager.instances.Deserialize(state);
     //
     //     level = Convert.ToInt32(sd["level"]);
-    //     money = Convert.ToInt32(sd["money"]);
+    //     exp = Convert.ToInt32(sd["exp"]);
     //
     //     currentStrength = Convert.ToInt32(sd["strength"]);
     //     currentConstitution = Convert.ToInt32(sd["constitution"]);
@@ -360,7 +361,7 @@ public class Buff
 public class StatSaveData 
 {
     public int level;
-    public int money;
+    public int exp;
 
     public int strength;
     public int constitution;
@@ -378,7 +379,7 @@ public class StatSaveData
     {
         level = lvl;
         strength = atk;
-        money = m;
+        exp = m;
         constitution = con;
         dexterity = dex;
         vitality = vit;

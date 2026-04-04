@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -18,7 +17,13 @@ public class BonfireUI : MonoBehaviour
 
     [Header("Level Up Panel")]
     [SerializeField] private GameObject levelupPanel; 
-    [SerializeField] private List<StatsValue> mainStats;
+    [SerializeField] private List<StatsValue> previewData;
+    
+    [Header("Exp and Level")]
+    [SerializeField] private TextMeshProUGUI levelCurrent;
+    [SerializeField] private TextMeshProUGUI levelNext;
+    [SerializeField] private TextMeshProUGUI expHeld;
+    [SerializeField] private TextMeshProUGUI expNeed;
 
     [Header("Result Stats")]
     [SerializeField] private TextMeshProUGUI health;
@@ -31,21 +36,17 @@ public class BonfireUI : MonoBehaviour
     // [SerializeField] private GameObject dialogPanel; 
 
     private int mainOptionsID, levelOptionsID;
+    private int previewLevel, previewExp, previewNextLevelExp;
     private bool isOnUI, canMove;
     private CanvasGroup mainUI;
     private InputController input;
     private PlayerStats stats;
-    private Dictionary<string, TextMeshProUGUI> levelupOptions = new Dictionary<string, TextMeshProUGUI>();
 
     private void Awake()
     {
         instances = this;
         isOnUI = false;
         mainUI = GetComponent<CanvasGroup>();
-
-        levelupOptions = new Dictionary<string, TextMeshProUGUI>();
-        foreach(StatsValue sv in mainStats)
-            levelupOptions.Add(sv.tag, sv.value);
 
         levelupPanel.SetActive(false);
         plusMinIcon.SetActive(false);
@@ -56,7 +57,7 @@ public class BonfireUI : MonoBehaviour
     private void Start()
     {
         input = FindFirstObjectByType<InputController>();
-        stats = FindFirstObjectByType<PlayerStats>();
+        stats = PlayerStats.instances;
         canMove = true;
 
         mainOptionsID = 0;
@@ -78,16 +79,29 @@ public class BonfireUI : MonoBehaviour
 
     public void ToggleUI()
     {
+        if (!canMove)
+            return;
+
         isOnUI = !isOnUI;
         if (isOnUI)
             Time.timeScale = 0;
         else 
             Time.timeScale = 1;
 
+        StartCoroutine(OpenMainCanvas());
+    }
+
+    private IEnumerator OpenMainCanvas()
+    {
+        canMove = false;
         mainOptionsID = 0;
         MoveCursor(mainOptions[mainOptionsID].rectTransform);
+
+        yield return new WaitForSecondsRealtime(uiDelay);
         ToggleCanvasGroup(secondPanel, false);
         ToggleCanvasGroup(mainUI, isOnUI);
+
+        canMove = true;
     }
 
     private void Update()
@@ -96,11 +110,11 @@ public class BonfireUI : MonoBehaviour
             return;
 
         Vector2 rawdir = input.move.ReadValue<Vector2>();
-        Vector2Int dir = new Vector2Int(0, (int)rawdir.y);
-        if (dir.y != 0)
+        Vector2Int dir = new Vector2Int((int)rawdir.x, (int)rawdir.y);
+        if (dir.y != 0 || dir.x != 0)
         {
             if (levelupPanel.activeSelf)
-                StartCoroutine(MoveOnLevelPanel(dir.y));
+                StartCoroutine(MoveOnLevelPanel(dir));
             else
                 StartCoroutine(MoveOnMainUI(dir.y));
         }
@@ -152,25 +166,63 @@ public class BonfireUI : MonoBehaviour
         canMove = true;
     }
 
-    private IEnumerator MoveOnLevelPanel(int ydir)
+    private IEnumerator MoveOnLevelPanel(Vector2 dir)
     {
         canMove = false;
-        TextMeshProUGUI[] values = levelupOptions.Values.ToArray();
 
-        if (ydir > 0)
-            levelOptionsID--;
-        if (ydir < 0)
-            levelOptionsID++;
+        if (levelOptionsID < 5)
+        {
+            if (dir.y > 0)
+                levelOptionsID--; else 
+            if (dir.y < 0)
+                levelOptionsID++; else 
+            if (dir.x > 0)
+            {
+                if (previewExp - previewNextLevelExp > 0)
+                {
+                    previewLevel++; 
+                    previewData[levelOptionsID].value++;
+                    previewExp -= previewNextLevelExp; 
+                    previewNextLevelExp = stats.expFormula(previewLevel);
+                }
+            } else 
+            if (dir.x < 0)
+            {
+                // 2 < 2 or 6 > 6
+                //  
+                if (stats.level+1 < previewLevel && previewData[levelOptionsID].value > previewData[levelOptionsID].baseValue)
+                {
+                    previewLevel--;
+                    previewData[levelOptionsID].value--;
+                    previewNextLevelExp = stats.expFormula(previewLevel); 
+                    previewExp += previewNextLevelExp;
+                }
+            }
+        } else 
+        if (levelOptionsID >= 5)
+        {
+            if (dir.x > 0 || dir.x < 0)
+            {
+                if (levelOptionsID == 5)
+                    levelOptionsID = 6; else 
+                if (levelOptionsID == 6)
+                    levelOptionsID = 5;
+            }
+            if (dir.y > 0)
+                levelOptionsID = 4;
+            if (dir.y < 0)
+                levelOptionsID = 0;
+        }
 
-        if (levelOptionsID > values.Length - 1)
+        if (levelOptionsID > previewData.Count - 1)
             levelOptionsID = 0;
         if (levelOptionsID < 0)
-            levelOptionsID = values.Length - 1;
-
+            levelOptionsID = previewData.Count - 1;
 
         yield return new WaitForSecondsRealtime(uiDelay);
 
-        MoveCursor(values[levelOptionsID].rectTransform);
+        RefreshLevelUI();
+        MoveCursor(previewData[levelOptionsID].gui.rectTransform);
         if (levelOptionsID == 5 || levelOptionsID == 6)
             plusMinIcon.SetActive(false); else 
         if (plusMinIcon.activeSelf == false)
@@ -181,19 +233,23 @@ public class BonfireUI : MonoBehaviour
 
     private IEnumerator OpenLevelPanel()
     {
-        levelupOptions["vitality"].text = stats.vitality.ToString();
-        levelupOptions["strength"].text = stats.strength.ToString();
-        levelupOptions["constitution"].text = stats.constitution.ToString();
-        levelupOptions["dexterity"].text = stats.dexterity.ToString();
-        levelupOptions["poise"].text = stats.poise.ToString();
+        previewLevel = stats.level+1;
+        previewExp = stats.exp;
+        previewNextLevelExp = stats.nextRequiredLevel;
 
-        health.text = stats.health.ToString();
-        damage.text = stats.damage.ToString();
-        defense.text = stats.defense.ToString();
-        speed.text = stats.speed.ToString();
-        rollspeed.text = Math.Round(stats.rollspeed, 2).ToString();
-        downtime.text = Math.Round(stats.downtime, 2).ToString();
-        knockforce.text = Math.Round(stats.knockforce, 2).ToString();
+        previewData[0].value = stats.vitality;
+        previewData[1].value = stats.strength;
+        previewData[2].value = stats.constitution;
+        previewData[3].value = stats.dexterity;
+        previewData[4].value = stats.poise;
+
+        previewData[0].baseValue = stats.vitality;
+        previewData[1].baseValue = stats.strength;
+        previewData[2].baseValue = stats.constitution;
+        previewData[3].baseValue = stats.dexterity;
+        previewData[4].baseValue = stats.poise;
+
+        RefreshLevelUI();
 
         ToggleCanvasGroup(secondPanel, true);
         plusMinIcon.SetActive(true);
@@ -201,11 +257,52 @@ public class BonfireUI : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(uiDelay);
         levelOptionsID = 0;
-        MoveCursor(levelupOptions["vitality"].rectTransform);
+        MoveCursor(previewData[0].gui.rectTransform);
+    }
+
+    private void RefreshLevelUI()
+    {
+        previewData[0].gui.text = previewData[0].value.ToString();
+        previewData[1].gui.text = previewData[1].value.ToString();
+        previewData[2].gui.text = previewData[2].value.ToString();
+        previewData[3].gui.text = previewData[3].value.ToString();
+        previewData[4].gui.text = previewData[4].value.ToString();
+
+        levelCurrent.text = stats.level.ToString();
+        levelNext.text = previewLevel.ToString();
+        expHeld.text = "Exp Held : " + previewExp.ToString();
+        expNeed.text = "Exp Needed : " + previewNextLevelExp.ToString();
+
+        /* NOTE:
+         * 0 = vit
+         * 1 = str
+         * 2 = con
+         * 3 = dex
+         * 4 = poi */
+
+        health.text = stats.previewHealth(previewData[0].value, previewData[4].value, previewData[2].value).ToString();
+        damage.text = stats.previewDamage(previewData[1].value, previewData[3].value).ToString();
+        defense.text = stats.previewDefense(previewData[2].value, previewData[4].value).ToString();
+        speed.text = stats.previewSpeed(previewData[3].value).ToString();
+        rollspeed.text = Math.Round(stats.previewRollspeed(previewData[3].value, previewData[2].value), 2).ToString();
+        downtime.text = Math.Round(stats.previewDowntime(previewData[4].value, previewData[3].value), 2).ToString();
+        knockforce.text = Math.Round(stats.previewKnockforce(previewData[4].value, previewData[0].value, previewData[3].value), 2).ToString();
     }
 
     private IEnumerator CloseLevelPanel(bool accept)
     {
+        if (accept)
+        {
+            stats.levelUp(
+                previewLevel,
+                previewData[0].value,
+                previewData[1].value,
+                previewData[2].value,
+                previewData[3].value,
+                previewData[4].value
+            );
+        }
+
         ToggleCanvasGroup(secondPanel, false);
         plusMinIcon.SetActive(false);
         levelupPanel.SetActive(false);
@@ -225,6 +322,7 @@ public class BonfireUI : MonoBehaviour
 public class StatsValue
 {
     public string tag;
-    public TextMeshProUGUI value;
+    public TextMeshProUGUI gui;
+    [HideInInspector] public int value;
+    [HideInInspector] public int baseValue;
 }
-

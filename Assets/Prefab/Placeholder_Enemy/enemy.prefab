@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4406869507528138740}
   - component: {fileID: 2686108114404224417}
+  - component: {fileID: 7612698163616758967}
   - component: {fileID: 5498789993940799135}
   - component: {fileID: 3809721585400129317}
   - component: {fileID: 5369661371608759468}
@@ -58,6 +59,18 @@ MonoBehaviour:
   groundCheck: {fileID: 5452164569174610869}
   info: {fileID: 1179540045607139229}
   drawGizmosDebug: 0
+--- !u!114 &7612698163616758967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466571554060571611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7233c35effff34c96be2ea2d6ef41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &5498789993940799135
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class EnemyData : ScriptableObject
 
     public bool checkChase = true;
     public bool checkPlayerElevation = true;
+    public int expValue = 10;
 
     public float walkRange = 5;
     public float mass = 0.5f;

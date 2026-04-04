@@ -13,6 +13,6 @@ public class PlayerAnimationTrigger : MonoBehaviour
             Vector3.zero
         );
         vfx.transform.LookAt(new Vector3(controller.Pointer.position.x, 0, controller.Pointer.position.z));
-        vfx.GetComponent<DamageComponent>().damage = controller.Stats.damage;
+        vfx.GetComponent<DamageComponent>().damage = PlayerStats.instances.damage;
     }
 }

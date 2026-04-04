@@ -47,7 +47,12 @@ public class CameraController : MonoBehaviour
 
     public void SetCameraThreshold(Vector2 min, Vector2 max)
     {
-        minCameraThreshold = new Vector2(min.x + camWidth/2, min.y + camHeight/2);
-        maxCameraThreshold = new Vector2(max.x - camWidth/2, max.y - camHeight/2);
+        minCameraThreshold = new Vector3(min.x + camWidth/2f, 0, min.y + camHeight/1.75f);
+        maxCameraThreshold = new Vector3(max.x - camWidth/2f, 0, max.y - camHeight/1.75f);
+
+        Vector3 lockedCam = new Vector3(
+                Mathf.Clamp(target.position.x, minCameraThreshold.x, maxCameraThreshold.x), 0,
+                Mathf.Clamp(target.position.z, minCameraThreshold.z, maxCameraThreshold.z));
+        this.transform.position = lockedCam;
     }
 }

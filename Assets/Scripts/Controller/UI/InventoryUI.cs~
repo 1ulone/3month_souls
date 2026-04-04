@@ -1,0 +1,266 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public enum invMode
+{
+    main,
+    key,
+    map
+}
+
+public class InventoryUI : MonoBehaviour 
+{
+    public static InventoryUI instances;
+    private InputController input;
+
+    [SerializeField] private Image[] slotUI;
+    [SerializeField] private Image[] keyslotUI;
+
+    // [SerializeField] private slotImage[] slotUI;
+    // [SerializeField] private slotImage[] keyslotUI;
+
+/*--NOTE: Inventory Slot Variable, and a 'Reset' function for main inventory data-*/
+    private slot[][] slot;
+    private void ClearMainSlot() 
+    {
+        slot = new slot[][]
+        {
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() }
+        };
+
+        int y = 0, x = 0;
+        Debug.Log(slotUI.Length);
+        Debug.Log(slot.Length);
+        Debug.Log(slot[0].Length);
+
+        for (int i = 0; i < slotUI.Length; i++)
+        {
+            // Debug.Log(((i+1) % 5 == 0) + " with the i of " + (i+1));
+            slot[x][y].image = slotUI[i];
+
+            if ((i+1) % 5 == 0) 
+                { y = 0; x++; }
+            else 
+                { y++; }
+            // Debug.Log(x + "," + y);
+        }
+    }
+
+/*--NOTE: Key Inventory Slot Variable, and a 'Reset' function for key inventory data-*/
+    private slot[][] keyslot; 
+    private void ClearKeySlot() 
+    {
+        keyslot = new slot[][]
+        {
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+            new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
+        };
+
+        // for (int x = 0; x < keyslotUI.Length; x++)
+        //     for (int y = 0; y < keyslotUI[x].image.Length; y++)
+        //         keyslot[x][y].image = keyslotUI[x].image[y];
+    }
+
+    public static bool hasKeyItem(ItemData k)
+    {
+        for (int x = 0; x < InventoryUI.instances.keyslot.Length; x++)
+        {
+            for (int y = 0; y < InventoryUI.instances.keyslot[x].Length; y++)
+            {
+                if (k == InventoryUI.instances.keyslot[x][y].item as KeyItemData)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int col, row;
+    private bool isOnInventory, isOnEnumerator;
+    private CanvasGroup mainCanvas;
+    [SerializeField] private CanvasGroup equipableCanvas;
+    [SerializeField] private CanvasGroup keyitemsCanvas;
+    [SerializeField] private CanvasGroup mapCanvas;
+    [SerializeField] private RectTransform cursor;
+    [SerializeField] private TextMeshProUGUI health;
+    [SerializeField] private TextMeshProUGUI damage;
+    [SerializeField] private TextMeshProUGUI defense;
+    [SerializeField] private TextMeshProUGUI speed;
+    [SerializeField] private TextMeshProUGUI rollspeed;
+    [SerializeField] private TextMeshProUGUI downtime;
+    [SerializeField] private TextMeshProUGUI knockforce;
+
+/* NOTE:--------------------------------------------
+ *------------------INITIALIZATION------------------
+ *--------------------------------------------------*/
+    private void Awake()
+    {
+        instances = this;
+        mainCanvas = GetComponent<CanvasGroup>();
+
+        ToggleCanvasGroup(equipableCanvas, false);
+        ToggleCanvasGroup(keyitemsCanvas, false);
+        ToggleCanvasGroup(mapCanvas, false);
+        ToggleCanvasGroup(mainCanvas, false);
+
+        ClearMainSlot();
+    }
+
+    private void Start()
+    {
+        input = FindFirstObjectByType<InputController>();
+    }
+
+    private void ToggleCanvasGroup(CanvasGroup cgt, bool b)
+    {
+        cgt.alpha = b ? 1 : 0;
+        cgt.interactable = b;
+        cgt.blocksRaycasts = b;
+    }
+
+    public void ToggleInventory()
+    {
+        if (isOnEnumerator)
+            return;
+
+        isOnInventory = !isOnInventory;
+        Time.timeScale = isOnInventory ? 0 : 1;
+        StartCoroutine(isOnInventory ? EnterInventory() : ExitInventory());
+    }
+
+    private IEnumerator EnterInventory() 
+    {
+        isOnEnumerator = true;
+        yield return new WaitForSecondsRealtime(0.15f);
+
+        col = 0; row = 0;
+        cursor.position = slot[col][row].image.transform.position;
+        ToggleCanvasGroup(mainCanvas, true);
+        ToggleCanvasGroup(equipableCanvas, true);
+        isOnEnumerator = false;
+    }
+
+    private IEnumerator ExitInventory() 
+    {
+        isOnEnumerator = true;
+        yield return new WaitForSecondsRealtime(0.15f);
+
+        ToggleCanvasGroup(equipableCanvas, false);
+        ToggleCanvasGroup(keyitemsCanvas, false);
+        ToggleCanvasGroup(mapCanvas, false);
+        ToggleCanvasGroup(mainCanvas, false);
+        isOnEnumerator = false;
+    }
+
+    private void Update()
+    {
+        if (isOnEnumerator)
+            return;
+
+        if (!isOnInventory)
+            return;
+
+        Vector2 rawdir = input.move.ReadValue<Vector2>();
+        Vector2Int dir = new Vector2Int((int)rawdir.x, (int)rawdir.y);
+
+        if (dir != Vector2.zero)
+        {
+            StartCoroutine(MoveOnEquipableItemPanel(dir));
+        }
+    }
+
+    private IEnumerator MoveOnEquipableItemPanel(Vector2Int dir)
+    {
+        isOnEnumerator = true;
+        if (dir.y != 0)
+            col -= dir.y;
+        if (dir.x != 0)
+            row += dir.x;
+
+        if (col > slot.Length-1) 
+            col = 0; 
+        if (col < 0)
+            col = slot.Length-1;
+
+        if (row > slot[col].Length-1) 
+            row = 0; 
+        if (row < 0)
+            row = slot[col].Length-1;
+
+        // Debug.Log(dir);
+        // Debug.Log(col + "," + row);
+
+        yield return new WaitForSecondsRealtime(0.15f);
+        cursor.position = slot[col][row].image.transform.position;
+        isOnEnumerator = false;
+    }
+
+    public void AddItem(ItemData data)
+    {
+        for (int x = 0; x < slot.Length; x++)
+        {
+            for (int y = 0; y < slot.Length; y++)
+            {
+                if (slot[x][y].item == null)
+                {
+                    slot[x][y].item = data;
+                    slot[x][y].image.sprite = data.icon;
+
+                    return;
+                }
+            }
+        }
+    }
+}
+
+public class slot
+{
+    public Image image;
+    public ItemData item;
+    public TextMeshProUGUI text;//for key inventory;
+}
+
+[System.Serializable]
+public class slotImage 
+{ 
+    [SerializeField] public Image[] image; 
+}
+
+[System.Serializable]
+public class SavedInventory
+{
+    public List<SavedSlot> saveDataMain = new List<SavedSlot>();
+    public List<SavedSlot> saveDataCore = new List<SavedSlot>();
+    public List<string> saveDataRoom = new List<string>();
+
+    public SavedInventory() {}
+}
+
+[System.Serializable]
+public class SavedSlot
+{
+    public string itemTag;
+    public string itemType;
+    public int index_x;
+    public int index_y;
+
+    public SavedSlot(string tag, string type, int xx, int yy)
+    {
+        itemTag = tag;
+        itemType = type;
+        index_x = xx;
+        index_y = yy;
+    }
+}

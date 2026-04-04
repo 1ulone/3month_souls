@@ -19,20 +19,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform targetMesh;
     [SerializeField] private Transform pointer;
     [SerializeField] private Animator anim;
-    [SerializeField] private PlayerUI ui;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask dodgeWindow;
     [SerializeField] private LayerMask interactLayer;
+    [SerializeField] public LayerMask roomBoundLayer;
 
     public Transform Pointer { get { return pointer; } }
-    public PlayerStats Stats { get { return stats; } }
+    public Transform ActualMesh { get { return targetMesh; } }
     
     private CharacterController controller;
     private InputController input;
-    private PlayerStats stats;
     private HitflashComponent hitflash;
     private KnockbackComponent knockback;
     private IInteractable interactable;
+    private PlayerStats stats;
 
     private string state;
     private float startTime;
@@ -51,16 +51,13 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         input = GetComponent<InputController>();
-        stats = GetComponent<PlayerStats>();
         hitflash = GetComponent<HitflashComponent>();
         knockback = GetComponent<KnockbackComponent>();
 
         defaultLayer = LayerMask.NameToLayer("Player");
         invincible = LayerMask.NameToLayer("Invincible");
 
-        health = maxHealth;
-        ui.UpdateHealthUI(health, maxHealth);
-        
+
         state = "";
 
         canRoll = true;
@@ -70,8 +67,39 @@ public class PlayerController : MonoBehaviour
         ChangeAnim("idle");
     }
 
+    private void Start()
+    {
+        stats = PlayerStats.instances;
+        health = stats.health;
+
+        PlayerUI.instances.UpdateHealthUI(health, stats.health);
+        PlayerUI.instances.UpdateExpUI(stats.exp);
+
+        Invoke("InitializeCamera", 1.0f);
+    }
+
+    private void InitializeCamera()
+    {
+        Collider[] checkBounding = Physics.OverlapBox(transform.position, Vector3.one, Quaternion.identity, roomBoundLayer);
+        if (checkBounding.Length > 0)
+        {
+            if (checkBounding[0].TryGetComponent<RoomTriggerComponent>(out RoomTriggerComponent rtc))
+                rtc.TriggerBoundingBox();
+        }
+    }
+
     private void Update()
     {
+        if (FadeTransitionUI.isTransitioning)
+        {
+            dir = Vector2.zero;
+            ChangeAnim("idle");
+            return;
+        }
+
+        if (input.inventory.WasPressedThisFrame())
+            InventoryUI.instances.ToggleInventory();
+
         if (!canBeHurt)
         {
             dir = Vector2.zero;
@@ -82,8 +110,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0 || !controller.enabled)
+        {
+            ChangeAnim("idle");
             return;
+        }
         
         if (interactable != null && input.interact.WasPressedThisFrame())
         {
@@ -124,7 +155,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Time.timeScale == 0)
+        if (FadeTransitionUI.isTransitioning)
+            return;
+
+        if (Time.timeScale == 0 || !controller.enabled)
             return;
 
         if (state == "roll")
@@ -212,7 +246,7 @@ public class PlayerController : MonoBehaviour
         canBeHurt = false;
 
         CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
-        ui.UpdateHealthUI(health, maxHealth);
+        PlayerUI.instances.UpdateHealthUI(health, maxHealth);
 
         // EFFECTS
         StartCoroutine(hitflash.FlashesCoroutine());
@@ -240,6 +274,12 @@ public class PlayerController : MonoBehaviour
 
         if (((1<<other.gameObject.layer) & interactLayer) != 0)
         {
+            if (other.gameObject.TryGetComponent<InteractDoor>(out InteractDoor d))
+                d.EnterTransition(this, controller, input);
+
+            if (other.gameObject.TryGetComponent<InteractItem>(out InteractItem i))
+                i.Interact();
+
             if (other.gameObject.TryGetComponent<IInteractable>(out IInteractable it))
                 interactable = it;
         }

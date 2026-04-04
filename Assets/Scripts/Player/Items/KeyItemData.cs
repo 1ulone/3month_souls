@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class KeyItemData : MonoBehaviour
+[CreateAssetMenu(fileName="new Key Item", menuName = "Assets/Data/KeyItem")]
+public class KeyItemData : ItemData 
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Sprite mainDisplay;
+    public override itemType getType() { return itemType.keyItem; }
 }

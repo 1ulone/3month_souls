@@ -84,7 +84,7 @@ Material:
         a: 0}
     - Color_f80f35f483824d26a852f2ee81312a1a: {r: 0.3160377, g: 0.7127229, b: 1, a: 0}
     - Vector2_55edcb19ba1d459dbb3c027e66abbc1e: {r: 3, g: 3, b: 0, a: 0}
-    - Vector2_e97cb9b7b5564bc9857e7669e2d0b82f: {r: 64, g: 64, b: 0, a: 0}
+    - Vector2_e97cb9b7b5564bc9857e7669e2d0b82f: {r: 128, g: 128, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5108479651417733561
