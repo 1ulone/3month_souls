@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ac400f832f6e3fda637d1ca1c40415, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  tag: Sword Test
+  tag: Short Sword
   icon: {fileID: 2051920306, guid: 0559904015c425943a5663314891630c, type: 3}
-  description: Big Sword
-  vitalityBuff: 1
-  strengthBuff: 3
+  description: Short Crappy Sword
+  vitalityBuff: 0
+  strengthBuff: 1
   constitutionBuff: 0
   dexterityBuff: 0
   poiseBuff: -1

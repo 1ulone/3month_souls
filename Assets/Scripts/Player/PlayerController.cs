@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using CameraShake;
+using Unity.Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 10;
-    [SerializeField] private float movementSpeed = 7;
     [SerializeField] private float rotationSpeed = 5;
     [SerializeField] private float crossFadeTime = 1.25f;
     [SerializeField] private float dashTime = 1f;
@@ -13,11 +12,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashCooldown = 1.5f;
     [SerializeField] private float attackTime = 1f;
     [SerializeField] private float attackCooldown = 1.5f;
-    [SerializeField] private float hurtCooldown = 2f;
     [SerializeField] private float mass = 0.3f;
-    [SerializeField] private float force = 3f;
     [SerializeField] private Transform targetMesh;
     [SerializeField] private Transform pointer;
+    [SerializeField] private Transform holdPoint;
+    [SerializeField] private GameObject interactGUI;
     [SerializeField] private Animator anim;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask dodgeWindow;
@@ -32,7 +31,9 @@ public class PlayerController : MonoBehaviour
     private HitflashComponent hitflash;
     private KnockbackComponent knockback;
     private IInteractable interactable;
+    private InteractHoldable holdedObject;
     private PlayerStats stats;
+    private CinemachineImpulseSource shakeSource;
 
     private string state;
     private float startTime;
@@ -53,10 +54,11 @@ public class PlayerController : MonoBehaviour
         input = GetComponent<InputController>();
         hitflash = GetComponent<HitflashComponent>();
         knockback = GetComponent<KnockbackComponent>();
+        shakeSource = GetComponent<CinemachineImpulseSource>();
 
         defaultLayer = LayerMask.NameToLayer("Player");
         invincible = LayerMask.NameToLayer("Invincible");
-
+        interactGUI.SetActive(false);
 
         state = "";
 
@@ -104,7 +106,7 @@ public class PlayerController : MonoBehaviour
         {
             dir = Vector2.zero;
             ChangeAnim("idle"); // TODO: change to hurt later
-            if (startTime + stats.downtime < Time.time)
+            if (startTime + stats.downtime/2 < Time.time)
                 EndHurt();
 
             return;
@@ -118,8 +120,17 @@ public class PlayerController : MonoBehaviour
         
         if (interactable != null && input.interact.WasPressedThisFrame())
         {
-            interactable.Interact();
+            interactable.Interact(this.transform);
             interactable = null;
+            interactGUI.SetActive(false);
+        }
+    
+        if (holdedObject != null && input.sling.WasPressedThisFrame())
+        {
+            holdedObject.Sling(pointer.transform.position - transform.position);
+            holdedObject.damageComponent.enabled = true;
+            holdedObject.realTransform.parent = null;
+            holdedObject = null;
         }
 
         dir = input.move.ReadValue<Vector2>();
@@ -163,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
         if (state == "roll")
         {
-            controller.Move(rollingDir.normalized * (dashSpeed + stats.rollspeed) * Time.fixedUnscaledDeltaTime);
+            controller.Move(new Vector3(rollingDir.normalized.x, -98.1f * Time.deltaTime, rollingDir.normalized.z) * (dashSpeed + stats.rollspeed) * Time.fixedUnscaledDeltaTime);
             return; 
         }
 
@@ -171,6 +182,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 move = transform.right * dir.x + transform.forward * dir.y;
+        move.y = -98.1f * Time.deltaTime;
         controller.Move(move * stats.speed * Time.fixedUnscaledDeltaTime);
     }
 
@@ -245,7 +257,7 @@ public class PlayerController : MonoBehaviour
         health -= Mathf.Abs(damage - stats.defense);
         canBeHurt = false;
 
-        CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
+        shakeSource.GenerateImpulse();
         PlayerUI.instances.UpdateHealthUI(health, maxHealth);
 
         // EFFECTS
@@ -261,31 +273,101 @@ public class PlayerController : MonoBehaviour
         canRoll = true;
     }
 
+    public void MoveRoom(BoxCollider boxCollider, bool isHorizontal)
+    {
+        Vector3 newPos = new Vector3(
+            isHorizontal ? (ActualMesh.forward.x > 0 ? boxCollider.bounds.max.x : boxCollider.bounds.min.x) : transform.position.x,
+            transform.position.y,
+            isHorizontal ? transform.position.z : (ActualMesh.forward.z > 0 ? boxCollider.bounds.max.z : boxCollider.bounds.min.z)
+        );
+
+        controller.enabled = false;
+        controller.Move(Vector3.zero);
+
+        transform.position = newPos + (ActualMesh.forward * 2.5f);
+        Invoke("ReenableController", 0.2f);
+        InitializeCamera();
+    }
+
+    public void ChangeHoldItem(InteractHoldable holdObject)
+    {
+        if (holdedObject != null)
+        {
+            //if already holding something
+        } else {
+
+            holdedObject = holdObject;
+            holdedObject.gameObject.layer = this.gameObject.layer;
+            holdedObject.damageComponent.damage = stats.damage/2;
+            holdedObject.damageComponent.enabled = false;
+
+            holdObject.realTransform.SetParent(holdPoint.transform);
+            holdObject.realTransform.localPosition = Vector3.zero;
+
+            holdedObject.rb.linearVelocity = Vector3.zero;
+            holdedObject.rb.useGravity = false;
+
+            holdedObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+    }
+
+    private void ReenableController()
+        { controller.enabled = true; controller.Move(Vector3.zero); }
+
     private void OnTriggerEnter(Collider other)
     {
         if (((1<<other.gameObject.layer) & enemyLayer) != 0)
         {
             if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
             {
+                if (d.damage == 0)
+                    return;
+
                 knockback.StartKnock(transform.position - other.transform.position, mass, stats.knockforce);
-                GetHurt(d.damage);
+                if (d.destroyOnEnd)
+                    Pool.instances.DestroyObject(d.gameObject);
+                if (holdedObject != null && holdedObject.canBeShield)
+                {
+                    holdedObject.health -= d.damage;
+                    if (holdedObject.health <= 0)
+                    {
+                        Debug.Log("hi");
+                        GameObject hb = holdedObject.realTransform.gameObject;
+                        holdedObject = null;
+                        Pool.instances.DestroyObject(hb);
+                    }
+                } else {
+                    GetHurt(d.damage);
+                }
             }
         }
 
         if (((1<<other.gameObject.layer) & interactLayer) != 0)
         {
             if (other.gameObject.TryGetComponent<InteractDoor>(out InteractDoor d))
-                d.EnterTransition(this, controller, input);
+                d.EnterTransition();
 
             if (other.gameObject.TryGetComponent<InteractItem>(out InteractItem i))
                 i.Interact();
 
             if (other.gameObject.TryGetComponent<IInteractable>(out IInteractable it))
+            {
+                interactGUI.SetActive(true);
                 interactable = it;
+            }
         }
 
         if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
             onPDodge = true;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit other) 
+    {
+        if (((1<<other.gameObject.layer) & interactLayer) != 0)
+        {
+            if (other.gameObject.TryGetComponent<InteractDoor>(out InteractDoor d))
+                d.EnterTransition();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -293,7 +375,19 @@ public class PlayerController : MonoBehaviour
         if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
             onPDodge = false;
 
-        if ((((1<<other.gameObject.layer) & interactLayer) != 0) && interactable != null)
-            interactable = null;
+        if (((1<<other.gameObject.layer) & interactLayer) != 0)
+        {
+            if (interactable != null)
+            {
+                interactable = null;
+                interactGUI.SetActive(false);
+            }
+
+            if (other.gameObject.TryGetComponent<InteractDoor>(out InteractDoor id))
+            {
+                if (id.forChangingFloor)
+                    InitializeCamera();
+            }
+        }
     }
 }

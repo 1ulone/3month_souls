@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e01410cff3777c86a46dc91281468fa, type: 3}
   m_Name: Charm
   m_EditorClassIdentifier: 
-  tag: Charm Test
-  icon: {fileID: -120321375, guid: 0559904015c425943a5663314891630c, type: 3}
+  tag: Lucky Charm
+  icon: {fileID: -227302848, guid: 0559904015c425943a5663314891630c, type: 3}
   description: charm type shi
   vitalityBuff: 5
   strengthBuff: 0

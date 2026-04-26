@@ -291,8 +291,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 1
+      scalar: 0.1
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -984,7 +984,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 100
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -3746,7 +3746,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.25
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3799,7 +3799,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.35
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4948,11 +4948,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81a5c75c78d6364ea8c1a6f121e3a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paintColor: {r: 0.5943396, g: 0, b: 0, a: 1}
-  minRadius: 1
-  maxRadius: 1.5
-  strength: 1
-  hardness: 0
+  paintColor: {r: 0.4056604, g: 0.08610717, b: 0.08610717, a: 1}
+  minRadius: 0.1
+  maxRadius: 1
+  strength: 0.2
+  hardness: 0.1
 --- !u!73398921 &6374089812809483213
 VFXRenderer:
   serializedVersion: 1

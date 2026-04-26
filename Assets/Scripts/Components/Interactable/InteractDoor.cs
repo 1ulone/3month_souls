@@ -3,44 +3,31 @@ using UnityEngine;
 public class InteractDoor : MonoBehaviour
 {
     [SerializeField] private bool isHorizontal;
+    [SerializeField] private KeyItemData keyNeeded; 
+    [SerializeField] public bool forChangingFloor;
     private BoxCollider boxCollider;
+    private CutsceneDirector director;
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
+        if (keyNeeded != null)
+            boxCollider.isTrigger = false;
+        else 
+            boxCollider.isTrigger = true;
+
+        director = GetComponent<CutsceneDirector>();
+        director.setCustomAction(1, ()=> FindFirstObjectByType<PlayerController>().MoveRoom(boxCollider, isHorizontal));
     }
 
-    public void EnterTransition(PlayerController con, CharacterController rb, InputController input)
+    public void EnterTransition()
     {
-        FadeTransitionUI.instances.StartTransition(
-            ()=> {
-                rb.Move(Vector3.zero);
-                input.DisableInput();
+        if (forChangingFloor)
+            return;
 
-                rb.enabled = false;
-            }, 
-            ()=> {
-                Vector3 newPos = new Vector3(
-                    isHorizontal ? (con.ActualMesh.forward.x > 0 ? boxCollider.bounds.max.x : boxCollider.bounds.min.x) : con.transform.position.x,
-                    con.transform.position.y,
-                    isHorizontal ? con.transform.position.z : (con.ActualMesh.forward.z > 0 ? boxCollider.bounds.max.z : boxCollider.bounds.min.z)
-                );
+        if (!InventoryUI.hasKeyItem(keyNeeded) && keyNeeded != null)
+            return;
 
-                con.transform.position = newPos + (con.ActualMesh.forward * 2.5f);
-
-                Collider[] checkBounding = Physics.OverlapBox(con.transform.position, Vector3.one, Quaternion.identity, con.roomBoundLayer);
-                if (checkBounding.Length > 0)
-                {
-                    if (checkBounding[0].TryGetComponent<RoomTriggerComponent>(out RoomTriggerComponent rtc))
-                        rtc.TriggerBoundingBox();
-                }
-            },
-            ()=> {
-                rb.enabled = true;
-
-                rb.Move(Vector3.zero);
-                input.EnableInput();
-            }
-        );
+        StartCoroutine(director.PlayScene());
     }
 }

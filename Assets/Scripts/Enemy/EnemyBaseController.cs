@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
-using  CameraShake;
+using Unity.Cinemachine;
 
 public class EnemyBaseController : MonoBehaviour
 {
@@ -19,6 +19,7 @@ public class EnemyBaseController : MonoBehaviour
     protected Transform hurtbox;
     protected HitflashComponent hitflash;
     protected KnockbackComponent knockback;
+    protected CinemachineImpulseSource shakeSource;
 
     protected EIdleState idle;
     protected EPatrolState patrol;
@@ -51,6 +52,7 @@ public class EnemyBaseController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         hitflash = GetComponent<HitflashComponent>();
         knockback = GetComponent<KnockbackComponent>();
+        shakeSource = GetComponent<CinemachineImpulseSource>();
         data = Instantiate(data);
 
         maxHealth = data.health;
@@ -153,7 +155,13 @@ public class EnemyBaseController : MonoBehaviour
         {
             if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
             {
+                if (d.damage == 0)
+                    return;
+
                 knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force);
+                if (d.destroyOnEnd)
+                    Pool.instances.DestroyObject(d.gameObject);
+
                 GetHurt(d.damage);
             }
         }
@@ -167,9 +175,10 @@ public class EnemyBaseController : MonoBehaviour
         if (onHurt && !TimeManager.instances.onSlow)
             return;
 
-        Pool.instances.CreateObject("blood", transform.position + new Vector3(0, 0.5f, 0), new Vector3(0, -transform.rotation.eulerAngles.y, 0));
+        shakeSource.GenerateImpulse();
+        Transform blood = Pool.instances.CreateObject("blood", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero).transform;
+        blood.rotation = Quaternion.LookRotation(-transform.forward);
         Pool.instances.CreateObject("sparks", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero);
-        CameraShaker.Shake(new PerlinShake(ShakeParams.instances.HurtSShake));
         ChangeAnimation("hurt");
         onHurt = true;
         health -= damage;

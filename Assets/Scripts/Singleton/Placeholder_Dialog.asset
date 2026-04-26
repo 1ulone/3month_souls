@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4007fa6c1ce47f144bcc9f9614583e34, type: 3}
+  m_Name: Placeholder_Dialog
+  m_EditorClassIdentifier: 
+  dialogs:
+  - content: 'this is a test dialog '
+    responsesToWhatMood: 0
+    playerResponses: []
+    resetCurrentMood: 0
+    endOfDialogue: 0
+  - content: Type shit
+    responsesToWhatMood: 0
+    playerResponses: []
+    resetCurrentMood: 0
+    endOfDialogue: 0
+  - content: sumshit about drugs or somthng
+    responsesToWhatMood: 0
+    playerResponses:
+    - content: What?
+      mood: 0
+    - content: WTF r u talking about
+      mood: 2
+    resetCurrentMood: 0
+    endOfDialogue: 0
+  - content: You Got a Neutral Response
+    responsesToWhatMood: 0
+    playerResponses: []
+    resetCurrentMood: 0
+    endOfDialogue: 1
+  - content: You Got a Negative Response
+    responsesToWhatMood: 2
+    playerResponses: []
+    resetCurrentMood: 0
+    endOfDialogue: 1

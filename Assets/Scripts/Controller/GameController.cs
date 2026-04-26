@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public static int roomID;
+    public static string roomID;
 }

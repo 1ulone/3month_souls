@@ -44,7 +44,10 @@ public class Pool : MonoBehaviour
     public void DestroyObject(GameObject prefab)
     {
         if (!poolDicts.ContainsKey(prefab.name.ToLower()))
+        {
+            Destroy(prefab.gameObject);
             return;
+        }
 
         if (prefab.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
             rb.linearVelocity = Vector2.zero;

@@ -139,7 +139,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        input = FindFirstObjectByType<InputController>();
+        input = InputController.instances;
         defaultCursorSize = cursor.sizeDelta;
     }
 

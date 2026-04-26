@@ -33,7 +33,12 @@ public class BonfireUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rollspeed;
     [SerializeField] private TextMeshProUGUI downtime;
     [SerializeField] private TextMeshProUGUI knockforce;
-    // [SerializeField] private GameObject dialogPanel; 
+
+    [Header("Dialog Data")]
+    [SerializeField] private GameObject dialogPanel; 
+    [SerializeField] private DialogData placeholderDialog;
+    [SerializeField] private GameObject placeholderNPCobj;
+    [SerializeField] private GameObject placeholderPlayerGet;
 
     private int mainOptionsID, levelOptionsID;
     private int previewLevel, previewExp, previewNextLevelExp;
@@ -48,6 +53,7 @@ public class BonfireUI : MonoBehaviour
         isOnUI = false;
         mainUI = GetComponent<CanvasGroup>();
 
+        dialogPanel.SetActive(false);
         levelupPanel.SetActive(false);
         plusMinIcon.SetActive(false);
         ToggleCanvasGroup(secondPanel, false);
@@ -56,7 +62,7 @@ public class BonfireUI : MonoBehaviour
 
     private void Start()
     {
-        input = FindFirstObjectByType<InputController>();
+        input = InputController.instances;
         stats = PlayerStats.instances;
         canMove = true;
 
@@ -139,7 +145,7 @@ public class BonfireUI : MonoBehaviour
                 switch(mainOptionsID)
                 {
                     case 0 : { StartCoroutine(OpenLevelPanel()); } break;
-                    case 1 : { OpenDialoguePanel(); } break;
+                    case 1 : { OpenDialogPanel(); } break;
                     case 2 : { ToggleUI(); } break;
                     default: {} break;
                 }
@@ -312,9 +318,54 @@ public class BonfireUI : MonoBehaviour
         MoveCursor(mainOptions[mainOptionsID].rectTransform);
     }
 
-    private void OpenDialoguePanel()
+    private void OpenDialogPanel()
     {
+        //Change Camera
+        ToggleCanvasGroup(secondPanel, true);
+        dialogPanel.SetActive(true);
+        StartCoroutine(TypeOutDialog(placeholderDialog));
 
+        placeholderPlayerGet.transform.position = placeholderNPCobj.transform.position + new Vector3(-0.5f, 0, -1);
+        CameraController.instances.UpdateCameraPositionOnZeroTimeScale();
+    }
+
+    // NOTE: for dialog and shit :
+    // Position (0.8, 1.75f, -0.75f)
+    // RotationEuler (25, -45, 0)
+    private IEnumerator TypeOutDialog(DialogData data)
+    {
+        canMove = false;
+        CameraController.instances.MoveCameraOffset(new Vector3(0.8f, 1.75f, -0.75f), new Vector3(25, -45, 0));
+        
+        foreach(Dialog d in data.dialogs)
+        {
+            if (DialogBox.instances.nextMood != dialogMood.neutral && d.responsesToWhatMood != DialogBox.instances.nextMood)
+                continue;
+
+            yield return DialogBox.instances.useDialogBox(d.content, this.transform);
+            if (d.playerResponses.Length > 0)
+            {
+                yield return DialogBox.instances.openResponseBox(d.playerResponses);
+                yield return new WaitUntil(()=> DialogBox.waitForResponse == false);
+                yield return DialogBox.instances.exitResponseBox();
+            }
+            else {
+                yield return new WaitUntil(()=> input.interact.WasPressedThisFrame());
+            }
+
+            if (d.resetCurrentMood)
+                DialogBox.instances.nextMood = dialogMood.neutral;
+
+            if (d.endOfDialogue)
+                break;
+        }
+        yield return DialogBox.instances.exitDialog();
+
+        dialogPanel.SetActive(false);
+        ToggleCanvasGroup(secondPanel, false);
+        canMove = true;
+        CameraController.instances.ResetCameraPosition();
+        MoveCursor(mainOptions[0].rectTransform);
     }
 }
 

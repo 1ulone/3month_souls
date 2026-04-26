@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7276126799217878487}
   - component: {fileID: 2942229131775000232}
   - component: {fileID: 741629253115384039}
+  - component: {fileID: -2818610627978012695}
   m_Layer: 9
   m_Name: charm
   m_TagString: Untagged
@@ -122,3 +123,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 79edf54bc3953ad4eb1656ee774e2813, type: 2}
+--- !u!114 &-2818610627978012695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334280316021443589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4f7a0bc25627842857f246b97d8b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 100, z: 0}

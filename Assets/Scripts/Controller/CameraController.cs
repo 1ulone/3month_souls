@@ -10,9 +10,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 maxCameraThreshold, minCameraThreshold;
 
     public Transform target { get; private set; }
-    // private const int zValue = -10;
     private float camHeight;
     private float camWidth;
+
+    private static readonly Vector3 defaultOffset = new Vector3(0, 8, -7.5f);
+    private static readonly Vector3 defaultRotation = new Vector3(47.5f, 0, 0);
 
     private void Awake()
     {
@@ -22,7 +24,8 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         target = defaultTarget;
-
+        ResetCameraPosition();
+   
         camHeight = 2f * Camera.main.orthographicSize;
         camWidth = camHeight * Camera.main.aspect;
     }
@@ -40,7 +43,7 @@ public class CameraController : MonoBehaviour
 
         Vector3 smoothCam = Vector3.Lerp(transform.position, target.position, cameraSpeed * Time.fixedUnscaledDeltaTime);
         Vector3 lockedCam = new Vector3(
-                Mathf.Clamp(smoothCam.x, minCameraThreshold.x, maxCameraThreshold.x), 0,
+                Mathf.Clamp(smoothCam.x, minCameraThreshold.x, maxCameraThreshold.x), smoothCam.y,
                 Mathf.Clamp(smoothCam.z, minCameraThreshold.z, maxCameraThreshold.z));
         this.transform.position = lockedCam;
     }
@@ -54,5 +57,22 @@ public class CameraController : MonoBehaviour
                 Mathf.Clamp(target.position.x, minCameraThreshold.x, maxCameraThreshold.x), 0,
                 Mathf.Clamp(target.position.z, minCameraThreshold.z, maxCameraThreshold.z));
         this.transform.position = lockedCam;
+    }
+    
+    public void UpdateCameraPositionOnZeroTimeScale()
+    {
+        this.transform.position = target.position;
+    }
+
+    public void MoveCameraOffset(Vector3 offsetPos, Vector3 offsetRot)
+    {
+        Camera.main.transform.localPosition = offsetPos;
+        Camera.main.transform.eulerAngles = offsetRot;
+    }
+
+    public void ResetCameraPosition()
+    {
+        Camera.main.transform.localPosition = defaultOffset;
+        Camera.main.transform.eulerAngles = defaultRotation;
     }
 }
