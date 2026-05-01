@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Bits: 64
   hurtForEnemy:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2112
   checkChase: 1
   checkPlayerElevation: 1
   expValue: 10

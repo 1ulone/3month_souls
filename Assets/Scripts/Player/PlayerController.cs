@@ -297,7 +297,8 @@ public class PlayerController : MonoBehaviour
         } else {
 
             holdedObject = holdObject;
-            holdedObject.gameObject.layer = this.gameObject.layer;
+            holdedObject.gameObject.layer = 11;
+            holdedObject.realTransform.gameObject.layer = 11;
             holdedObject.damageComponent.damage = stats.damage/2;
             holdedObject.damageComponent.enabled = false;
 

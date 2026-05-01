@@ -44,32 +44,45 @@ public class PaintManager : Singleton<PaintManager>{
 
         paintMaterial.SetFloat(prepareUVID, 1);
         command.SetRenderTarget(uvIslands);
-        command.DrawRenderer(rend, paintMaterial, 0);
-
+        for (int i = 0; i < rend.sharedMaterials.Length; i++)
+        {
+            command.DrawRenderer(rend, paintMaterial, i);
+        }
         Graphics.ExecuteCommandBuffer(command);
         command.Clear();
     }
 
 
-    public void paint(Paintable paintable, Vector3 pos, float radius = 1f, float hardness = .5f, float strength = .5f, Color? color = null){
+    public void paint(Paintable paintable, Vector3 pos, float radius = 1f, float hardness = .5f, float strength = .5f, Color? color = null)
+    {
         RenderTexture mask = paintable.getMask();
         RenderTexture uvIslands = paintable.getUVIslands();
         RenderTexture extend = paintable.getExtend();
         RenderTexture support = paintable.getSupport();
         Renderer rend = paintable.getRenderer();
 
-        paintMaterial.SetFloat(prepareUVID, 0);
-        paintMaterial.SetVector(positionID, pos);
-        paintMaterial.SetFloat(hardnessID, hardness);
-        paintMaterial.SetFloat(strengthID, strength);
-        paintMaterial.SetFloat(radiusID, radius);
-        paintMaterial.SetTexture(textureID, support);
-        paintMaterial.SetColor(colorID, color ?? Color.red);
+        // 1. Extract the mesh to bypass camera culling
+        Mesh mesh = rend is SkinnedMeshRenderer ? 
+            ((SkinnedMeshRenderer)rend).sharedMesh : 
+            rend.GetComponent<MeshFilter>().sharedMesh;
+
+        // 2. Use a MaterialPropertyBlock to prevent data overwriting in loops
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetFloat(prepareUVID, 0);
+        block.SetVector(positionID, pos);
+        block.SetFloat(hardnessID, hardness);
+        block.SetFloat(strengthID, strength);
+        block.SetFloat(radiusID, radius);
+        block.SetTexture(textureID, support);
+        block.SetColor(colorID, color ?? Color.red);
+
         extendMaterial.SetFloat(uvOffsetID, paintable.extendsIslandOffset);
         extendMaterial.SetTexture(uvIslandsID, uvIslands);
 
         command.SetRenderTarget(mask);
-        command.DrawRenderer(rend, paintMaterial, 0);
+        
+        // 3. Draw the mesh directly using the property block
+        command.DrawMesh(mesh, rend.transform.localToWorldMatrix, paintMaterial, 0, 0, block);
 
         command.SetRenderTarget(support);
         command.Blit(mask, support);
@@ -79,6 +92,5 @@ public class PaintManager : Singleton<PaintManager>{
 
         Graphics.ExecuteCommandBuffer(command);
         command.Clear();
-        // Debug.Log("hey");
     }
 }

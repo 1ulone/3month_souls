@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Paintable : MonoBehaviour {
-    const int TEXTURE_SIZE = 1024;
+    const int TEXTURE_SIZE = 480;
 
     public float extendsIslandOffset = 1;
 
@@ -22,16 +22,16 @@ public class Paintable : MonoBehaviour {
 
     void Start() {
         maskRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        maskRenderTexture.filterMode = FilterMode.Bilinear;
+        maskRenderTexture.filterMode = FilterMode.Point; // Changed
 
         extendIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        extendIslandsRenderTexture.filterMode = FilterMode.Bilinear;
+        extendIslandsRenderTexture.filterMode = FilterMode.Point; // Changed
 
         uvIslandsRenderTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        uvIslandsRenderTexture.filterMode = FilterMode.Bilinear;
+        uvIslandsRenderTexture.filterMode = FilterMode.Point; // Changed
 
         supportTexture = new RenderTexture(TEXTURE_SIZE, TEXTURE_SIZE, 0);
-        supportTexture.filterMode =  FilterMode.Bilinear;
+        supportTexture.filterMode =  FilterMode.Point; // Changed
 
         rend = GetComponent<Renderer>();
         rend.material.SetTexture(maskTextureID, extendIslandsRenderTexture);

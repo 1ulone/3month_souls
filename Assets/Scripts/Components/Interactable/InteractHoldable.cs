@@ -32,6 +32,10 @@ public class InteractHoldable : MonoBehaviour, IInteractable
 
     public void Sling(Vector3 dir)
     {
-        bulletComponent.Move(throwSpeed, new Vector3(dir.normalized.x, 0, dir.normalized.z), ()=> { this.gameObject.layer = 9; }, 1.0f);
+        bulletComponent.Move(throwSpeed, new Vector3(dir.normalized.x, 0, dir.normalized.z), ()=> 
+        {
+            realTransform.gameObject.layer = 0;
+            this.gameObject.layer = 9;
+        }, 1.0f);
     }
 }

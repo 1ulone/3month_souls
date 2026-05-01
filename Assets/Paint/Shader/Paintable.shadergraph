@@ -599,20 +599,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "7221f6d1a9c247c7877252d52dede039"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "616087ff1cc240c0a0d848085c316e36"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "7499b43960a14a42bdb8aafd89235b59"
                 },
                 "m_SlotId": 2
@@ -7807,7 +7793,7 @@
     "m_Title": "Glitter",
     "m_Position": {
         "x": -3900.0,
-        "y": 906.9999389648438
+        "y": 907.0
     }
 }
 

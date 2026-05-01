@@ -14,7 +14,7 @@
 
             #include "UnityCG.cginc"
 
-			sampler2D _MainTex;
+            sampler2D _MainTex;
             float4 _MainTex_ST;
             
             float3 _PainterPosition;
@@ -26,7 +26,8 @@
 
             struct appdata{
                 float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
+                float2 uv : TEXCOORD0;
+                float2 uv1 : TEXCOORD1; // Second UV channel for the non-overlapping paint map
             };
 
             struct v2f{
@@ -42,11 +43,13 @@
 
             v2f vert (appdata v){
                 v2f o;
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-                o.uv = v.uv;
-				float4 uv = float4(0, 0, 0, 1);
-                uv.xy = float2(1, _ProjectionParams.x) * (v.uv.xy * float2( 2, 2) - float2(1, 1));
-				o.vertex = uv; 
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.uv = v.uv; 
+                float4 uv = float4(0, 0, 0, 1);
+                
+                // Map to the Render Texture space using the second UV channel (uv1)
+                uv.xy = float2(1, _ProjectionParams.x) * (v.uv1.xy * float2( 2, 2) - float2(1, 1));
+                o.vertex = uv; 
                 return o;
             }
 
@@ -56,6 +59,7 @@
                 }         
 
                 float4 col = tex2D(_MainTex, i.uv);
+                // Mask computation remains in world space
                 float f = mask(i.worldPos, _PainterPosition, _Radius, _Hardness);
                 float edge = f * _Strength;
                 return lerp(col, _PainterColor, edge);
