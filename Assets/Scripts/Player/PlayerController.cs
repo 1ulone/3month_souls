@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
         if (dir != Vector2.zero)
         {
             rollingDir = lookRotation;
-            targetMesh.rotation = Quaternion.LookRotation(lookRotation, Vector3.up);
+            // targetMesh.rotation = Quaternion.LookRotation(lookRotation, Vector3.up);
         }
 
         ChangeAnim("roll");
@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Attack()
     {
         canAttack = false;
-        targetMesh.LookAt(new Vector3(pointer.position.x, 0, pointer.position.z));
+        // targetMesh.LookAt(new Vector3(pointer.position.x, 0, pointer.position.z));
         ChangeAnim("attack");
 
         float timer = 0f;

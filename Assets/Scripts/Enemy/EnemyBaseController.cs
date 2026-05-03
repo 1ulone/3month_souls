@@ -15,6 +15,7 @@ public class EnemyBaseController : MonoBehaviour
 
     protected float startHurtTime;
     protected float maxHealth;
+    protected Vector3 closestPoint;
 
     protected Transform hurtbox;
     protected HitflashComponent hitflash;
@@ -35,6 +36,7 @@ public class EnemyBaseController : MonoBehaviour
     public EAttackState Attack { get { return attack; } }
     public ECooldownState Cooldown { get { return cooldown; } }
     public EDeadState Dead { get { return dead; } }
+
 
     public NavMeshAgent agent { get; protected set; }
 
@@ -162,6 +164,7 @@ public class EnemyBaseController : MonoBehaviour
                 if (d.destroyOnEnd)
                     Pool.instances.DestroyObject(d.gameObject);
 
+                closestPoint = other.ClosestPoint(transform.position);
                 GetHurt(d.damage);
             }
         }
@@ -177,7 +180,7 @@ public class EnemyBaseController : MonoBehaviour
 
         shakeSource.GenerateImpulse();
         Transform blood = Pool.instances.CreateObject("blood", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero).transform;
-        blood.rotation = Quaternion.LookRotation(-transform.forward);
+        blood.rotation = Quaternion.LookRotation((closestPoint - transform.position)*-1);
         Pool.instances.CreateObject("sparks", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero);
         ChangeAnimation("hurt");
         onHurt = true;
