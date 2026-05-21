@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e724efc3802e3752bd082d59f4f0c6c, type: 3}
   m_Name: placeholder_data
   m_EditorClassIdentifier: 
-  health: 10
+  health: 50
   damage: 2
   movementSpeed: 4
   chaseSpeed: 5

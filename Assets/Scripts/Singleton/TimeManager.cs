@@ -12,6 +12,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private VolumeProfile slowVolume;
 
     private float hitstopTime;
+    private Coroutine currentCoroutine; 
     public bool onSlow { get; private set; }
 
     private void Awake()
@@ -26,7 +27,15 @@ public class TimeManager : MonoBehaviour
             return;
 
         hitstopTime = waittime;
-        StartCoroutine(HitStopCoroutine());
+        StartCoroutine(QueueHitStop());
+    }
+
+    private IEnumerator QueueHitStop()
+    {
+        if (currentCoroutine != null)
+            yield return new WaitUntil(()=> currentCoroutine == null);
+
+        currentCoroutine = StartCoroutine(HitStopCoroutine());
     }
 
     public void SlowTime()
@@ -44,6 +53,7 @@ public class TimeManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(hitstopTime);
 
         Time.timeScale = 1;
+        currentCoroutine = null;
     }
 
     private IEnumerator SlowTimeCoroutine()

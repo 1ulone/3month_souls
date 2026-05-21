@@ -4,52 +4,84 @@ using UnityEngine.AI;
 public class KnockbackComponent : MonoBehaviour
 {
     private Vector3 impact;
-    private Vector3 impactDir;
     private CharacterController controller;
     private NavMeshAgent agent;
     private Rigidbody rb;
 
-    private void Awake() 
+    public Vector3 word { get { return impact; }}
+
+    private float oSpeed, oAcc;
+    private bool stopKnock;
+
+    private void Start() 
     {
-        if (TryGetComponent<CharacterController>(out CharacterController c))
-            controller = c;
-        if (TryGetComponent<NavMeshAgent>(out NavMeshAgent a))
-            agent = a;
-        if (TryGetComponent<Rigidbody>(out Rigidbody r))
-            rb = r;
+        TryGetComponent(out controller);
+        TryGetComponent(out agent);
+        if (agent == null)
+            TryGetComponent(out rb);
     }
 
     public void StartKnock(Vector3 dir, float mass, float force)
     {
-        impactDir = dir;
-        impactDir.Normalize();
-        if (impact.y < 0) 
-            impact.y = -impact.y;
-        impact += impactDir.normalized * force / mass;
+        stopKnock = false;
+        dir.Normalize();
+        if (dir.y < 0) 
+            dir.y = -dir.y;
+
+        Vector3 aforce = dir.normalized * (force / mass);
+
+        if (rb != null)
+            rb.AddForce(aforce, ForceMode.Impulse);
+        else 
+            impact += aforce;
+
+        if (agent != null)
+            agent.updateRotation = false;
+    }
+
+    public void ForceStopKnock()
+    {
+        impact = Vector3.zero;
+        stopKnock = true;
+        
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        if (agent != null)
+        {
+            agent.updateRotation = true;
+            if (agent.isOnNavMesh)
+            {
+                agent.isStopped = true;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        if (rb != null)
-        {
-            if (impact.magnitude > 0.3) 
-                rb.AddForce(impact * Time.deltaTime, ForceMode.Impulse);
+        if (stopKnock)
+            return;
 
-            impact = Vector3.Lerp(impact, Vector3.zero, 20*Time.deltaTime);
-        } 
-        else 
+        if (rb != null)
+            return;
+
+        if (impact.magnitude > 0.2) 
         {
             if (controller != null)
-            {
-                if (impact.magnitude > 0.2) 
-                    controller.Move(impact * Time.deltaTime);
-            } else 
+                controller.Move(impact * Time.deltaTime);
+            else if (agent != null)
+                agent.Move(impact * Time.deltaTime);
+
+            impact = Vector3.MoveTowards(impact, Vector3.zero, 5*Time.deltaTime);
+        } else 
+        if (impact != Vector3.zero) 
+        {
+            impact = Vector3.zero;
             if (agent != null)
-            {
-                if (impact.magnitude > 0.2) 
-                    agent.Move(impact * Time.deltaTime);
-            }  
-            impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
+                agent.updateRotation = true;
         }
     }
 }

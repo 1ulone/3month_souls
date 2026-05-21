@@ -10,6 +10,7 @@ public class EnemyBaseController : MonoBehaviour
     [SerializeField] public Transform groundCheck;
     [SerializeField] protected TextMeshPro info;
     [SerializeField] protected bool drawGizmosDebug = false;
+    [SerializeField] public GameObject attackObject; 
 
     protected const float hurtTime = 1f;
 
@@ -39,12 +40,14 @@ public class EnemyBaseController : MonoBehaviour
 
 
     public NavMeshAgent agent { get; protected set; }
+    public EnemyData Data { get { return data; } }
 
     public int animState { get; protected set; }
     public int prevAnimState { get; protected set; }
     public int FacingDirection { get; protected set; }
     public float health { get; protected set; }
     public bool onEndAttack { get; set; }
+    public bool canBeHurt { get; set; }
 
     public bool onHurt { get; protected set; }
     // public bool canGetHurt { get; set; }
@@ -138,17 +141,36 @@ public class EnemyBaseController : MonoBehaviour
 
     public void ChangeVelocity(Vector3 v)
     {
+        if (onHurt)
+            return;
+
         if (health <= 0)
             return;
 
+        knockback.ForceStopKnock();
         if (v == Vector3.zero)
+        {
             agent.ResetPath();
-        agent.velocity = v;
+            agent.velocity = Vector3.zero;
+        }
+        else
+        {
+            if (agent.isStopped)
+                agent.isStopped = false;
+            agent.velocity = v;
+        }
     }
 
     public void ChangeFacingDirection(Vector3 target)
     {
-        transform.LookAt(target);
+        if (onHurt)
+            return;
+
+        Vector3 dir = target - transform.position;
+        dir.y = 0;
+
+        if (dir != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(dir);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -160,7 +182,9 @@ public class EnemyBaseController : MonoBehaviour
                 if (d.damage == 0)
                     return;
 
-                knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force);
+                knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force/4);
+                TimeManager.instances.HitStop(0.075f);
+
                 if (d.destroyOnEnd)
                     Pool.instances.DestroyObject(d.gameObject);
 
@@ -170,10 +194,10 @@ public class EnemyBaseController : MonoBehaviour
         }
     }
 
-    public void GetHurt(int damage)
+    public void GetHurt(int damage, bool bypass = false)
     {
-        // if (!canGetHurt)
-        //     return;
+        if (!canBeHurt && !bypass)
+            return;
 
         if (onHurt && !TimeManager.instances.onSlow)
             return;
@@ -188,12 +212,14 @@ public class EnemyBaseController : MonoBehaviour
         startHurtTime = Time.time;
 
         StartCoroutine(hitflash.FlashesCoroutine());
-        TimeManager.instances.HitStop(0.075f);
     }
 
     public virtual void AttackEvent() 
     {
-        Transform vfx = Pool.instances.CreateObject("enemyAttack",transform.position + new Vector3(0, 0.5f, 0) + (transform.forward.normalized), Vector3.zero).transform;
+        // Transform vfx = Pool.instances.CreateObject("enemyAttack",transform.position + new Vector3(0, 0.5f, 0) + (transform.forward.normalized), Vector3.zero).transform;
+        attackObject.SetActive(true);
+        Transform vfx = attackObject.transform;
+        vfx.position = transform.position + new Vector3(0, 0.5f, 0) + transform.forward.normalized;
         vfx.LookAt(transform.forward);
         vfx.GetComponent<DamageComponent>().damage = data.damage;
     }

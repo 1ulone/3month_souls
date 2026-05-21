@@ -19,12 +19,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject interactGUI;
     [SerializeField] private Animator anim;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private LayerMask dodgeWindow;
+    [SerializeField] private LayerMask parryWindow;
     [SerializeField] private LayerMask interactLayer;
     [SerializeField] public LayerMask roomBoundLayer;
 
     public Transform Pointer { get { return pointer; } }
     public Transform ActualMesh { get { return targetMesh; } }
+    public bool canBeHurt { get; set; }
     
     private CharacterController controller;
     private InputController input;
@@ -37,8 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private string state;
     private float startTime;
-    private bool canRoll, canAttack, canBeHurt;
-    private bool onPDodge;
+    private bool canRoll, canAttack;
     private int health;
 
     private Coroutine currentCoroutine;
@@ -196,17 +196,17 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Roll()
     {
         canRoll = false;
-        if (onPDodge)
-            TimeManager.instances.SlowTime();
-
-        onPDodge = false;
+        // if (onPDodge)
+        //     TimeManager.instances.SlowTime();
+        //
+        // onPDodge = false;
         this.gameObject.layer = invincible;
 
         rollingDir = targetMesh.forward;
         if (dir != Vector2.zero)
         {
             rollingDir = lookRotation;
-            // targetMesh.rotation = Quaternion.LookRotation(lookRotation, Vector3.up);
+            targetMesh.rotation = Quaternion.LookRotation(lookRotation, Vector3.up);
         }
 
         ChangeAnim("roll");
@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Attack()
     {
         canAttack = false;
-        // targetMesh.LookAt(new Vector3(pointer.position.x, 0, pointer.position.z));
+        targetMesh.LookAt(new Vector3(pointer.position.x, 0, pointer.position.z));
         ChangeAnim("attack");
 
         float timer = 0f;
@@ -250,6 +250,9 @@ public class PlayerController : MonoBehaviour
 
     private void GetHurt(int damage)
     {
+        if (!canBeHurt)
+            return;
+
         if (state == "roll")
             return;
 
@@ -281,8 +284,8 @@ public class PlayerController : MonoBehaviour
             isHorizontal ? transform.position.z : (ActualMesh.forward.z > 0 ? boxCollider.bounds.max.z : boxCollider.bounds.min.z)
         );
 
-        controller.enabled = false;
         controller.Move(Vector3.zero);
+        controller.enabled = false;
 
         transform.position = newPos + (ActualMesh.forward * 2.5f);
         Invoke("ReenableController", 0.2f);
@@ -324,7 +327,7 @@ public class PlayerController : MonoBehaviour
                 if (d.damage == 0)
                     return;
 
-                knockback.StartKnock(transform.position - other.transform.position, mass, stats.knockforce);
+                knockback.StartKnock(transform.position - other.transform.position, mass, stats.knockforce/4);
                 if (d.destroyOnEnd)
                     Pool.instances.DestroyObject(d.gameObject);
                 if (holdedObject != null && holdedObject.canBeShield)
@@ -358,8 +361,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
-            onPDodge = true;
+        // if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
+        //     onPDodge = true;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit other) 
@@ -373,8 +376,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
-            onPDodge = false;
+        // if (((1<<other.gameObject.layer) & dodgeWindow) != 0)
+        //     onPDodge = false;
 
         if (((1<<other.gameObject.layer) & interactLayer) != 0)
         {

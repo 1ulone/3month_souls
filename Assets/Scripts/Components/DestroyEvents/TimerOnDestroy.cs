@@ -3,6 +3,7 @@ using UnityEngine;
 public class TimerOnDestroy : MonoBehaviour
 {
     [SerializeField] private float timeToDeath = 5f;
+    [SerializeField] private bool usePool = true;
     private float startTime;
 
     private void OnEnable()
@@ -13,7 +14,12 @@ public class TimerOnDestroy : MonoBehaviour
     private void Update()
     {
         if (Time.time >= startTime + timeToDeath)
-            Pool.instances.DestroyObject(this.gameObject);
+        {
+            if (usePool)
+                Pool.instances.DestroyObject(this.gameObject);
+            else 
+                this.gameObject.SetActive(false);
+        }
     }
 }
 

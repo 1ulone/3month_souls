@@ -1,12 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class FadeTransitionUI : MonoBehaviour
 {
     public static FadeTransitionUI instances;
     public static bool isTransitioning;
+
     private CanvasGroup fadeGroup;
+    private Image imageComponent; 
 
     private void Awake()
         => instances = this;
@@ -14,20 +17,25 @@ public class FadeTransitionUI : MonoBehaviour
     private void Start()
     {
         fadeGroup = GetComponent<CanvasGroup>(); 
+        imageComponent = GetComponent<Image>();
         isTransitioning = false;
     }
 
     // public void StartTransition(Action startEvt = null, Action processEvt = null, Action endEvt = null)
     //     => StartCoroutine(FadeTransition(startEvt, processEvt, endEvt));
 
-    public IEnumerator FadeInOut(bool isFadeIn)
+    public IEnumerator FadeInOut(bool isFadeIn, bool blackFade = true, float time = 0.5f, bool onStartSet = false)
     {
         bool fadeOnEnd = false;
+        Color color = blackFade ? Color.black : Color.white;
 
-        LeanTween.alphaCanvas(fadeGroup, isFadeIn ? 1 : 0, 0.5f).setEaseInCirc().setIgnoreTimeScale(true).setOnComplete(()=> { fadeOnEnd = true; });
+        if (onStartSet)
+            fadeGroup.alpha = isFadeIn ? 0 : 1;
+
+        imageComponent.color = color;
+        LeanTween.alphaCanvas(fadeGroup, isFadeIn ? 1 : 0, time).setEaseInCirc().setIgnoreTimeScale(true).setOnComplete(()=> { fadeOnEnd = true; });
         yield return new WaitUntil(()=> fadeOnEnd == true);
     }
-
 
     //
     // private IEnumerator FadeTransition(Action startEvt, Action processEvt, Action endEvt)

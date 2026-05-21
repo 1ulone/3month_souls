@@ -30,6 +30,6 @@ public class EChaseState : EBaseState
     public override void FixedLogic()
     {
         if (detectedPlayer != null)
-            e.agent.SetDestination(detectedPlayer.position);
+            e.agent.SetDestination(new Vector3(detectedPlayer.position.x, e.transform.position.y, detectedPlayer.position.z));
     }
 }

@@ -22,7 +22,11 @@ public class EBaseState
             e.ChangeState(e.Dead);
     }
 
-    public virtual void FixedLogic() {}
+    public virtual void FixedLogic() 
+    {
+        if (e.onHurt)
+            return;
+    }
 
     public virtual void PhysicsLogic() 
     {

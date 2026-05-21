@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6082296148751920590}
   - component: {fileID: -6308212748837013342}
   - component: {fileID: -3694729470660426718}
+  - component: {fileID: 4796719536184459893}
   m_Layer: 6
   m_Name: Slash
   m_TagString: Untagged
@@ -59,7 +60,10 @@ VisualEffect:
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0, y: 20.133276, z: 23.96863, w: 1}
+        m_Name: Color
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -130,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDeath: 0.35
+  usePool: 0
 --- !u!114 &-6308212748837013342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,5 +167,21 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4796719536184459893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902336270621484884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4048e7bca030ce890b84e07437c635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  parryWindow:
+    serializedVersion: 2
+    m_Bits: 256
