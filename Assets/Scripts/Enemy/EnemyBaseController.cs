@@ -201,7 +201,6 @@ public class EnemyBaseController : MonoBehaviour
         if (onHurt && !TimeManager.instances.onSlow)
             return;
 
-        Debug.Log("?");
         shakeSource.GenerateImpulse();
         Transform blood = Pool.instances.CreateObject("blood", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero).transform;
         blood.rotation = Quaternion.LookRotation((closestPoint - transform.position)*-1);

@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private string state;
     private float startTime;
+    private float vintake;
     private bool canRoll, canAttack;
     private int health;
 
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
         canRoll = true;
         canAttack = true;
         canBeHurt = true;
+        vintake = 0;
 
         ChangeAnim("idle");
     }
@@ -132,6 +134,21 @@ public class PlayerController : MonoBehaviour
             holdedObject.realTransform.parent = null;
             holdedObject = null;
         }
+
+        if (input.heal.IsInProgress() && holdedObject == null && PlayerStats.instances.currentVessel > 1.0f && health < stats.health)
+        {
+            if (vintake >= 1.0f)
+            {
+                vintake = 0.4f;
+                PlayerStats.instances.ControlVessel(-1);
+
+                health += 1;
+                PlayerUI.instances.UpdateHealthUI(health, stats.health);
+            } else { vintake += 1 - Mathf.Sqrt(1-Mathf.Pow(Time.deltaTime*17.5f, 2)); } 
+        }
+
+        if (input.heal.WasReleasedThisFrame())
+            vintake = 0;
 
         dir = input.move.ReadValue<Vector2>();
         lookRotation = new Vector3(dir.x, 0, dir.y);
@@ -257,8 +274,13 @@ public class PlayerController : MonoBehaviour
             return;
 
         startTime = Time.time;
-        health -= Mathf.Abs(damage - stats.defense);
+        int tdamage = stats.defense - damage > 0 ? 0 : stats.defense - damage;
+        health -= Mathf.Abs(tdamage);
+        Debug.Log(tdamage);
         canBeHurt = false;
+
+        if (health <= 0)
+            health = 0;
 
         shakeSource.GenerateImpulse();
         PlayerUI.instances.UpdateHealthUI(health, maxHealth);

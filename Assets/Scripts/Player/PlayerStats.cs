@@ -4,6 +4,10 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats instances;    
+    
+    // HACK: ADDITION FOR SUNDERBLOOD
+    public int maxVessel { get; private set; }
+    public float currentVessel { get; set; }
 
     //Player Default Weapon (fist)
     [SerializeField] public WeaponItemData defaultWeapon;
@@ -53,6 +57,7 @@ public class PlayerStats : MonoBehaviour
     {
         instances = this;
         level = 1;
+        maxVessel = 10;
         exp = startExp;
 
         currentVitality = startVitality;
@@ -82,6 +87,22 @@ public class PlayerStats : MonoBehaviour
         //     "DT  : " + downtime + "\n" + 
         //     "KB  : " + knockforce + "\n" 
         // );
+    }
+
+    private void Start()
+        => ControlVessel(0);
+    
+    // HACK: ADDITION FOR SUNDERBLOOD
+    public void ControlVessel(float v)
+    {
+        if (v < 0 && currentVessel <= 0)
+            return; 
+
+        if (currentVessel > maxVessel)
+            currentVessel = maxVessel;
+        
+        currentVessel += v;
+        PlayerUI.instances.UpdateVesselUI(currentVessel, maxVessel);
     }
 
     public void AddExperiences(int e)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: placeholder_data
   m_EditorClassIdentifier: 
   health: 10
-  damage: 2
+  damage: 6
   movementSpeed: 4
   chaseSpeed: 0
   idleLength: 5
@@ -36,6 +36,8 @@ MonoBehaviour:
   checkChase: 1
   checkPlayerElevation: 1
   expValue: 10
+  bloodCountMin: 0.2
+  bloodCountMax: 1.5
   walkRange: 5
   mass: 0.3
   force: 6

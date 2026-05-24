@@ -8,6 +8,7 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI info;
     [SerializeField] private Image healthUI;
+    [SerializeField] private Image vesselUI;
     [SerializeField] private TextMeshProUGUI expUI;
 
     private void Awake()
@@ -19,6 +20,11 @@ public class PlayerUI : MonoBehaviour
     {
         healthUI.fillAmount = (float)health / (float)maxHealth;
         info.text = health + "/" + maxHealth;
+    }
+
+    public void UpdateVesselUI(float vessel, int maxVessel)
+    {
+        vesselUI.fillAmount = (float)vessel / (float)maxVessel;
     }
 
     public void UpdateExpUI(int exp)

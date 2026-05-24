@@ -23,6 +23,8 @@ public class EnemyData : ScriptableObject
     public bool checkChase = true;
     public bool checkPlayerElevation = true;
     public int expValue = 10;
+    public float bloodCountMin = 0.2f;
+    public float bloodCountMax = 1.5f;
 
     public float walkRange = 5;
     public float mass = 0.5f;

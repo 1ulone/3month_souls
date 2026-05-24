@@ -12,7 +12,7 @@ public class DamageComponent : MonoBehaviour
 
     private void Awake()
     {
-        damage = 1;
+        damage = 5;
         TryGetComponent(out projectile);
         if (projectile != null)
             parryAble = true;
