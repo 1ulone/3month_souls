@@ -4,12 +4,10 @@ public class EnemyAnimationTrigger : MonoBehaviour
 {
     [SerializeField] protected EnemyBaseController e; 
     [SerializeField] protected GameObject parryHint;
-    [SerializeField] private GameObject dodgeWindow; 
 
     private void Awake()
     {
         parryHint.SetActive(false);
-        dodgeWindow.SetActive(false);
     }
 
     public void TriggerHitbox()
@@ -22,23 +20,21 @@ public class EnemyAnimationTrigger : MonoBehaviour
         e.onEndAttack = true;
     }
 
-    public void CreateDodgeWindow()
+    public void CreateParryWindow()
     {
-        // dodgeWindow = Pool.instances.CreateObject("dodgeWindow", transform.position + new Vector3(0, 0.5f, 0) + (e.transform.forward.normalized), Vector3.zero);
-        dodgeWindow.SetActive(true);
-        dodgeWindow.transform.position = transform.position + new Vector3(0, 0.5f, 0) + e.transform.forward.normalized;
-        // parryHint.SetActive(true);
+        if (e.hitbox == null)
+            return;
+
+        e.hitbox.parryAble = true; 
         e.canBeHurt = false;
     }
 
-    public void DeleteDodgeWindow()
+    public void DeleteParryWindow()
     {
-        if (dodgeWindow == null)
+        if (e.hitbox == null)
             return;
 
+        e.hitbox.parryAble = false; 
         e.canBeHurt = true;
-        parryHint.SetActive(false);
-        dodgeWindow.SetActive(false);
-        // Pool.instances.DestroyObject(dodgeWindow);
     }
 }

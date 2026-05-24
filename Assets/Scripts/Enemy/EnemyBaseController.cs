@@ -10,7 +10,6 @@ public class EnemyBaseController : MonoBehaviour
     [SerializeField] public Transform groundCheck;
     [SerializeField] protected TextMeshPro info;
     [SerializeField] protected bool drawGizmosDebug = false;
-    [SerializeField] public GameObject attackObject; 
 
     protected const float hurtTime = 1f;
 
@@ -38,9 +37,9 @@ public class EnemyBaseController : MonoBehaviour
     public ECooldownState Cooldown { get { return cooldown; } }
     public EDeadState Dead { get { return dead; } }
 
-
     public NavMeshAgent agent { get; protected set; }
     public EnemyData Data { get { return data; } }
+    public DamageComponent hitbox { get; protected set; }
 
     public int animState { get; protected set; }
     public int prevAnimState { get; protected set; }
@@ -63,7 +62,7 @@ public class EnemyBaseController : MonoBehaviour
         maxHealth = data.health;
         health = maxHealth;
         FacingDirection = 1;
-        // canGetHurt = true;
+        canBeHurt = true;
 
         Initialize();
 
@@ -182,7 +181,7 @@ public class EnemyBaseController : MonoBehaviour
                 if (d.damage == 0)
                     return;
 
-                knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force/4);
+                knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force/3);
                 TimeManager.instances.HitStop(0.075f);
 
                 if (d.destroyOnEnd)
@@ -202,6 +201,7 @@ public class EnemyBaseController : MonoBehaviour
         if (onHurt && !TimeManager.instances.onSlow)
             return;
 
+        Debug.Log("?");
         shakeSource.GenerateImpulse();
         Transform blood = Pool.instances.CreateObject("blood", transform.position + new Vector3(0, 0.5f, 0), Vector3.zero).transform;
         blood.rotation = Quaternion.LookRotation((closestPoint - transform.position)*-1);
@@ -216,12 +216,11 @@ public class EnemyBaseController : MonoBehaviour
 
     public virtual void AttackEvent() 
     {
-        // Transform vfx = Pool.instances.CreateObject("enemyAttack",transform.position + new Vector3(0, 0.5f, 0) + (transform.forward.normalized), Vector3.zero).transform;
-        attackObject.SetActive(true);
-        Transform vfx = attackObject.transform;
-        vfx.position = transform.position + new Vector3(0, 0.5f, 0) + transform.forward.normalized;
-        vfx.LookAt(transform.forward);
-        vfx.GetComponent<DamageComponent>().damage = data.damage;
+        hitbox = Pool.instances.CreateObject("enemyAttack",transform.position + new Vector3(0, 0.5f, 0) + (transform.forward.normalized), Vector3.zero).GetComponent<DamageComponent>();
+        hitbox.transform.LookAt(transform.forward);
+        hitbox.damage = data.damage;
+        hitbox.knockback = this.knockback;
+        hitbox.enemy = this;
     }
 
     private void OnDrawGizmos()

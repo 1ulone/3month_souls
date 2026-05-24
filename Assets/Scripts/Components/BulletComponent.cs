@@ -9,6 +9,7 @@ public class BulletComponent : MonoBehaviour
     private Action onCollideEvent; 
 
     public float health { get; set; }
+    public float Speed { get { return speed; } }
 
     [SerializeField] public bool doRotate = false;
     [SerializeField] public bool destroyOnCollide = true;

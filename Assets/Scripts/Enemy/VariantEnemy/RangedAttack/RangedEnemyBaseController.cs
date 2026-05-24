@@ -25,8 +25,11 @@ public class RangedEnemyBaseController : EnemyBaseController
         GameObject p = FindFirstObjectByType<PlayerController>().gameObject;
         Vector3 targetDir = p.transform.position - transform.position;
 
+        // hitbox = bc.GetComponent<DamageComponent>();
+        // hitbox.knockback = hitbox.GetComponent<KnockbackComponent>();
+        // hitbox.enemy = null;
+
         bc.Move(bulletSpeed, targetDir);
         bc.GetComponent<DamageComponent>().damage = data.damage;
-
     }
 }

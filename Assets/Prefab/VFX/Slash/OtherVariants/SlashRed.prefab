@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9189709299823483524}
   - component: {fileID: 7224242082776105149}
-  - component: {fileID: 6651228642180459435}
   - component: {fileID: 4019402197961487430}
   - component: {fileID: 6082296148751920590}
   - component: {fileID: -4789972034404251217}
@@ -75,18 +74,6 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
---- !u!114 &6651228642180459435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902336270621484884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5e9a466f2e5ee7e99ca4a40f8fd04e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!73398921 &4019402197961487430
 VFXRenderer:
   serializedVersion: 1
@@ -178,3 +165,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyOnEnd: 0
+  knockback: {fileID: 0}
+  enemy: {fileID: 0}

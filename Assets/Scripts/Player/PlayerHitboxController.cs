@@ -8,10 +8,12 @@ public class PlayerHitboxController : MonoBehaviour
 
      private void OnTriggerEnter(Collider other)
      {
-         if (((1<<other.gameObject.layer) & parryWindow) != 0)
+         if (other.TryGetComponent<DamageComponent>(out DamageComponent dc))
          {
-             // Debug.Log("PARRIED");
-             other.GetComponentInParent<EnemyHitboxController>().ParryCallback(controller.transform.position, PlayerStats.instances.damage);
+             if (!dc.parryAble)
+                 return;
+
+             dc.ParryCallback(controller.transform.position, PlayerStats.instances.damage);
              StartCoroutine(parryEffect());
          }
      }
