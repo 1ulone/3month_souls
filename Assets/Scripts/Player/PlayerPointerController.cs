@@ -10,6 +10,11 @@ public class PlayerPointerController : MonoBehaviour
     [SerializeField] private float followSpeed = 5;
     [SerializeField] private LayerMask floorMask;
 
+    private void Awake()
+    {
+        Cursor.visible = false;
+    }
+
     private void FixedUpdate()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();

@@ -75,7 +75,7 @@ public class KnockbackComponent : MonoBehaviour
             else if (agent != null)
                 agent.Move(impact * Time.deltaTime);
 
-            impact = Vector3.MoveTowards(impact, Vector3.zero, 5*Time.deltaTime);
+            impact = Vector3.Lerp(impact, Vector3.zero, 5f*Time.deltaTime);
         } else 
         if (impact != Vector3.zero) 
         {

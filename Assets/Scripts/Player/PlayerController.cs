@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
+        // NOTE: INTERACT 
         if (interactable != null && input.interact.WasPressedThisFrame())
         {
             interactable.Interact(this.transform);
@@ -127,8 +128,10 @@ public class PlayerController : MonoBehaviour
             interactGUI.SetActive(false);
         }
     
+        // NOTE: THROW SHIT
         if (holdedObject != null && input.sling.WasPressedThisFrame())
         {
+            holdedObject.rb.constraints = RigidbodyConstraints.None;
             holdedObject.Sling(pointer.transform.position - transform.position);
             holdedObject.damageComponent.enabled = true;
             holdedObject.realTransform.parent = null;
@@ -247,7 +250,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Attack()
     {
         canAttack = false;
-        targetMesh.LookAt(new Vector3(pointer.position.x, 0, pointer.position.z));
+        targetMesh.LookAt(new Vector3(pointer.position.x, targetMesh.position.y, pointer.position.z));
         ChangeAnim("attack");
 
         float timer = 0f;
@@ -280,7 +283,7 @@ public class PlayerController : MonoBehaviour
         canBeHurt = false;
 
         if (health <= 0)
-            health = 0;
+            GameOverUI.instances.StartPanel();
 
         shakeSource.GenerateImpulse();
         PlayerUI.instances.UpdateHealthUI(health, maxHealth);
@@ -318,23 +321,25 @@ public class PlayerController : MonoBehaviour
     {
         if (holdedObject != null)
         {
-            //if already holding something
-        } else {
-
-            holdedObject = holdObject;
-            holdedObject.gameObject.layer = 11;
-            holdedObject.realTransform.gameObject.layer = 11;
-            holdedObject.damageComponent.damage = stats.damage/2;
-            holdedObject.damageComponent.enabled = false;
-
-            holdObject.realTransform.SetParent(holdPoint.transform);
-            holdObject.realTransform.localPosition = Vector3.zero;
-
+            holdedObject.RevertBackMask();
+            holdedObject.realTransform.SetParent(null);
             holdedObject.rb.linearVelocity = Vector3.zero;
-            holdedObject.rb.useGravity = false;
-
-            holdedObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+            holdedObject.rb.useGravity = true;
+            holdedObject.rb.constraints = RigidbodyConstraints.None;
         }
+
+        holdedObject = holdObject;
+        holdedObject.gameObject.layer = 11;
+        holdedObject.realTransform.gameObject.layer = 11;
+        holdedObject.damageComponent.damage = stats.damage/2;
+        holdedObject.damageComponent.enabled = false;
+
+        holdObject.realTransform.SetParent(holdPoint.transform);
+        holdObject.realTransform.localPosition = Vector3.zero;
+
+        holdedObject.rb.linearVelocity = Vector3.zero;
+        holdedObject.rb.useGravity = false;
+        holdedObject.rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     private void ReenableController()
@@ -354,10 +359,9 @@ public class PlayerController : MonoBehaviour
                     Pool.instances.DestroyObject(d.gameObject);
                 if (holdedObject != null && holdedObject.canBeShield)
                 {
-                    holdedObject.health -= d.damage;
-                    if (holdedObject.health <= 0)
+                    holdedObject.destroyableComponent.TakeDamage(d.damage, Vector3.zero);
+                    if (holdedObject.destroyableComponent.Health <= 0)
                     {
-                        Debug.Log("hi");
                         GameObject hb = holdedObject.realTransform.gameObject;
                         holdedObject = null;
                         Pool.instances.DestroyObject(hb);

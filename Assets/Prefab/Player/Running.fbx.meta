@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f74c36d7d3729b77b9a19ee41507a3bd
+guid: 1570901a7b311bf938c584396e3e5c41
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -34,8 +34,8 @@ ModelImporter:
       name: walk
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 2
-      lastFrame: 20
+      firstFrame: 0
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

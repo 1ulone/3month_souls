@@ -18,8 +18,8 @@ TagManager:
   - RoomBounds
   - PlayerProjectile
   - EnemyProjectile
-  - 
-  - 
+  - PlayerIgnore
+  - LightSource
   - 
   - 
   - 

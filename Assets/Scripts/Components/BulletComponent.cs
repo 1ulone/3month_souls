@@ -7,8 +7,8 @@ public class BulletComponent : MonoBehaviour
     private Vector3 direction, lastVelocity;
     private Rigidbody rb;
     private Action onCollideEvent; 
+    private DestroyableObject destroyableComponent;
 
-    public float health { get; set; }
     public float Speed { get { return speed; } }
 
     [SerializeField] public bool doRotate = false;
@@ -17,6 +17,7 @@ public class BulletComponent : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        TryGetComponent(out destroyableComponent);
     }
 
     private void FixedUpdate()
@@ -39,13 +40,16 @@ public class BulletComponent : MonoBehaviour
         if (speed == 0)
             return;
 
-        health --;
-        if (health <= 0)
-        {
-            Pool.instances.DestroyObject(this.gameObject); 
-        } else 
-        if (health > 0)
-        {
+        destroyableComponent.TakeDamage(1, Vector3.zero);
+
+        //
+        // health--;
+        // if (health <= 0)
+        // {
+        //     Pool.instances.DestroyObject(this.gameObject); 
+        // } else 
+        // if (health > 0)
+        // {
             Invoke("delayedCollideEvent", delayTime);
             speed = 0;
 
@@ -58,7 +62,7 @@ public class BulletComponent : MonoBehaviour
 
             rb.linearVelocity = new Vector3(randomizedBounce.x, 0, randomizedBounce.z).normalized * (lastSpeed*1.5f);
             rb.useGravity = true;
-        }
+        // }
     }
 
     private void delayedCollideEvent()

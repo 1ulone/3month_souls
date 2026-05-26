@@ -16,6 +16,12 @@ public class PlayerHitboxController : MonoBehaviour
              dc.ParryCallback(controller.transform.position, PlayerStats.instances.damage);
              StartCoroutine(parryEffect());
          }
+
+         if (other.TryGetComponent<DestroyableObject>(out DestroyableObject dobj))
+         {
+             Vector3 dir = other.transform.position - transform.position;
+             dobj.TakeDamage(1, dir, dobj.GetComponent<Rigidbody>().mass, 0.75f);
+         }
      }
 
      private IEnumerator parryEffect() 

@@ -19,6 +19,7 @@ MonoBehaviour:
   idleLength: 5
   patrolLength: 10
   cooldownLength: 2
+  chaseInspect: 1.5
   chaseRadius: 10
   attackRadius: 1.5
   floor:

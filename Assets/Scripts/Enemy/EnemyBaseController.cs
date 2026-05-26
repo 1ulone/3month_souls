@@ -182,7 +182,7 @@ public class EnemyBaseController : MonoBehaviour
                     return;
 
                 knockback.StartKnock(transform.position - other.transform.position, data.mass, data.force/3);
-                TimeManager.instances.HitStop(0.075f);
+                TimeManager.instances.HitStop(0.05f);
 
                 if (d.destroyOnEnd)
                     Pool.instances.DestroyObject(d.gameObject);

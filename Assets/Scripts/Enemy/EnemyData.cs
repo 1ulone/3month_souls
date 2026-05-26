@@ -11,9 +11,13 @@ public class EnemyData : ScriptableObject
     public float idleLength;
     public float patrolLength;
     public float cooldownLength;
+    public float chaseInspect;
 
     public float chaseRadius;
     public float attackRadius;
+
+    public float cooldownStepoff = 4.0f;
+    public float chaseStepoff = 3.0f;
 
     public LayerMask floor;
     public LayerMask collider;
