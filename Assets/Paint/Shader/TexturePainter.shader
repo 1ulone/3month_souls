@@ -27,7 +27,7 @@
             struct appdata{
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float2 uv1 : TEXCOORD1; // Second UV channel for the non-overlapping paint map
+                float2 uv2 : TEXCOORD2;
             };
 
             struct v2f{
@@ -47,8 +47,8 @@
                 o.uv = v.uv; 
                 float4 uv = float4(0, 0, 0, 1);
                 
-                // Map to the Render Texture space using the second UV channel (uv1)
-                uv.xy = float2(1, _ProjectionParams.x) * (v.uv1.xy * float2( 2, 2) - float2(1, 1));
+                // Map to the Render Texture space using the new UV channel
+                uv.xy = float2(1, _ProjectionParams.x) * (v.uv2.xy * float2( 2, 2) - float2(1, 1));
                 o.vertex = uv; 
                 return o;
             }
@@ -59,8 +59,9 @@
                 }         
 
                 float4 col = tex2D(_MainTex, i.uv);
-                // Mask computation remains in world space
-                float f = mask(i.worldPos, _PainterPosition, _Radius, _Hardness);
+                
+                // Explicitly use .xyz to match the float3 parameter in mask()
+                float f = mask(i.worldPos.xyz, _PainterPosition, _Radius, _Hardness);
                 float edge = f * _Strength;
                 return lerp(col, _PainterColor, edge);
             }
