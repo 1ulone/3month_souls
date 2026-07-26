@@ -1,13 +1,14 @@
-using UnityEngine;
-
-public class RangedAttackState : EAttackState
+namespace wine.enemy
 {
-    public RangedAttackState(EnemyBaseController e, EnemyData data) : base(e, data) {}
-
-    public override void Enter()
+    public class RangedAttackState : EAttackState
     {
-        //Shoot shit here
-        e.onEndAttack = false;
-        e.ChangeAnimation("attack");
+        public RangedAttackState(EnemyBaseController e, EnemyData data) : base(e, data) {}
+
+        public override void Enter()
+        {
+            //Shoot shit here
+            e.onEndAttack = false;
+            e.ChangeAnimation("attack");
+        }
     }
 }

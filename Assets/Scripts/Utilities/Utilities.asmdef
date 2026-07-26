@@ -1,0 +1,17 @@
+{
+    "name": "util",
+    "rootNamespace": "wine",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:375f907a3759f3a4f80f868d1852e061"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,42 +1,44 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "[EType]Data", menuName="Assets/Data/Enemy")]
-public class EnemyData : ScriptableObject 
+namespace wine.enemy
 {
-    public int health;
-    public int damage = 2;
-    public float movementSpeed;
-    public float chaseSpeed;
+    [CreateAssetMenu(fileName = "[EType]Data", menuName="Assets/Data/Enemy")]
+    public class EnemyData : ScriptableObject 
+    {
+        public int health;
+        public int damage = 2;
+        public float movementSpeed;
+        public float chaseSpeed;
 
-    public float idleLength;
-    public float patrolLength;
-    public float cooldownLength;
-    public float chaseInspect;
+        public float idleLength;
+        public float patrolLength;
+        public float cooldownLength;
+        public float chaseInspect;
 
-    public float chaseRadius;
-    public float attackRadius;
+        public float chaseRadius;
+        public float attackRadius;
 
-    public float cooldownStepoff = 4.0f;
-    public float chaseStepoff = 3.0f;
+        public float cooldownStepoff = 4.0f;
+        public float chaseStepoff = 3.0f;
 
-    public LayerMask floor;
-    public LayerMask collider;
-    public LayerMask player;
-    public LayerMask hurtForEnemy;
+        public LayerMask floor;
+        public LayerMask collider;
+        public LayerMask player;
+        public LayerMask hurtForEnemy;
 
-    public bool checkChase = true;
-    public bool checkPlayerElevation = true;
-    public int expValue = 10;
-    public float bloodCountMin = 0.2f;
-    public float bloodCountMax = 1.5f;
+        public bool checkChase = true;
+        public bool checkPlayerElevation = true;
+        public int expValue = 10;
+        public float bloodCountMin = 0.2f;
+        public float bloodCountMax = 1.5f;
 
-    public float walkRange = 5;
-    public float mass = 0.5f;
-    public float force = 6f;
+        public float walkRange = 5;
+        public float mass = 0.5f;
+        public float force = 6f;
 
-    [HideInInspector] public bool onGround;
-    [HideInInspector] public bool onWall;
-    [HideInInspector] public bool onChase;
-    [HideInInspector] public bool onAttack;
+        [HideInInspector] public bool onGround;
+        [HideInInspector] public bool onWall;
+        [HideInInspector] public bool onChase;
+        [HideInInspector] public bool onAttack;
+    }
 }
-

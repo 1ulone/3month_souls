@@ -1,46 +1,49 @@
 using UnityEngine;
 
-public class ECooldownState : EBaseState 
+namespace wine.enemy
 {
-    protected int circDirection;
-
-    public ECooldownState(EnemyBaseController e, EnemyData data) : base(e, data) {}
-
-    public override void Enter()
+    public class ECooldownState : EBaseState 
     {
-        timer = Time.time;
-        e.agent.speed = data.movementSpeed;
-        e.ChangeAnimation("walk");
-        circDirection = Random.value > 0.5f ? 1 : -1;
-    }
+        protected int circDirection;
 
-    public override void Logic()
-    {
-        if (timer + data.cooldownLength < Time.time)
+        public ECooldownState(EnemyBaseController e, EnemyData data) : base(e, data) {}
+
+        public override void Enter()
         {
-            if (data.onAttack)
-                e.ChangeState(e.Attack); else 
-            if (data.onChase)
-                e.ChangeState(e.Chase);
-            else 
-                e.ChangeState(e.Patrol);
+            timer = Time.time;
+            e.agent.speed = data.movementSpeed;
+            e.ChangeAnimation("walk");
+            circDirection = Random.value > 0.5f ? 1 : -1;
         }
-    }
 
-    public override void FixedLogic()
-    {
-        if (detectedPlayer == null)
-            return;
+        public override void Logic()
+        {
+            if (timer + data.cooldownLength < Time.time)
+            {
+                if (data.onAttack)
+                    e.ChangeState(e.Attack); else 
+                        if (data.onChase)
+                            e.ChangeState(e.Chase);
+                        else 
+                            e.ChangeState(e.Patrol);
+            }
+        }
 
-        float circleStep = 1.5f;
+        public override void FixedLogic()
+        {
+            if (detectedPlayer == null)
+                return;
 
-        Vector3 target = new Vector3(detectedPlayer.position.x, e.transform.position.y, detectedPlayer.position.z);
+            float circleStep = 1.5f;
 
-        Vector3 targetDir = (e.transform.position - target).normalized; 
-        Vector3 tangent = Vector3.Cross(targetDir, Vector3.up).normalized;
-        Vector3 idealPosition = target + (targetDir * data.cooldownStepoff);
+            Vector3 target = new Vector3(detectedPlayer.position.x, e.transform.position.y, detectedPlayer.position.z);
 
-        e.agent.SetDestination(idealPosition + (tangent * circleStep * circDirection));
+            Vector3 targetDir = (e.transform.position - target).normalized; 
+            Vector3 tangent = Vector3.Cross(targetDir, Vector3.up).normalized;
+            Vector3 idealPosition = target + (targetDir * data.cooldownStepoff);
 
+            e.agent.SetDestination(idealPosition + (tangent * circleStep * circDirection));
+
+        }
     }
 }

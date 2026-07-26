@@ -1,13 +1,14 @@
-using UnityEngine;
-
-public class EDeadState : EBaseState 
+namespace wine.enemy
 {
-    public EDeadState(EnemyBaseController e, EnemyData data) : base(e, data) {}
-
-    public override void Enter()
+    public class EDeadState : EBaseState 
     {
-        PlayerStats.instances.AddExperiences(data.expValue);
-        PlayerStats.instances.ControlVessel(Random.Range(data.bloodCountMin, data.bloodCountMax));
-        e.gameObject.SetActive(false);
+        public EDeadState(EnemyBaseController e, EnemyData data) : base(e, data) {}
+
+        public override void Enter()
+        {
+            // PlayerStats.instances.AddExperiences(data.expValue);
+            // PlayerStats.instances.ControlVessel(Random.Range(data.bloodCountMin, data.bloodCountMax));
+            e.gameObject.SetActive(false);
+        }
     }
 }

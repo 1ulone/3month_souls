@@ -1,0 +1,21 @@
+{
+    "name": "PlayerUI",
+    "rootNamespace": "player.ui",
+    "references": [
+        "GUID:d3ed2a022a80bbe40b29951e67eb8870",
+        "GUID:d90945825729de94b916cd3d84c780ff",
+        "GUID:a5b2dab24c8edd74e9eab2c4f53d99d0",
+        "GUID:4ffc58e7bef0e624389526c2feda6e30",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:a75a2888e4b13334dac30821fd35bcea"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

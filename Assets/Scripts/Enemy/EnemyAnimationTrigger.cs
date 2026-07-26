@@ -1,40 +1,47 @@
 using UnityEngine;
 
-public class EnemyAnimationTrigger : MonoBehaviour
+namespace wine.enemy
 {
-    [SerializeField] protected EnemyBaseController e; 
-    [SerializeField] protected GameObject parryHint;
-
-    private void Awake()
+    public class EnemyAnimationTrigger : MonoBehaviour
     {
-        parryHint.SetActive(false);
-    }
+        [SerializeField] protected EnemyBaseController e; 
+        [SerializeField] protected GameObject parryHint;
 
-    public void TriggerHitbox()
-    {
-        e.AttackEvent();
-    }
+        private void Awake()
+        {
+            parryHint.SetActive(false);
+        }
 
-    public void OnEndAttack()
-    {
-        e.onEndAttack = true;
-    }
+        public void TriggerHitbox()
+        {
+            e.AttackEvent();
+        }
 
-    public void CreateParryWindow()
-    {
-        if (e.hitbox == null)
-            return;
+        public void OnEndAttack()
+        {
+            e.onEndAttack = true;
+        }
 
-        e.hitbox.parryAble = true; 
-        e.canBeHurt = false;
-    }
+        public void CreateParryWindow()
+        {
+            if (e.hitbox == null)
+                return;
 
-    public void DeleteParryWindow()
-    {
-        if (e.hitbox == null)
-            return;
+            e.hitbox.parryAble = true; 
+            e.canBeHurt = false;
 
-        e.hitbox.parryAble = false; 
-        e.canBeHurt = true;
+            parryHint.SetActive(true);
+        }
+
+        public void DeleteParryWindow()
+        {
+            if (e.hitbox == null)
+                return;
+
+            e.hitbox.parryAble = false; 
+            e.canBeHurt = true;
+
+            parryHint.SetActive(false);
+        }
     }
 }

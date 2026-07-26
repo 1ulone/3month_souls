@@ -1,0 +1,18 @@
+{
+    "name": "enemy",
+    "rootNamespace": "wine",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:502df6dd13d5a4b46ac0c6220f231d39",
+        "GUID:d90945825729de94b916cd3d84c780ff"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

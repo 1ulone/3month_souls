@@ -1,28 +1,31 @@
 using UnityEngine;
 
-public class RangedChaseState : EChaseState 
+namespace wine.enemy
 {
-    protected RangedEnemyBaseController ranged;
-    public RangedChaseState(EnemyBaseController e, EnemyData data, RangedEnemyBaseController ranged) : base(e, data) 
+    public class RangedChaseState : EChaseState 
     {
-        this.ranged = ranged;
-    }
-
-    public override void Enter()
-    {
-        e.ChangeFacingDirection(e.GetPlayer().position);
-        e.agent.speed = 0;
-        timer = Time.time;
-        e.ChangeAnimation("walk");
-    }
-
-    public override void Logic()
-    {
-        if (Time.time > timer + ranged.aimTime)
+        protected RangedEnemyBaseController ranged;
+        public RangedChaseState(EnemyBaseController e, EnemyData data, RangedEnemyBaseController ranged) : base(e, data) 
         {
-            e.ChangeState(e.Attack);
+            this.ranged = ranged;
         }
-    }
 
-    public override void FixedLogic() {}
+        public override void Enter()
+        {
+            e.ChangeFacingDirection(e.GetPlayer().position);
+            e.agent.speed = 0;
+            timer = Time.time;
+            e.ChangeAnimation("walk");
+        }
+
+        public override void Logic()
+        {
+            if (Time.time > timer + ranged.aimTime)
+            {
+                e.ChangeState(e.Attack);
+            }
+        }
+
+        public override void FixedLogic() {}
+    }
 }

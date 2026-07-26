@@ -1,0 +1,20 @@
+{
+    "name": "interact",
+    "rootNamespace": "wine.player",
+    "references": [
+        "GUID:d3ed2a022a80bbe40b29951e67eb8870",
+        "GUID:d90945825729de94b916cd3d84c780ff",
+        "GUID:364c58aead2458b42ae8888b641c1f74",
+        "GUID:c717d7d434fce7d40b6fa2332e98d6f2",
+        "GUID:502df6dd13d5a4b46ac0c6220f231d39"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
