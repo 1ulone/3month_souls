@@ -20,3 +20,4 @@ MonoBehaviour:
   constitutionBuff: 0
   dexterityBuff: 0
   poiseBuff: -1
+  onHoldRotation: {x: 6.43, y: -24.573, z: -7.406}

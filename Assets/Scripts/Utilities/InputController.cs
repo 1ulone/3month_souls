@@ -3,6 +3,13 @@ using UnityEngine.InputSystem;
 
 namespace wine.util
 {
+    public enum InputType 
+    {
+        press,
+        hold,
+        release
+    }
+
     public class InputController : MonoBehaviour
     {
         public static InputController instances; 
@@ -12,6 +19,7 @@ namespace wine.util
         private InputAction move; 
         private InputAction attack; 
         private InputAction sling; 
+        private InputAction addItem; 
         private InputAction roll; 
         private InputAction test;
         private InputAction heal;
@@ -33,6 +41,7 @@ namespace wine.util
             move = input.actions["Move"];
             attack = input.actions["Attack"];
             sling = input.actions["Sling"];
+            addItem = input.actions["AddItem"];
             roll = input.actions["Roll"];
             test = input.actions["Test"];
             heal = input.actions["Heal"];
@@ -50,6 +59,7 @@ namespace wine.util
             move.Enable();
             attack.Enable();
             sling.Enable();
+            addItem.Enable();
             roll.Enable();
             test.Enable();
             heal.Enable();
@@ -70,6 +80,7 @@ namespace wine.util
             move.Disable();
             attack.Disable();
             sling.Disable();
+            addItem.Disable();
             roll.Disable();
             test.Disable();
             heal.Disable();
@@ -91,13 +102,14 @@ namespace wine.util
             return move.ReadValue<Vector2>(); 
         }
 
-        public bool GetInput(string tag, bool onRelease = false)
+        public bool GetInput(string tag, InputType type = InputType.press)
         {
             tag = tag.ToLower();
             InputAction action = tag switch
             {
                 "attack" => attack,
                 "sling" => sling,
+                "additem" => addItem,
                 "roll" => roll,
                 "test" => test,
                 "heal" => heal,
@@ -112,8 +124,15 @@ namespace wine.util
                 return false;
 
             bool inputReturn = action.WasPressedThisFrame();
-            if (onRelease)
-                inputReturn = action.WasReleasedThisFrame();
+            switch(type)
+            {
+                case InputType.press:
+                { inputReturn = action.WasPressedThisFrame(); } break;
+                case InputType.hold:
+                { inputReturn = action.IsInProgress(); } break;
+                case InputType.release:
+                { inputReturn = action.WasReleasedThisFrame(); } break;
+            }
 
             return inputReturn;
         }

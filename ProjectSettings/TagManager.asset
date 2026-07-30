@@ -22,7 +22,7 @@ TagManager:
   - PlayerIgnore
   - LightSource
   - FloorCollider
-  - 
+  - StaticCollider
   - 
   - 
   - 

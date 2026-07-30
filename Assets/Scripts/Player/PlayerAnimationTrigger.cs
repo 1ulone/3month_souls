@@ -17,8 +17,13 @@ namespace wine.player
 
         public void OnEndAttack()
         {
-            hitbox.gameObject.SetActive(false);
             controller.OnEndAttack();
+        }
+
+        public void ComboWindowTrigger()
+        {
+            hitbox.gameObject.SetActive(false);
+            controller.AttackComboAddon();
         }
     }
 }

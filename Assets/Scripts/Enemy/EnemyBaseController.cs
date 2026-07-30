@@ -182,6 +182,9 @@ namespace wine.enemy
             {
                 if (other.TryGetComponent<DamageComponent>(out DamageComponent d))
                 {
+                    if (!d.enabled)
+                        return;
+
                     if (d.damage == 0)
                         return;
 

@@ -52,6 +52,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AddItem",
+                    "type": "Button",
+                    "id": "b0fe4d4a-9664-4e5a-b47c-ea49839f5c97",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Inventory",
                     "type": "Button",
                     "id": "db45940e-f2a0-4b4a-8772-b64cd52e51c2",
@@ -271,6 +280,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b87beb4e-3518-4996-80bb-759f8d17c1e3",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 using wine.util;
 
@@ -455,16 +456,21 @@ namespace wine.player.ui
             ItemData item = slot[col][row].item;
             if (item.getType() == itemType.weapon)
             {
-                PlayerStats.instances.EquipWeapon(item as WeaponItemData);
+                WeaponItemData wid = item as WeaponItemData;
+
+                PlayerStats.instances.EquipWeapon(wid);
                 equippedWeapon.sprite = item.icon;
                 equippedWeapon.enabled = true;
+
+                wid.onEquip?.Invoke();
+                wid.onEquip = null;
             } else 
-                if (item.getType() == itemType.charm)
-                {
-                    PlayerStats.instances.EquipCharm(item as CharmItemData);
-                    equippedCharm.sprite = item.icon;
-                    equippedCharm.enabled = true;
-                }
+            if (item.getType() == itemType.charm)
+            {
+                PlayerStats.instances.EquipCharm(item as CharmItemData);
+                equippedCharm.sprite = item.icon;
+                equippedCharm.enabled = true;
+            }
 
             health.text = "Health : " + PlayerStats.instances.health.ToString();
             damage.text = "Damage : " + PlayerStats.instances.damage.ToString();
@@ -488,11 +494,11 @@ namespace wine.player.ui
                 PlayerStats.instances.EquipWeapon(null);
                 equippedWeapon.enabled = false;
             } else 
-                if (item.getType() == itemType.charm)
-                {
-                    PlayerStats.instances.EquipCharm(null);
-                    equippedCharm.enabled = false;
-                }
+            if (item.getType() == itemType.charm)
+            {
+                PlayerStats.instances.EquipCharm(null);
+                equippedCharm.enabled = false;
+            }
 
             health.text = "Health : " + PlayerStats.instances.health.ToString();
             damage.text = "Damage : " + PlayerStats.instances.damage.ToString();
@@ -548,7 +554,7 @@ namespace wine.player.ui
             isOnEnumerator = false;
         }
 
-        public void AddItem(ItemData data)
+        public void AddItem(ItemData data, bool autoEquip = false)
         {
             if (data.getType() == itemType.keyItem) 
             {
@@ -577,10 +583,35 @@ namespace wine.player.ui
                             slot[x][y].item = data;
                             slot[x][y].image.sprite = data.icon;
 
+                            if (autoEquip)
+                            {
+                                col = x;
+                                row = y;
+                                StartCoroutine(EquipItem());
+                            }
+
                             return;
                         }
                     }
                 }
+            }
+        }
+
+        public void InstantDequipDiscard(ItemData id, bool doDiscard = true)
+        {
+            var result = slot.Select((row, x) => (x, y: System.Array.IndexOf(row, id))).FirstOrDefault(pos => pos.y != -1);
+            if (result.y != -1)
+            {
+                col = result.x;
+                row = result.y;
+            }
+
+            StartCoroutine(DequipItem());
+
+            if (doDiscard)
+            {
+                slot[col][row].item = null;
+                slot[col][row].image.sprite = null;
             }
         }
     }

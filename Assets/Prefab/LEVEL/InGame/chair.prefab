@@ -654,8 +654,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 3, z: 2}
+  m_Center: {x: 0, y: 0.5, z: -0.25}
 --- !u!114 &5123434749986960653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,6 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwSpeed: 15
   canBeShield: 0
+  weaponData: {fileID: 0}
 --- !u!114 &6740172296882324831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1541,8 +1542,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.64967144, y: 1.4469762, z: 0.64355606}
-  m_Center: {x: 0, y: 0.72887206, z: 0.09858105}
+  m_Size: {x: 1.2993429, y: 2.8939524, z: 1.2871121}
+  m_Center: {x: 0, y: 1.4577441, z: -0.1971621}
 --- !u!114 &3184422826704813555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1597,6 +1598,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doRotate: 0
   destroyOnCollide: 1
+  bounceMultiplier: 1.25
+  bounceWindowTimer: 0.25
+  rotationSpeed: 25
 --- !u!114 &16740627092052087
 MonoBehaviour:
   m_ObjectHideFlags: 0

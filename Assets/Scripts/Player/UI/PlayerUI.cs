@@ -68,7 +68,7 @@ namespace wine.player.ui
                 InventoryUI.instances.ToggleInventory();
 
 
-            if (InputController.instances.GetInput("heal", true))
+            if (InputController.instances.GetInput("heal", InputType.release))
                 vintake = 0;
 
             if (InputController.instances.GetInput("heal") && PlayerStats.instances.currentVessel > 1.0f && health < stats.health)

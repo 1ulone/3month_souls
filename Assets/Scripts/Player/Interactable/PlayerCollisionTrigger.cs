@@ -21,14 +21,17 @@ namespace wine.player.interact
         private PlayerController controller;
         private CharacterController ccon;
         private PlayerStats stats;
+        private PlayerThrowTrajectoryHint hintController;
 
         private float startTime;
 
         public bool isHoldingItem() { return holdedObject == null; }
+        private bool onAim;
 
         private void Awake()
         {
             controller = GetComponent<PlayerController>();
+            hintController = GetComponent<PlayerThrowTrajectoryHint>();
 
             ccon = GetComponent<CharacterController>();
             hitflash = GetComponent<HitflashComponent>();
@@ -38,6 +41,7 @@ namespace wine.player.interact
         private void Start()
         {
             stats = PlayerStats.instances;
+            hintController.hint.enabled = false;
             Invoke("InitializeCamera", 1.0f);
         }
 
@@ -51,16 +55,50 @@ namespace wine.player.interact
                 interactGUI.SetActive(false);
             }
 
+            if (holdedObject == null)
+                return;
+
             // NOTE: THROW SHIT
-            if (holdedObject != null && InputController.instances.GetInput("sling"))
+            if (InputController.instances.GetInput("sling", InputType.hold))
             {
+                hintController.hint.enabled = true;
+                onAim = true;
+            }
+
+            if (InputController.instances.GetInput("sling", InputType.release) && onAim)
+            {
+                onAim = false;
+                hintController.hint.enabled = false;
+
+                if (holdedObject.weaponData != null)
+                    InventoryUI.instances.InstantDequipDiscard(holdedObject.weaponData);
+
                 holdedObject.rb.constraints = RigidbodyConstraints.None;
                 holdedObject.Sling(controller.Pointer.transform.position - transform.position);
                 holdedObject.damageComponent.enabled = true;
                 holdedObject.realTransform.parent = null;
                 holdedObject = null;
+                interactable = null;
+                controller.weapon = "unarmed";
             }
 
+            // NOTE: ADD HOLDED ITEM INTO INVENTORY
+            if (InputController.instances.GetInput("addItem"))
+            {
+                string wtag = holdedObject.realTransform.name;
+                holdedObject.weaponData.onEquip = ()=> 
+                {
+                    GameObject hw = Pool.instances.CreateObject(wtag, Vector3.zero, Vector3.zero);
+                    ChangeHoldItem(hw.GetComponentInChildren<InteractHoldable>());
+                };
+
+                InventoryUI.instances.InstantDequipDiscard(holdedObject.weaponData, false);
+                GameObject hobj = holdedObject.realTransform.gameObject;
+                holdedObject = null;
+
+                Destroy(hobj); // NOTE: for now just destroy it
+                controller.weapon = "unarmed";
+            }
         }
 
         public void ChangeHoldItem(InteractHoldable holdObject)
@@ -69,9 +107,12 @@ namespace wine.player.interact
             {
                 holdedObject.RevertBackMask();
                 holdedObject.realTransform.SetParent(null);
+                holdedObject.rb.constraints = RigidbodyConstraints.None;
                 holdedObject.rb.linearVelocity = Vector3.zero;
                 holdedObject.rb.useGravity = true;
-                holdedObject.rb.constraints = RigidbodyConstraints.None;
+                holdedObject.col.enabled = true;
+
+                controller.weapon = "unarmed";
             }
 
             holdedObject = holdObject;
@@ -80,12 +121,24 @@ namespace wine.player.interact
             holdedObject.damageComponent.damage = stats.damage/2;
             holdedObject.damageComponent.enabled = false;
 
-            holdObject.realTransform.SetParent(holdPoint.transform);
-            holdObject.realTransform.localPosition = Vector3.zero;
+            holdedObject.col.enabled = false;
+            holdedObject.bulletComponent.enabled = false;
 
-            holdedObject.rb.linearVelocity = Vector3.zero;
+            holdedObject.realTransform.SetParent(holdPoint.transform);
+            holdedObject.realTransform.localPosition = Vector3.zero;
+            holdedObject.realTransform.localRotation = holdedObject.weaponData != null ? Quaternion.Euler(holdedObject.weaponData.onHoldRotation) : Quaternion.identity;
+
             holdedObject.rb.useGravity = false;
+            holdedObject.rb.linearVelocity = Vector3.zero;
             holdedObject.rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+            if (holdedObject.weaponData != null)
+            {
+                // NOTE: for now weapon data will always be == sword
+                controller.weapon = "sword";
+            } else {
+                controller.weapon = "unarmed";
+            }
         }
 
         private void GetHurt(int damage)

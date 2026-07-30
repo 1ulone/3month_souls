@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   damage: 5
-  movementSpeed: 4
-  chaseSpeed: 5
+  movementSpeed: 2
+  chaseSpeed: 4
   idleLength: 5
   patrolLength: 10
   cooldownLength: 2

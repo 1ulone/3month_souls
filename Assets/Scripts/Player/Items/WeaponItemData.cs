@@ -1,5 +1,7 @@
-using UnityEngine;
+#nullable enable
 
+using UnityEngine;
+using System;
 
 // public enum weaponType
 // {
@@ -20,4 +22,6 @@ public class WeaponItemData : ItemData
     // public AnimationClip clip;
     // public weaponType type;
     public override itemType getType() { return itemType.weapon; }
+    public Vector3 onHoldRotation;
+    public Action? onEquip { get; set; }
 }

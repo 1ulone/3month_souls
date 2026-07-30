@@ -11,6 +11,7 @@ namespace wine.player
         [SerializeField] private float dashTime = 1f;
         [SerializeField] private float dashSpeed = 10f;
         [SerializeField] private float dashCooldown = 1.5f;
+        [SerializeField] private float comboWindow = 0.125f;
         [SerializeField] private Transform targetMesh;
         [SerializeField] private Transform pointer;
         [SerializeField] private Animator anim;
@@ -21,14 +22,15 @@ namespace wine.player
         public bool canBeHurt { get; set; }
         public bool onTransition { get; set; }
         public string state { get; set; }
+        public string weapon { get; set; }
 
         private CharacterController controller;
         private InputController input;
         private PlayerStats stats;
-        // private CinemachineImpulseSource shakeSource;
 
         private float startTime;
-        private bool canRoll, canAttack;
+        private bool canRoll, canAttack, canStillCombo;
+        private int comboIndex;
 
         private Coroutine currentCoroutine;
         private Vector2 dir;
@@ -47,11 +49,13 @@ namespace wine.player
             invincible = LayerMask.NameToLayer("Invincible");
 
             state = "";
+            weapon = "unarmed";
 
             canRoll = true;
             canAttack = true;
             canBeHurt = true;
 
+            comboIndex = 0;
             ChangeAnim("idle");
         }
 
@@ -79,6 +83,15 @@ namespace wine.player
                 return;
             }
 
+            if (canStillCombo)
+            {
+                if (startTime + comboWindow < Time.time)
+                {
+                    canStillCombo = false;
+                    comboIndex = 0;
+                }
+            }
+
             if (Time.timeScale == 0 || !controller.enabled)
                 return;
 
@@ -98,7 +111,7 @@ namespace wine.player
             if (input.GetInput("attack") && canAttack)
                 Attack();
 
-            if (state == "attack")
+            if (state.Contains("attack"))
                 return;
 
             if (dir != Vector2.zero)
@@ -127,7 +140,7 @@ namespace wine.player
                 return; 
             }
 
-            if (state == "attack")
+            if (state.Contains("attack"))
                 return;
 
             Vector3 move = transform.right * dir.x + transform.forward * dir.y;
@@ -145,6 +158,7 @@ namespace wine.player
         private IEnumerator Roll()
         {
             canRoll = false;
+            comboIndex = 0;
             // if (onPDodge)
             //     TimeManager.instances.SlowTime();
             //
@@ -178,9 +192,28 @@ namespace wine.player
 
         private void Attack()
         {
-            targetMesh.LookAt(new Vector3(pointer.position.x, targetMesh.position.y, pointer.position.z));
+            startTime = 0;
             canAttack = false;
-            ChangeAnim("attack");
+            canStillCombo = false;
+            targetMesh.LookAt(new Vector3(pointer.position.x, targetMesh.position.y, pointer.position.z));
+
+            string attackTag = "attack_"+weapon+"_"+comboIndex;
+            ChangeAnim(attackTag);
+        }
+
+        public void AttackComboAddon()
+        {
+            canAttack = true;
+
+            if (comboIndex+1 > 1)
+            {
+                comboIndex = 0;
+                return;
+            }
+
+            comboIndex++;
+            canStillCombo = true;
+            startTime = Time.time;
         }
 
         public void OnEndAttack()
@@ -188,7 +221,6 @@ namespace wine.player
             ChangeAnim("idle");
             canRoll = true;
             canAttack = true;
-            currentCoroutine = null;
         }
 
         private void EndHurt()
@@ -199,10 +231,11 @@ namespace wine.player
             canRoll = true;
         }
 
-
-
         private void ReenableController()
-        { controller.enabled = true; controller.Move(Vector3.zero); }
+        {
+            controller.enabled = true; 
+            controller.Move(Vector3.zero);
+        }
 
     }
 }
