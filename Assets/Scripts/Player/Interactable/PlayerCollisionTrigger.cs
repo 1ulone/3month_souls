@@ -8,10 +8,11 @@ namespace wine.player.interact
     public class PlayerCollisionTrigger : MonoBehaviour
     {
         [SerializeField] public LayerMask roomBoundLayer;
-        [SerializeField] private LayerMask interactLayer;
+        [SerializeField] private Transform holdPoint;
         [SerializeField] private LayerMask enemyLayer;
         [SerializeField] private GameObject interactGUI;
-        [SerializeField] private Transform holdPoint;
+        [SerializeField] private LayerMask interactLayer;
+        [SerializeField] private PlayerAnimationTrigger animTrigger; 
         [SerializeField] private float mass = 0.3f;
 
         private IInteractable interactable;
@@ -43,6 +44,20 @@ namespace wine.player.interact
             stats = PlayerStats.instances;
             hintController.hint.enabled = false;
             Invoke("InitializeCamera", 1.0f);
+
+            animTrigger.throwEvent = () => 
+            {
+                if (holdedObject.weaponData != null)
+                    InventoryUI.instances.InstantDequipDiscard(holdedObject.weaponData);
+
+                holdedObject.rb.constraints = RigidbodyConstraints.None;
+                holdedObject.Sling(controller.Pointer.position);
+                holdedObject.damageComponent.enabled = true;
+                holdedObject.realTransform.parent = null;
+                holdedObject = null;
+                interactable = null;
+                controller.weapon = "unarmed";
+            };
         }
 
         private void Update()
@@ -62,6 +77,7 @@ namespace wine.player.interact
             if (InputController.instances.GetInput("sling", InputType.hold))
             {
                 hintController.hint.enabled = true;
+                controller.LookAtPointer();
                 onAim = true;
             }
 
@@ -70,16 +86,8 @@ namespace wine.player.interact
                 onAim = false;
                 hintController.hint.enabled = false;
 
-                if (holdedObject.weaponData != null)
-                    InventoryUI.instances.InstantDequipDiscard(holdedObject.weaponData);
-
-                holdedObject.rb.constraints = RigidbodyConstraints.None;
-                holdedObject.Sling(controller.Pointer.transform.position - transform.position);
-                holdedObject.damageComponent.enabled = true;
-                holdedObject.realTransform.parent = null;
-                holdedObject = null;
-                interactable = null;
-                controller.weapon = "unarmed";
+                controller.onThrow = true;
+                controller.ChangeAnim("throw");
             }
 
             // NOTE: ADD HOLDED ITEM INTO INVENTORY

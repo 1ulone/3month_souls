@@ -26,6 +26,7 @@ namespace wine.player
 
             Vector3 currPos = transform.position;
             Vector3 currDir = (controller.Pointer.position - transform.position).normalized;
+            // Vector3 currDir = controller.Pointer.position;
 
             for (int i = 0; i < 3; i++)
             {

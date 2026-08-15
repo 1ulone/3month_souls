@@ -136,5 +136,11 @@ namespace wine.util
 
             return inputReturn;
         }
+
+        public Vector2 GetMousePosition()
+        {
+            return Mouse.current.position.ReadValue();
+        }
     }
+
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using wine.util.component;
 
@@ -8,6 +9,7 @@ namespace wine.player
         [SerializeField] private PlayerController controller;
         [SerializeField] private DamageComponent hitbox;
         [SerializeField] private float heightMod;
+        public Action throwEvent { get; set; }
 
         public void TriggerHitbox()
         {
@@ -25,6 +27,17 @@ namespace wine.player
             hitbox.gameObject.SetActive(false);
             controller.AttackComboAddon();
         }
+        
+        public void TriggerThrow()
+        {
+            if (throwEvent == null)
+                return;
+
+            throwEvent.Invoke();
+        }
+
+        public void OnEndThrow()
+            => controller.onThrow = false;
     }
 }
 // public void TriggerHitbox()

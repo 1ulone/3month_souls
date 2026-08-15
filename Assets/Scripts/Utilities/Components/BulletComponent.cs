@@ -67,9 +67,6 @@ namespace wine.util.component
             afterBounce = true;
 
             Invoke("removeBounceWindow", bounceWindowTimer);
-
-            // NOTE: add "stucked state" on high durability weapon
-            // add bounce only if durability is < than a threshold (1/3 of max durability)
         }
 
         private void removeBounceWindow()

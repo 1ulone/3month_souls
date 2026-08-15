@@ -19,6 +19,7 @@ namespace wine.player
 
         public Transform Pointer { get { return pointer; } }
         public Transform ActualMesh { get { return targetMesh; } }
+        public bool onThrow { get; set; }
         public bool canBeHurt { get; set; }
         public bool onTransition { get; set; }
         public string state { get; set; }
@@ -98,6 +99,9 @@ namespace wine.player
             dir = input.Move();
             lookRotation = new Vector3(dir.x, 0, dir.y);
 
+            if (onThrow)
+                return;
+
             if (input.GetInput("roll") && canRoll) 
             {
                 if (currentCoroutine != null && state != "roll")
@@ -120,10 +124,10 @@ namespace wine.player
                 Quaternion trot = Quaternion.LookRotation(lookRotation, Vector3.up);
                 targetMesh.rotation = Quaternion.RotateTowards(targetMesh.rotation, trot, rotationSpeed * Time.unscaledDeltaTime * 50);
             } else 
-                if (dir == Vector2.zero)
-                {
-                    ChangeAnim("idle");
-                }
+            if (dir == Vector2.zero)
+            {
+                ChangeAnim("idle");
+            }
         }
 
         private void FixedUpdate()
@@ -195,7 +199,8 @@ namespace wine.player
             startTime = 0;
             canAttack = false;
             canStillCombo = false;
-            targetMesh.LookAt(new Vector3(pointer.position.x, targetMesh.position.y, pointer.position.z));
+            // targetMesh.LookAt(new Vector3(pointer.position.x, targetMesh.position.y, pointer.position.z));
+            LookAtPointer();
 
             string attackTag = "attack_"+weapon+"_"+comboIndex;
             ChangeAnim(attackTag);
@@ -214,6 +219,13 @@ namespace wine.player
             comboIndex++;
             canStillCombo = true;
             startTime = Time.time;
+        }
+
+        public void LookAtPointer()
+        {
+            Vector3 newPoint = new Vector3(pointer.position.x, 0, pointer.position.z);
+            ActualMesh.LookAt(newPoint);
+            ActualMesh.rotation = Quaternion.Euler(0, ActualMesh.eulerAngles.y, 0);
         }
 
         public void OnEndAttack()

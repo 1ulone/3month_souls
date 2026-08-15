@@ -9,6 +9,7 @@ namespace wine.player
         [SerializeField] private LayerMask floorMask;
         [SerializeField] private float maxDistance = 5;
         [SerializeField] private float followSpeed = 5;
+        private Vector3 npos;
 
         private void Awake()
         {
@@ -16,29 +17,17 @@ namespace wine.player
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             Vector2 mousePos = wine.util.InputController.instances.RawMouse();
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(renderTextureUI, mousePos, null, out Vector2 localPoint))
-            {
-                Rect rect = renderTextureUI.rect;
+            Plane playerPlane = new Plane(Vector3.up, player.transform.position);
+            if (playerPlane.Raycast(ray, out float dist))
+                npos = ray.GetPoint(dist);
 
-                // Convert local point to Viewport coordinates (0 to 1)
-                float viewportX = (localPoint.x - rect.x) / rect.width;
-                float viewportY = (localPoint.y - rect.y) / rect.height;
-                Vector2 viewportPos = new Vector2(viewportX, viewportY);
-
-                Ray ray = Camera.main.ViewportPointToRay(viewportPos);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, 1000f, floorMask))
-                {
-                    Vector3 offset = new Vector3((hit.point.x - player.position.x) / 2, 0, (hit.point.z - player.position.z) / 2);
-                    transform.position = Vector3.Lerp(transform.position, player.position + Vector3.ClampMagnitude(offset, maxDistance), followSpeed * Time.fixedUnscaledDeltaTime);
-                }
-            }   
+            // transform.position = Vector3.Lerp(transform.position, player.position + Vector3.ClampMagnitude(npos - player.position, maxDistance), followSpeed * Time.deltaTime * 10.0f);
+            transform.position = Vector3.Lerp(transform.position, npos, followSpeed * Time.deltaTime * 10.0f);
         }
     }
-
 }

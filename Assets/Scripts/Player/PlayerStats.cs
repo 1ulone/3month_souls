@@ -24,7 +24,7 @@ namespace wine.player
         //Default stats on Start 
         private const int startStrength = 2;
         private const int startConstitution = 2;
-        private const int startDexterity = 4;
+        private const int startDexterity = 8;
         private const int startVitality = 6;
         private const int startPoise = 1;
 
