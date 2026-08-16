@@ -1,4 +1,5 @@
 using UnityEngine;
+// using Unity.Cinemachine;
 
 namespace wine.core 
 {
@@ -10,6 +11,7 @@ namespace wine.core
         [SerializeField] private Transform defaultTarget;
         [SerializeField] private float cameraSpeed = 7.5f;
         [SerializeField] private Vector3 maxCameraThreshold, minCameraThreshold;
+        // [SerializeField] private CinemachineCamera defaultCam;
 
         public Transform target { get; private set; }
         private float camHeight;
@@ -61,17 +63,23 @@ namespace wine.core
             this.transform.position = lockedCam;
         }
 
-        public void UpdateCameraPositionOnZeroTimeScale()
+        public void ChangeCamera(int i)
         {
-            this.transform.position = target.position;
+
         }
 
-        public void MoveCameraOffset(Vector3 offsetPos, Vector3 offsetRot)
-        {
-            Camera.main.transform.localPosition = offsetPos;
-            Camera.main.transform.eulerAngles = offsetRot;
-        }
-
+        //
+        // public void UpdateCameraPositionOnZeroTimeScale()
+        // {
+        //     this.transform.position = target.position;
+        // }
+        //
+        // public void MoveCameraOffset(Vector3 offsetPos, Vector3 offsetRot)
+        // {
+        //     Camera.main.transform.localPosition = offsetPos;
+        //     Camera.main.transform.eulerAngles = offsetRot;
+        // }
+        //
         public void ResetCameraPosition()
         {
             Camera.main.transform.localPosition = defaultOffset;

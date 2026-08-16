@@ -5,6 +5,8 @@ namespace wine.util.ui
     [CreateAssetMenu(fileName = "New Dialog Data", menuName = "Data/DialogData")]
     public class DialogData : ScriptableObject 
     {
+        [SerializeField] public RuntimeAnimatorController potrait;
+        [SerializeField] public string speakerName;
         [SerializeField] public Dialog[] dialogs;
     }
 

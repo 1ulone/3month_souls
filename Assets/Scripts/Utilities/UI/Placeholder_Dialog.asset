@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007fa6c1ce47f144bcc9f9614583e34, type: 3}
   m_Name: Placeholder_Dialog
   m_EditorClassIdentifier: 
+  potrait: {fileID: 9100000, guid: 0b6f508cffdbd7193ad3cc148a654733, type: 2}
+  speakerName: Karanova
   dialogs:
   - content: 'this is a test dialog '
     responsesToWhatMood: 0

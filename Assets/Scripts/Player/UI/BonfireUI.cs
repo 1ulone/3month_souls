@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.Cinemachine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using TMPro;
 
 using wine.util;
 using wine.util.ui;
-using wine.core;
 
 namespace wine.player.ui
 {
@@ -16,8 +16,12 @@ namespace wine.player.ui
         public static BonfireUI instances;
         private const float uiDelay = 0.15f;
 
+        [SerializeField] private CinemachineCamera defaultCamera;
+        [SerializeField] private CinemachineCamera dialogCamera;
+
+        [SerializeField] private CanvasGroup firstPanel;
         [SerializeField] private CanvasGroup secondPanel;
-        [SerializeField] private Image[] mainOptions;
+        [SerializeField] private Transform[] mainOptions;
         [SerializeField] private Image cursor;
         [SerializeField] private GameObject plusMinIcon;
 
@@ -49,7 +53,6 @@ namespace wine.player.ui
         private int mainOptionsID, levelOptionsID;
         private int previewLevel, previewExp, previewNextLevelExp;
         private bool isOnUI, canMove;
-        private CanvasGroup mainUI;
         private InputController input;
         private PlayerStats stats;
 
@@ -57,13 +60,21 @@ namespace wine.player.ui
         {
             instances = this;
             isOnUI = false;
-            mainUI = GetComponent<CanvasGroup>();
 
             dialogPanel.SetActive(false);
             levelupPanel.SetActive(false);
             plusMinIcon.SetActive(false);
-            ToggleCanvasGroup(secondPanel, false);
-            ToggleCanvasGroup(mainUI, false);
+
+            secondPanel.alpha = 0;
+            secondPanel.interactable = false;
+            secondPanel.blocksRaycasts = false;
+
+            firstPanel.alpha = 0;
+            firstPanel.interactable = false;
+            firstPanel.blocksRaycasts = false;
+
+            // ToggleCanvasGroup(secondPanel, false);
+            // ToggleCanvasGroup(mainUI, false);
         }
 
         private void Start()
@@ -73,13 +84,15 @@ namespace wine.player.ui
             canMove = true;
 
             mainOptionsID = 0;
-            MoveCursor(mainOptions[mainOptionsID].rectTransform);
+            cursor.enabled = false;
+            MoveCursor(mainOptions[mainOptionsID]);
         }
 
-        private void MoveCursor(RectTransform dest)
+        // private void MoveCursor(RectTransform dest)
+        private void MoveCursor(Transform dest)
         {
             cursor.rectTransform.position = dest.position;
-            cursor.rectTransform.sizeDelta = dest.sizeDelta;
+            // cursor.rectTransform.sizeDelta = dest.sizeDelta;
         }
 
         private void ToggleCanvasGroup(CanvasGroup cgt, bool b)
@@ -87,6 +100,29 @@ namespace wine.player.ui
             cgt.alpha = b ? 1 : 0;
             cgt.interactable = b;
             cgt.blocksRaycasts = b;
+        }
+
+        private IEnumerator OpenCanvas(CanvasGroup cgt)
+        {
+            cgt.alpha = 1;
+            canMove = false;
+            yield return PanelTransition.beginTransition(cgt.GetComponent<RectTransform>(), open: true);
+
+            canMove = true;
+            mainOptionsID = 0;
+            cursor.enabled = true;
+            MoveCursor(mainOptions[mainOptionsID]);
+        }
+
+        private IEnumerator CloseCanvas(CanvasGroup cgt)
+        {
+            canMove = false;
+            mainOptionsID = 0;
+            cursor.enabled = false;
+            yield return PanelTransition.beginTransition(cgt.GetComponent<RectTransform>(), open: false);
+
+            cgt.alpha = 0;
+            canMove = true;
         }
 
         public void ToggleUI()
@@ -100,19 +136,20 @@ namespace wine.player.ui
             else 
                 Time.timeScale = 1;
 
-            StartCoroutine(OpenMainCanvas());
+            StartCoroutine(ToggleBonfire());
         }
 
-        private IEnumerator OpenMainCanvas()
+        private IEnumerator ToggleBonfire()
         {
             canMove = false;
-            mainOptionsID = 0;
-            MoveCursor(mainOptions[mainOptionsID].rectTransform);
+            ToggleCanvasGroup(secondPanel, false);
 
             yield return new WaitForSecondsRealtime(uiDelay);
-            ToggleCanvasGroup(secondPanel, false);
-            ToggleCanvasGroup(mainUI, isOnUI);
-
+            if (isOnUI)
+                yield return OpenCanvas(firstPanel);
+            else 
+                yield return CloseCanvas(firstPanel);
+                
             canMove = true;
         }
 
@@ -153,6 +190,7 @@ namespace wine.player.ui
                         case 0 : { StartCoroutine(OpenLevelPanel()); } break;
                         case 1 : { OpenDialogPanel(); } break;
                         case 2 : { ToggleUI(); } break;
+                        case 3 : { ToggleUI(); } break;
                         default: {} break;
                     }
                 }
@@ -173,7 +211,7 @@ namespace wine.player.ui
                 mainOptionsID = mainOptions.Length - 1;
 
             yield return new WaitForSecondsRealtime(uiDelay);
-            MoveCursor(mainOptions[mainOptionsID].rectTransform);
+            MoveCursor(mainOptions[mainOptionsID]);
 
             canMove = true;
         }
@@ -263,7 +301,7 @@ namespace wine.player.ui
 
             RefreshLevelUI();
 
-            ToggleCanvasGroup(secondPanel, true);
+            yield return OpenCanvas(secondPanel);
             plusMinIcon.SetActive(true);
             levelupPanel.SetActive(true);
 
@@ -280,10 +318,10 @@ namespace wine.player.ui
             previewData[3].gui.text = previewData[3].value.ToString();
             previewData[4].gui.text = previewData[4].value.ToString();
 
-            levelCurrent.text = stats.level.ToString();
+            levelCurrent.text = "Level " + stats.level.ToString();
             levelNext.text = previewLevel.ToString();
-            expHeld.text = "Exp Held : " + previewExp.ToString();
-            expNeed.text = "Exp Needed : " + previewNextLevelExp.ToString();
+            expHeld.text = previewExp.ToString();
+            expNeed.text = previewNextLevelExp.ToString();
 
             /* NOTE:
              * 0 = vit
@@ -315,24 +353,24 @@ namespace wine.player.ui
                         );
             }
 
-            ToggleCanvasGroup(secondPanel, false);
+            yield return CloseCanvas(secondPanel);
             plusMinIcon.SetActive(false);
             levelupPanel.SetActive(false);
 
             yield return new WaitForSecondsRealtime(uiDelay);
             mainOptionsID = 0;
-            MoveCursor(mainOptions[mainOptionsID].rectTransform);
+            MoveCursor(mainOptions[mainOptionsID]);
+            cursor.enabled = true;
         }
 
         private void OpenDialogPanel()
         {
             //Change Camera
-            ToggleCanvasGroup(secondPanel, true);
-            dialogPanel.SetActive(true);
+
             StartCoroutine(TypeOutDialog(placeholderDialog));
 
-            placeholderPlayerGet.transform.position = placeholderNPCobj.transform.position + new Vector3(-0.5f, 0, -1);
-            CameraController.instances.UpdateCameraPositionOnZeroTimeScale();
+            // placeholderPlayerGet.transform.position = placeholderNPCobj.transform.position + new Vector3(-0.5f, 0, -1);
+            // CameraController.instances.UpdateCameraPositionOnZeroTimeScale();
         }
 
         // NOTE: for dialog and shit :
@@ -341,7 +379,25 @@ namespace wine.player.ui
         private IEnumerator TypeOutDialog(DialogData data)
         {
             canMove = false;
-            CameraController.instances.MoveCameraOffset(new Vector3(0.8f, 1.75f, -0.75f), new Vector3(25, -45, 0));
+            float transitionTime = 1.5f;
+            yield return FadeTransitionUI.instances.FadeInOut(true, time: transitionTime);
+
+            ToggleCanvasGroup(firstPanel, false);
+            ToggleCanvasGroup(secondPanel, true);
+
+            cursor.enabled = false;
+            placeholderPlayerGet.transform.position = placeholderNPCobj.transform.position + new Vector3(-0.5f, 0, -1);
+            DialogBox.instances.setSpeakerIdentity(placeholderDialog.potrait, placeholderDialog.speakerName);
+            dialogCamera.Priority = 2;
+
+            yield return FadeTransitionUI.instances.FadeInOut(false, time:transitionTime);
+
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            dialogPanel.GetComponent<RectTransform>().localScale = Vector3.zero;
+            dialogPanel.SetActive(true);
+
+            yield return PanelTransition.beginTransition(dialogPanel.GetComponent<RectTransform>(), true);
 
             foreach(Dialog d in data.dialogs)
             {
@@ -366,12 +422,20 @@ namespace wine.player.ui
                     break;
             }
             yield return DialogBox.instances.exitDialog();
-
+            yield return PanelTransition.beginTransition(dialogPanel.GetComponent<RectTransform>(), false);
             dialogPanel.SetActive(false);
+
+            // CameraController.instances.ResetCameraPosition();
+            yield return FadeTransitionUI.instances.FadeInOut(true, time: transitionTime);
+            dialogCamera.Priority = 0;
+            cursor.gameObject.SetActive(true);
+            cursor.enabled = true;
+            MoveCursor(mainOptions[0]);
+            ToggleCanvasGroup(firstPanel, true);
             ToggleCanvasGroup(secondPanel, false);
+            yield return FadeTransitionUI.instances.FadeInOut(false, time: transitionTime);
             canMove = true;
-            CameraController.instances.ResetCameraPosition();
-            MoveCursor(mainOptions[0].rectTransform);
+
         }
     }
 

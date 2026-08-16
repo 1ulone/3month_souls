@@ -11,6 +11,8 @@ namespace wine.util.ui
         public static bool waitForResponse = false;
 
         [SerializeField] private TextMeshProUGUI textMesh;
+        [SerializeField] private TextMeshProUGUI textName;
+        [SerializeField] private Animator potrait;
         [SerializeField] private GameObject dialogBox;
         [SerializeField] private ResponseBox[] responseBoxes;
         [SerializeField] private RectTransform responseCursor;
@@ -79,10 +81,16 @@ namespace wine.util.ui
                 currentCursorIndex = maxActiveResponseBox-1;
 
             yield return new WaitForSecondsRealtime(0.15f);
-            responseCursor.position = responseBoxes[currentCursorIndex].box.rectTransform.localPosition;
-            responseCursor.anchoredPosition = responseBoxes[currentCursorIndex].box.rectTransform.anchoredPosition;
-            responseCursor.sizeDelta = responseBoxes[currentCursorIndex].box.rectTransform.sizeDelta;
+            responseCursor.position = responseBoxes[currentCursorIndex].box.rectTransform.position;
+            // responseCursor.anchoredPosition = responseBoxes[currentCursorIndex].box.rectTransform.anchoredPosition;
+            // responseCursor.sizeDelta = responseBoxes[currentCursorIndex].box.rectTransform.sizeDelta;
             isCursorMoving = false;
+        }
+
+        public void setSpeakerIdentity(RuntimeAnimatorController potrait, string ntag)
+        {
+            this.potrait.runtimeAnimatorController = potrait;
+            this.textName.text = ntag;
         }
 
         public IEnumerator useDialogBox(string t, Transform speakerTarget, int spd = 30) 
@@ -91,6 +99,7 @@ namespace wine.util.ui
                 StopCoroutine(currentCoroutine);
 
             // dialogBox.transform.position = speakerTarget.position + (Vector3.up*3.5f);
+
             yield return new WaitForSecondsRealtime(1);
             dialogBox.SetActive(true);
 
@@ -100,6 +109,9 @@ namespace wine.util.ui
 
         private IEnumerator TypeDialog(string t, int spd)
         {
+            if (potrait.runtimeAnimatorController != null)
+                potrait.Play("talk");
+
             textMesh.text = "";
             foreach(var c in t.ToCharArray())
             {
@@ -109,6 +121,9 @@ namespace wine.util.ui
             }
 
             currentCoroutine = null;
+
+            if (potrait.runtimeAnimatorController != null)
+                potrait.Play("idle");
         }
 
         public IEnumerator exitDialog()
@@ -117,7 +132,7 @@ namespace wine.util.ui
             yield return new WaitForSecondsRealtime(0.5f);
             dialogBox.SetActive(false);
             nextMood = dialogMood.neutral;
-            responseCursor.gameObject.SetActive(true);
+            // responseCursor.gameObject.SetActive(true);
         }
 
         // NOTE: max of option will be 3  
@@ -137,9 +152,10 @@ namespace wine.util.ui
             }
             yield return new WaitForSecondsRealtime(0.5f);
             responseCursor.gameObject.SetActive(true);
-            responseCursor.position = responseBoxes[currentCursorIndex].box.rectTransform.localPosition;
-            responseCursor.anchoredPosition = responseBoxes[currentCursorIndex].box.rectTransform.anchoredPosition;
-            responseCursor.sizeDelta = responseBoxes[currentCursorIndex].box.rectTransform.sizeDelta;
+            responseCursor.GetComponent<Image>().enabled = true;
+            responseCursor.position = responseBoxes[currentCursorIndex].box.rectTransform.position;
+            // responseCursor.anchoredPosition = responseBoxes[currentCursorIndex].box.rectTransform.anchoredPosition;
+            // responseCursor.sizeDelta = responseBoxes[currentCursorIndex].box.rectTransform.sizeDelta;
         }
 
         public IEnumerator exitResponseBox()

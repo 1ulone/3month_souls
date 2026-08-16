@@ -51,7 +51,7 @@ namespace wine.player.interact
                     InventoryUI.instances.InstantDequipDiscard(holdedObject.weaponData);
 
                 holdedObject.rb.constraints = RigidbodyConstraints.None;
-                holdedObject.Sling(controller.Pointer.position);
+                holdedObject.Sling((controller.Pointer.position - transform.position).normalized);
                 holdedObject.damageComponent.enabled = true;
                 holdedObject.realTransform.parent = null;
                 holdedObject = null;
