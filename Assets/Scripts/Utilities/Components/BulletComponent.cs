@@ -57,11 +57,12 @@ namespace wine.util.component
 
             speed = 0;
             rb.linearVelocity = Vector3.zero;
-            destroyableComponent.TakeDamage(1, Vector3.zero);
-            Invoke("delayedCollideEvent", delayTime);
 
             Vector3 surfaceNormal = other.contacts[0].normal;
             Vector3 reflectDirection = Vector3.Reflect(lastVelocity.normalized, surfaceNormal);
+
+            destroyableComponent.TakeDamage(1, reflectDirection);
+            Invoke("delayedCollideEvent", delayTime);
 
             rb.linearVelocity = new Vector3(reflectDirection.x, 0, reflectDirection.z).normalized * lastSpeed * bounceMultiplier;
             afterBounce = true;

@@ -269,7 +269,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &4523956790175731907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +284,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doRotate: 0
   destroyOnCollide: 1
+  bounceMultiplier: 2
+  bounceWindowTimer: 0.25
+  rotationSpeed: 100
 --- !u!114 &1898045873920488093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +335,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.060656063
+  m_Radius: 0.06
   m_Center: {x: -0.000000010216686, y: 0.000000014528369, z: 0.048407663}
 --- !u!1 &2551804944489088651
 GameObject:
@@ -512,10 +515,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3197087123484996352}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70105624, y: 0.09229699, z: -0.09229663, w: 0.7010584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.069990836, y: 0.069990814, z: 0.06999079}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2006001659623061794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -538,8 +541,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.5, y: 2.5, z: 3}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!114 &4355273172028283687
 MonoBehaviour:
   m_ObjectHideFlags: 0
