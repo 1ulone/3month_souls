@@ -42,6 +42,7 @@ namespace wine.player.interact
         private void Start()
         {
             stats = PlayerStats.instances;
+            interactGUI.SetActive(false);
             hintController.hint.enabled = false;
             Invoke("InitializeCamera", 1.0f);
 
@@ -178,17 +179,23 @@ namespace wine.player.interact
         public void MoveRoom(BoxCollider boxCollider, bool isHorizontal)
         {
             Vector3 newPos = new Vector3(
-                    isHorizontal ? (controller.ActualMesh.forward.x > 0 ? boxCollider.bounds.max.x : boxCollider.bounds.min.x) : transform.position.x,
-                    transform.position.y,
-                    isHorizontal ? transform.position.z : (controller.ActualMesh.forward.z > 0 ? boxCollider.bounds.max.z : boxCollider.bounds.min.z)
-                    );
+                isHorizontal ? (controller.ActualMesh.forward.x > 0 ? boxCollider.bounds.max.x + 2.5f : boxCollider.bounds.min.x - 2.5f) : boxCollider.bounds.center.x,
+                transform.position.y,
+                isHorizontal ? boxCollider.bounds.center.z: (controller.ActualMesh.forward.z > 0 ? boxCollider.bounds.max.z + 2.5f : boxCollider.bounds.min.z - 2.5f)
+            );
 
             ccon.Move(Vector3.zero);
             ccon.enabled = false;
+            controller.ChangeAnim("idle");
 
-            transform.position = newPos + (controller.ActualMesh.forward * 2.5f);
+            transform.position = newPos;
             Invoke("ReenableController", 0.2f);
             InitializeCamera();
+        }
+
+        private void ReenableController()
+        {
+            controller.ReenableController();
         }
 
         // NOTE: Collision Trigger 

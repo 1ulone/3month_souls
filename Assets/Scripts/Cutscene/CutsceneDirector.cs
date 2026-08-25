@@ -32,12 +32,19 @@ namespace wine.cutscene
             Time.timeScale = 1;
         }
 
-        public void setCustomAction(int id, Action evt)
+        public void setCustomAction(int id, Action evt, Func<bool> customUntilBoolean = null)
         {
             foreach(ActionScene s in actions)
+            {
                 if (s.action.type == actionType.customAction)
+                {
                     if (s.action.customID == id)
+                    {
                         s.action.customAction = evt;
+                        s.action.customUntilBoolean = customUntilBoolean;
+                    }
+                }
+            }
         }
     }
 

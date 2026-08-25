@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
 using wine.util;
+using wine.util.ui;
 
 namespace wine.player.ui
 {
@@ -22,7 +24,8 @@ namespace wine.player.ui
         private InputController input;
         private invMode mode;
 
-        [SerializeField] private Image[] slotUI;
+        [SerializeField] private CinemachineCamera uiCamera;
+        [SerializeField] private slot[] slotUI;
         [SerializeField] private Image[] keyslotUI;
 
         // [SerializeField] private slotImage[] slotUI;
@@ -34,20 +37,25 @@ namespace wine.player.ui
         {
             slot = new slot[][]
             {
-                new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
-                new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
-                new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
-                new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
-                new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() },
-                new slot[] { new slot(), new slot(), new slot(), new slot(), new slot() }
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() },
+                new slot[] { new slot(), new slot(), new slot() }
             };
 
             int y = 0, x = 0;
             for (int i = 0; i < slotUI.Length; i++)
             {
-                slot[x][y].image = slotUI[i];
+                slot[x][y].icon = slotUI[i].icon;
+                slot[x][y].text = slotUI[i].text;
+                slot[x][y].rtransform = slotUI[i].rtransform;
 
-                if ((i+1) % 5 == 0) 
+                if ((i+1) % 3 == 0) 
                 { y = 0; x++; }
                 else 
                 { y++; }
@@ -71,7 +79,7 @@ namespace wine.player.ui
             int y = 0, x = 0;
             for (int i = 0; i < keyslotUI.Length; i++)
             {
-                keyslot[x][y].image = keyslotUI[i];
+                keyslot[x][y].icon = keyslotUI[i];
 
                 if ((i+1) % 5 == 0) 
                 { y = 0; x++; }
@@ -97,6 +105,7 @@ namespace wine.player.ui
         private int col, row;
         private int optionsID = 0;
         private bool isOnInventory, isOnEnumerator, isOnOptions;
+        private float transitionTime = 1.0f;
         private CanvasGroup mainCanvas;
 
         [SerializeField] private CanvasGroup equipableCanvas;
@@ -108,8 +117,11 @@ namespace wine.player.ui
 
         [SerializeField] private RectTransform cursor;
 
-        [SerializeField] private Image equippedWeapon;
-        [SerializeField] private Image equippedCharm;
+        [SerializeField] private slot equippedWeapon;
+        [SerializeField] private slot equippedCharm;
+
+        [SerializeField] private slot descriptionSlot;
+        [SerializeField] private TextMeshProUGUI descriptionText;
 
         [SerializeField] private TextMeshProUGUI health;
         [SerializeField] private TextMeshProUGUI damage;
@@ -123,7 +135,7 @@ namespace wine.player.ui
         [SerializeField] private TextMeshProUGUI itemLabel;
         [SerializeField] private TextMeshProUGUI itemDescription;
 
-        private Vector2 defaultCursorSize;
+        // private Vector2 defaultCursorSize;
 
         /* NOTE:--------------------------------------------
          *------------------INITIALIZATION------------------
@@ -145,7 +157,7 @@ namespace wine.player.ui
         private void Start()
         {
             input = InputController.instances;
-            defaultCursorSize = cursor.sizeDelta;
+            // defaultCursorSize = cursor.sizeDelta;
         }
 
         private void ToggleCanvasGroup(CanvasGroup cgt, bool b)
@@ -169,10 +181,11 @@ namespace wine.player.ui
         {
             isOnEnumerator = true;
             mode = invMode.main;
-            yield return new WaitForSecondsRealtime(0.15f);
+
+            yield return FadeTransitionUI.instances.FadeInOut(true, time: transitionTime);
 
             col = 0; row = 0;
-            cursor.position = slot[col][row].image.transform.position;
+            // cursor.position = slot[col][row].image.transform.position;
 
             health.text = "Health : " + PlayerStats.instances.health.ToString();
             damage.text = "Damage : " + PlayerStats.instances.damage.ToString();
@@ -182,22 +195,32 @@ namespace wine.player.ui
             downtime.text = "Downtime : " + PlayerStats.instances.downtime.ToString();
             knockforce.text = "KnockForce : " + PlayerStats.instances.knockforce.ToString();
 
-            cursor.GetComponent<Image>().color = Color.yellow;
+            // cursor.GetComponent<Image>().color = Color.yellow;
 
             ToggleCanvasGroup(mainCanvas, true);
             ToggleCanvasGroup(equipableCanvas, true);
+
+            uiCamera.Priority = 2;
+            cursor.position = slot[col][row].rtransform.position;
+
+            yield return FadeTransitionUI.instances.FadeInOut(false, time: transitionTime);
             isOnEnumerator = false;
         }
 
         private IEnumerator ExitInventory() 
         {
             isOnEnumerator = true;
-            yield return new WaitForSecondsRealtime(0.15f);
+
+            yield return FadeTransitionUI.instances.FadeInOut(true, time: transitionTime);
 
             ToggleCanvasGroup(equipableCanvas, false);
             ToggleCanvasGroup(keyitemsCanvas, false);
             ToggleCanvasGroup(mapCanvas, false);
             ToggleCanvasGroup(mainCanvas, false);
+
+            uiCamera.Priority = 0;
+
+            yield return FadeTransitionUI.instances.FadeInOut(false, time: transitionTime);
             isOnEnumerator = false;
         }
 
@@ -286,7 +309,7 @@ namespace wine.player.ui
                 case (invMode.main) : 
                     {
                         col = 0; row = 0;
-                        cursor.position = slot[col][row].image.transform.position;
+                        cursor.position = slot[col][row].rtransform.position;
 
                         health.text = "Health : " + PlayerStats.instances.health.ToString();
                         damage.text = "Damage : " + PlayerStats.instances.damage.ToString();
@@ -296,15 +319,15 @@ namespace wine.player.ui
                         downtime.text = "Downtime : " + PlayerStats.instances.downtime.ToString();
                         knockforce.text = "KnockForce : " + PlayerStats.instances.knockforce.ToString();
 
-                        cursor.GetComponent<Image>().color = Color.yellow;
+                        // cursor.GetComponent<Image>().color = Color.yellow;
 
                         ToggleCanvasGroup(equipableCanvas, true);
                     } break;
                 case (invMode.key) : 
                     {
                         col = 0; row = 0;
-                        cursor.position = keyslot[col][row].image.transform.position;
-                        cursor.GetComponent<Image>().color = Color.yellow;
+                        cursor.position = keyslot[col][row].rtransform.position;
+                        // cursor.GetComponent<Image>().color = Color.yellow;
 
                         if (keyslot[col][row].item != null)
                         {
@@ -353,7 +376,21 @@ namespace wine.player.ui
             // Debug.Log(col + "," + row);
 
             yield return new WaitForSecondsRealtime(0.15f);
-            cursor.position = slot[col][row].image.transform.position;
+
+            cursor.position = slot[col][row].rtransform.position;
+            if (slot[col][row].item != null)
+            {
+                descriptionSlot.icon.sprite = slot[col][row].item.icon;
+                descriptionSlot.icon.enabled = true;
+                descriptionSlot.text.text = slot[col][row].item.tag;
+                descriptionText.text = slot[col][row].item.description;
+            } else {
+                descriptionSlot.icon.sprite = null;
+                descriptionSlot.icon.enabled = false;
+                descriptionSlot.text.text = "";
+                descriptionText.text = "";
+            }
+
             isOnEnumerator = false;
         }
 
@@ -362,14 +399,14 @@ namespace wine.player.ui
             isOnOptions = true;
             isOnEnumerator = true;
             optionsID = 0;
-            itemOptionCanvas.transform.position = slot[col][row].image.transform.position;
+            itemOptionCanvas.transform.position = slot[col][row].rtransform.position;
             cursor.position = itemOptionGUI[0].transform.position;
-            cursor.sizeDelta = new Vector2(itemOptionGUI[0].preferredWidth, itemOptionGUI[0].preferredHeight);
+            // cursor.sizeDelta = new Vector2(itemOptionGUI[0].preferredWidth, itemOptionGUI[0].preferredHeight);
 
             // TODO: Animation here later
             yield return new WaitForSecondsRealtime(0.15f);
             ToggleCanvasGroup(itemOptionCanvas, true);
-            cursor.GetComponent<Image>().color = Color.red;
+            // cursor.GetComponent<Image>().color = Color.red;
 
             ItemData i = slot[col][row].item;
 
@@ -415,9 +452,9 @@ namespace wine.player.ui
         {
             isOnEnumerator = true;
             ToggleCanvasGroup(itemOptionCanvas, false);
-            cursor.position = slot[col][row].image.transform.position;
-            cursor.sizeDelta = defaultCursorSize;
-            cursor.GetComponent<Image>().color = Color.yellow;
+            cursor.position = slot[col][row].rtransform.position;
+            // cursor.sizeDelta = defaultCursorSize;
+            // cursor.GetComponent<Image>().color = Color.yellow;
 
             // TODO: Animation here later
             yield return new WaitForSecondsRealtime(0.15f);
@@ -459,8 +496,9 @@ namespace wine.player.ui
                 WeaponItemData wid = item as WeaponItemData;
 
                 PlayerStats.instances.EquipWeapon(wid);
-                equippedWeapon.sprite = item.icon;
-                equippedWeapon.enabled = true;
+                equippedWeapon.icon.sprite = item.icon;
+                equippedWeapon.icon.enabled = true;
+                equippedWeapon.text.text = item.tag;
 
                 wid.onEquip?.Invoke();
                 wid.onEquip = null;
@@ -468,8 +506,9 @@ namespace wine.player.ui
             if (item.getType() == itemType.charm)
             {
                 PlayerStats.instances.EquipCharm(item as CharmItemData);
-                equippedCharm.sprite = item.icon;
-                equippedCharm.enabled = true;
+                equippedCharm.icon.sprite = item.icon;
+                equippedCharm.icon.enabled = true;
+                equippedCharm.text.text = item.tag;
             }
 
             health.text = "Health : " + PlayerStats.instances.health.ToString();
@@ -492,12 +531,14 @@ namespace wine.player.ui
             if (item.getType() == itemType.weapon)
             {
                 PlayerStats.instances.EquipWeapon(null);
-                equippedWeapon.enabled = false;
+                equippedWeapon.icon.enabled = false;
+                equippedWeapon.text.text = "";
             } else 
             if (item.getType() == itemType.charm)
             {
                 PlayerStats.instances.EquipCharm(null);
-                equippedCharm.enabled = false;
+                equippedCharm.icon.enabled = false;
+                equippedCharm.text.text = "";
             }
 
             health.text = "Health : " + PlayerStats.instances.health.ToString();
@@ -534,7 +575,7 @@ namespace wine.player.ui
             // Debug.Log(col + "," + row);
 
             yield return new WaitForSecondsRealtime(0.15f);
-            cursor.position = keyslot[col][row].image.transform.position;
+            cursor.position = keyslot[col][row].rtransform.position;
 
             if (keyslot[col][row].item != null)
             {
@@ -565,7 +606,7 @@ namespace wine.player.ui
                         if (keyslot[x][y].item == null)
                         {
                             keyslot[x][y].item = data;
-                            keyslot[x][y].image.sprite = data.icon;
+                            keyslot[x][y].icon.sprite = data.icon;
 
                             return;
                         }
@@ -581,7 +622,9 @@ namespace wine.player.ui
                         if (slot[x][y].item == null)
                         {
                             slot[x][y].item = data;
-                            slot[x][y].image.sprite = data.icon;
+                            slot[x][y].icon.sprite = data.icon;
+                            slot[col][row].icon.enabled = true;
+                            slot[col][row].text.text = data.tag;
 
                             if (autoEquip)
                             {
@@ -611,23 +654,27 @@ namespace wine.player.ui
             if (doDiscard)
             {
                 slot[col][row].item = null;
-                slot[col][row].image.sprite = null;
+                slot[col][row].icon.sprite = null;
+                slot[col][row].icon.enabled = false;
+                slot[col][row].text.text = "";
             }
         }
     }
 
+    [System.Serializable]
     public class slot
     {
-        public Image image;
-        public ItemData item;
-        public TextMeshProUGUI text;//for key inventory;
+        public Image icon;
+        public RectTransform rtransform;
+        public TextMeshProUGUI text;
+        [HideInInspector] public ItemData item;
     }
 
-    [System.Serializable]
-    public class slotImage 
-    { 
-        [SerializeField] public Image[] image; 
-    }
+    // [System.Serializable]
+    // public class slotImage 
+    // { 
+    //     [SerializeField] public Image[] image; 
+    // }
 
     [System.Serializable]
     public class SavedInventory

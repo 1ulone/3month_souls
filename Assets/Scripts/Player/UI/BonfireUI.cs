@@ -16,7 +16,6 @@ namespace wine.player.ui
         public static BonfireUI instances;
         private const float uiDelay = 0.15f;
 
-        [SerializeField] private CinemachineCamera defaultCamera;
         [SerializeField] private CinemachineCamera dialogCamera;
 
         [SerializeField] private CanvasGroup firstPanel;

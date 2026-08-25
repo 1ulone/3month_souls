@@ -16,6 +16,8 @@ namespace wine.player.interact
         public DamageComponent damageComponent { get; set; }
         public Collider col { get; set; }
 
+        private ItemShadowComponent shadow;
+
         private void OnEnable()
         {
             realTransform = transform.parent;
@@ -23,7 +25,7 @@ namespace wine.player.interact
             bulletComponent = GetComponentInParent<BulletComponent>();
             damageComponent = GetComponent<DamageComponent>();
             col = realTransform.GetComponent<Collider>();
-
+            shadow = realTransform.GetComponent<ItemShadowComponent>();
             rb = GetComponentInParent<Rigidbody>();
 
             bulletComponent.doRotate = true;
@@ -37,6 +39,8 @@ namespace wine.player.interact
                 p.ChangeHoldItem(this);
                 if (weaponData != null)
                     wine.player.ui.InventoryUI.instances.AddItem(this.weaponData, true);
+                if (shadow != null)
+                    shadow.DisableShadow();
             }
         }
 

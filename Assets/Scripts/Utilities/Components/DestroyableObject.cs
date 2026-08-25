@@ -38,7 +38,6 @@ namespace wine.util.component
                     {
                         Vector3 noise = Random.insideUnitSphere * 15.0f;
                         Vector3 ndir = dir.normalized + new Vector3(noise.x, noise.y/4.0f, noise.z);
-                        Debug.Log(noise);
                         Vector3 aforce = noise.normalized * (force / r.mass);
                         r.AddForce(aforce, ForceMode.Impulse);
                     }

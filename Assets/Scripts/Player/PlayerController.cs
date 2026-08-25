@@ -243,11 +243,10 @@ namespace wine.player
             canRoll = true;
         }
 
-        private void ReenableController()
+        public void ReenableController()
         {
             controller.enabled = true; 
             controller.Move(Vector3.zero);
         }
-
     }
 }

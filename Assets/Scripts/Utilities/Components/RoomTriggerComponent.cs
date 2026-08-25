@@ -7,17 +7,26 @@ namespace wine.util.component
     public class RoomTriggerComponent : MonoBehaviour
     {
         [SerializeField] private string roomID;
-
-        private Vector2 newMinThreshold;
-        private Vector2 newMaxThreshold;
-        private BoxCollider triggerBox;
-        private CinemachineConfiner3D boundController;
+        [SerializeField] private CinemachineCamera roomCamera;
+        private GameObject room;
 
         private void Awake()
         {
-            triggerBox = GetComponent<BoxCollider>();
             roomID = transform.name;
-            boundController = FindFirstObjectByType<CinemachineConfiner3D>();
+        }
+
+        private void Start()
+        {
+            int separator = roomID.IndexOf("_");
+            room = GameObject.Find("ROOM_"+roomID[(separator+1)..]);
+
+            if (room.name != "ROOM_1")
+            {
+                room.SetActive(false);
+                roomCamera.enabled = false;
+            }
+            else 
+                GameController.currentRoom = room;
         }
 
         public void TriggerBoundingBox()
@@ -25,8 +34,14 @@ namespace wine.util.component
             if (GameController.roomID == roomID)
                 return;
 
-            boundController.BoundingVolume = triggerBox;
+            CameraController.instances.ChangeCamera(roomCamera);
+
+            GameController.currentRoom.SetActive(false);
+
             GameController.roomID = roomID;
+            GameController.currentRoom = room;
+
+            room.SetActive(true);
         }
     }
 }

@@ -47,6 +47,7 @@ namespace wine.cutscene
         /* NOTE: custom action variable */
         public int customID; 
         public float customEstimatedTime;
+        public Func<bool> customUntilBoolean;
         public Action customAction;
 
         private IEnumerator _coroutine() {
@@ -127,7 +128,10 @@ namespace wine.cutscene
                 } break;
                 case actionType.customAction: {
                     customAction.Invoke();
-                    yield return new WaitForSecondsRealtime(customEstimatedTime);
+                    if (customUntilBoolean != null)
+                        yield return new WaitUntil(()=> customUntilBoolean.Invoke() == true);
+                    else
+                        yield return new WaitForSecondsRealtime(customEstimatedTime);
                     actionCompleted = true;
                 } break;
             }

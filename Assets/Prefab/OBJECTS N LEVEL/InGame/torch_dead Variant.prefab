@@ -21,12 +21,12 @@ PrefabInstance:
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.75
+      value: -9.75
       objectReference: {fileID: 0}
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4650707342990637966, guid: 96e86d8545ceff35d96b1d19e2c690f1,
         type: 3}
@@ -64,7 +64,11 @@ PrefabInstance:
       value: torch_dead Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6134313480381378630, guid: 96e86d8545ceff35d96b1d19e2c690f1, type: 3}
+    - {fileID: 5679278110074549827, guid: 96e86d8545ceff35d96b1d19e2c690f1, type: 3}
+    - {fileID: 2901269759724535764, guid: 96e86d8545ceff35d96b1d19e2c690f1, type: 3}
+    - {fileID: 8196024217344896239, guid: 96e86d8545ceff35d96b1d19e2c690f1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96e86d8545ceff35d96b1d19e2c690f1, type: 3}
